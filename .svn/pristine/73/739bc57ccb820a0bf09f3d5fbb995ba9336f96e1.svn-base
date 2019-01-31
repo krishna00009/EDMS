@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div class="container-fluid">
+    <div class="container cus_main_row" >
+        <div class="row">
+            <h2 class="pos-header-new">
+                <div>User</div>
+            </h2>
+        </div>
+        <div class="row inner_row_bg">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="panel">
+                    <div class="panel-body" style="height: 65px;">
+                        <div class="col-md-4 col-lg-3 col-sm-5 col-xs-5">
+                            <form class="form-horizontal ng-pristine ng-valid">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="col-lg-7 col-md-9 col-sm-9">
+
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <button type="button" class="btn btn-default hi_btn"  ng-click="addUserDetails()">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="fixed-table-container">
+                        <div class="table_wrap fixed-table-container-inner">
+                            <div class="header-background"> </div>
+                            <table data-toggle="table" data-cache="false" data-height="299" style="margin-bottom: 0;" class="hi_table table table-hover table-bordered table-striped table-fixed-header">
+                                <thead>
+                                <th data-field="cntryname"><div class="th-inner">User Name</div></th>
+                                <th data-field="cntryname"><div class="th-inner">Full Name</div></th>
+                                <th data-field="cntryname"><div class="th-inner">Telephone Number</div></th>
+                                <th data-field="cntryname"><div class="th-inner">Email Address</div></th>
+
+                                </tr></thead>
+                                <tbody id="parentTable">
+                                <tr ng-repeat="user in userList| filter:searchText">
+                                    <td>{{user.userName}}</td>
+                                    <td>{{user.full_name}}</td>
+                                    <td>{{user.phone}}</td>
+                                    <td>{{user.email}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                    <div class="modal fade addCustomer" tabindex="-1" id="add_user_master" role="dialog" data-backdrop="static"
+                         aria-labelledby="mySmallModalLabel">
+                        <div class="modal-dialog modal-md">
+                            <div class="modal-content checkout">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">Add User</h4>
+
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <form class="form-horizontal" name="mail">
+                                                <fieldset>
+                                                    <div class="form-group">
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 col-sm-4 control-label" for="">User Name</label>
+                                                            <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                                <input id="UserName" name="UserName"
+                                                                       type="text" placeholder="User Name"
+                                                                       ng-model="userText" maxlength="125"
+                                                                       class="form-control input-md" autocomplete="off" required>
+                                                                <p class="error" ng-show="mail.UserName.$error.pattern">Enter Valid EmailId</p>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 col-sm-4 control-label">Password
+                                                                <span>*</span></label>
+                                                            <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                                <input id="newPassword" name="newPassword"
+                                                                       maxlength="125"
+                                                                       type="password" placeholder="Password"
+                                                                       ng-model="PasswordText"
+                                                                       class="form-control input-md" autocomplete="off" required>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 col-sm-4 control-label">Full Name</label>
+                                                            <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                                <input id="FullName" name="FullName" alpha-with-space
+                                                                       allowpattern="[a-z]"
+                                                                       maxlength="125"
+                                                                       type="text" placeholder="Full Name"
+                                                                       ng-model="FullNameText"
+                                                                       class="form-control input-md" autocomplete="off" required>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 col-sm-4 control-label">Security Question</label>
+                                                            <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                                <input id="SecurityQuestion" name="SecurityQuestion"
+                                                                       allowpattern="[a-z]" maxlength="125"
+                                                                       type="text" placeholder="Security Question"
+                                                                       ng-model="SecurityQuestionText"
+                                                                       class="form-control input-md" autocomplete="off" required>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 col-sm-4 control-label">Answer</label>
+                                                            <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                                <input id="Answer" name="Answer"
+                                                                       allowpattern="[a-z]" maxlength="125"
+                                                                       type="text" placeholder="Answer"
+                                                                       ng-model="AnswerText"
+                                                                       ng-value="setupobj.securityAnswer"
+                                                                       class="form-control input-md" autocomplete="off" required>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 col-sm-4 control-label">Telephone Number</label>
+                                                            <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                                <input id="TelephoneNumber" name="TelephoneNumber" num-with-space maxlength="10"
+                                                                       allowpattern="[a-z]"
+                                                                       type="text" placeholder="Telephone Number"
+                                                                       ng-model="TelephoneNumberText"
+                                                                       class="form-control input-md" autocomplete="off" required>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 col-sm-4 control-label">Email Address</label>
+                                                            <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                                <input id="EmailAddress" name="EmailAddress"
+                                                                       type="text" placeholder="Email Address"
+                                                                       ng-model="EmailAddressText"
+                                                                       class="form-control input-md"  required>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-4 col-sm-4 control-label">Status </label>
+                                                            <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                                <select id="statusId" name="status"
+                                                                        ng-model="status" ng-init="status='Active'"  class="form-control input-md">
+                                                                    <option value="Active">Active</option>
+                                                                    <option value="InActive">InActive</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </fieldset>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-default" data-toggle="modal" ng-disabled="isDisabled"
+                                            data-target=".print-me" ng-click="saveuserDetails()">Save
+                                    </button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,288 @@
+<div class="row">
+    <div id="{{loginId}}" >
+        <div class="login_wrapper">
+
+            <!-- Login Form section -->
+            <div class="animate form login_form">
+                <section class="login_content">
+                    <img src="resource/images/i_logo.png" style="position: absolute; top: 0; left: -60px;">
+                    <!--<form name="loginForm" ng-submit="login()" novalidate>-->
+                    <form name="loginForm"  novalidate>
+
+                        <h1>Login</h1>
+
+                        <!--<div class="form-group">-->
+                            <!--<label class="col-md-4 control-label" for="">Email</label>-->
+                            <!--<div class="col-md-6" style="position:relative;">-->
+                                <!--<input id="companyemail" name="companyemail"-->
+                                       <!--ng-pattern="word" alpha-with-space-->
+                                       <!--type="text" placeholder="Email"-->
+                                       <!--ng-model="userEmailText"-->
+                                       <!--class="form-control input-md" required>-->
+                                <!--<p class="error" ng-show="loginForm.companyemail.$error.pattern">Enter Valid EmailId</p>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="">Branch Code</label>
+                            <div class="col-md-6" style="position:relative;">
+                                <input id="branchCode" name="branchCode"
+                                       type="text" placeholder="Branch Code"
+                                       ng-model="branchCodeText"
+                                       class="form-control input-md" required>
+                                <div class="help-block text-left" ng-show="loginForm.password.$touched && loginForm.password.$invalid">
+                                    Username should not be empty.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="">User Name</label>
+                            <div class="col-md-6" style="position:relative;">
+                                <input id="userName" name="userName"  maxlength="125"
+                                       type="text" placeholder="User Name"
+                                       ng-model="userNameText"
+                                       class="form-control input-md" required>
+                                <div class="help-block text-left" ng-show="loginForm.password.$touched && loginForm.password.$invalid">
+                                    Username should not be empty.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="">Password</label>
+                            <div class="col-md-6" style="position:relative;">
+                                <input id="userPswd" name="userPswd"  maxlength="125"
+                                       type="password" placeholder="Password"
+                                       ng-model="pswdText"
+                                       class="form-control input-md" required>
+                                <div class="help-block text-left" ng-show="loginForm.password.$touched && loginForm.password.$invalid">
+                                    Your password must have a minimum length of 6 characters.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-md-offset-1 col-sm-offset-1 col-sm-9 col-xs-3 col-xs-offset-0">
+                                <div style="text-align: left;">
+                                    <td>
+                                        <a>  <button type="submit" class="btn btn-default" data-toggle="modal"
+                                                     data-target=".print-me" ng-click="saveuservalidate()" ng-disabled="loginForm.$invalid || disabled">Log in
+                                        </button></a>
+                                    </td>
+
+                                    <!--<button type="submit" class="btn btn-default" data-toggle="modal"-->
+                                            <!--data-target=".print-me" ng-click="addUserDetails()">Sign Up-->
+                                    <!--</button>-->
+                                </div>
+
+                                <!--<input type="submit" id="submit_on_enter" ng-click="usersave()" style="padding: 8px 22px;" class="btn btn-default btn-primary" value="SUBMIT" ng-disabled="loginForm.$invalid"/>-->
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+            <div class="clearfix"></div>
+            </form>
+            </section>
+        </div>
+
+        <!-- Registration Form section -->
+        <div class="animate form registration_form" ng-if="currentPage == 'license'">
+            <section class="login_content">
+                <form name="registrationForm" ng-submit="register()" novalidate>
+                    <h1>Registration</h1>
+                    <p>Enter your License Key to complete your registration process</p>
+                    <div class="form-group" ng-class="{ 'has-error' : registrationForm.license.$invalid && !registrationForm.license.$pristine }">
+                        <input type="text" name="license" class="form-control" placeholder="Enter your License here..."
+                               ng-model="registrationFormData.license_key"
+                               ng-minlength="25"
+                               ng-pattern="/[a-zA-Z0-9]/" required capitalize-with-dash style="margin: 20px 0px 30px;" />
+                        <!--<span class="asterisk_input">  </span>-->
+                        <div class="help-block text-left" ng-show="registrationForm.license.$touched && registrationForm.license.$invalid">
+                            License should not be empty and it must have atleast 25 characters, contains number and letter only.
+                        </div>
+                    </div>
+
+                    <div style="text-align: right">
+                        <button type="submit" class="btn btn-default btn-primary"
+                                ng-disabled="registrationForm.$invalid" style="text-transform: uppercase;">Submit</button>
+
+
+
+
+                        <a href="http://hiaccounts.in" class="btn btn-default btn-primary"
+                           target="_blank" style="height: 34px;
+                               text-transform: uppercase;
+                                padding: 8px 12px 6px 12px;
+                                margin: 0px 0px 5px 5px;
+                                font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;">Buy / Renew</a>
+                    </div>
+
+
+
+
+
+
+                    <div class="clearfix"></div>
+
+                    <div style="margin-top: 26px;">
+                        <img src="resource/images/i_logo_big.png" style="width: 200px;">
+                    </div>
+                </form>
+            </section>
+        </div>
+
+        <!-- Forget Form section -->
+        <div class="animate form forget_pwd_form" ng-if="currentPage == 'login'">
+            <section class="login_content">
+                <form name="forgetPwdForm" ng-submit="forgetPwd()" novalidate style="    width: 98%;">
+                    <h1>Let's get you into your account</h1>
+                    <p>Tell us your Sign-in User Name.</p>
+                    <div class="form-group">
+                        <input type="text" name="userName" class="form-control" placeholder="User Name"
+                               ng-model="forgetPwdFormData.user_name" required />
+
+                    </div>
+
+                    <div>
+                        <button type="submit" class="btn btn-default btn-primary" ng-disabled="forgetPwdForm.$invalid">Submit</button>
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <div class="separator">
+                        <p>Already a member ?
+                            <a href="javascript:;" ng-click="changeTab('signin')" class="to_register" style="cursor:pointer;"> Log in </a>
+                        </p>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </form>
+            </section>
+        </div>
+
+        <div class="modal fade addCustomer" tabindex="-1" id="add_user_modal" role="dialog" data-backdrop="static"
+             aria-labelledby="mySmallModalLabel">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content checkout">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Add User</h4>
+
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <form class="form-horizontal" name="mail">
+                                    <fieldset>
+                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label" for="">User Name</label>
+                                                <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <input id="UserName" name="UserName"
+                                                           allowpattern="[a-z]"
+                                                           type="text" placeholder="User Name"
+                                                           ng-model="userText" maxlength="125"
+                                                           class="form-control input-md" autocomplete="off" required>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label">Password
+                                                    <span>*</span></label>
+                                                <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <input id="newPassword" name="newPassword"
+                                                           maxlength="125"
+                                                           type="password" placeholder="Password"
+                                                           ng-model="PasswordText"
+                                                           class="form-control input-md" autocomplete="off" required>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label">Full Name</label>
+                                                <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <input id="FullName" name="FullName" alpha-with-space
+                                                           allowpattern="[a-z]"
+                                                           maxlength="125"
+                                                           type="text" placeholder="Full Name"
+                                                           ng-model="FullNameText"
+                                                           class="form-control input-md" autocomplete="off" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label">Security Question</label>
+                                                <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <input id="SecurityQuestion" name="SecurityQuestion"
+                                                           allowpattern="[a-z]"
+                                                           type="text" placeholder="Security Question"
+                                                           ng-model="SecurityQuestionText"
+                                                           class="form-control input-md" autocomplete="off" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label">Answer</label>
+                                                <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <input id="Answer" name="Answer"
+                                                           allowpattern="[a-z]"
+                                                           type="text" placeholder="Answer"
+                                                           ng-model="AnswerText"
+                                                           ng-value="setupobj.securityAnswer"
+                                                           class="form-control input-md" autocomplete="off" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label">Telephone Number</label>
+                                                <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <input id="TelephoneNumber" name="TelephoneNumber" num-with-space maxlength="10"
+                                                           allowpattern="[a-z]"
+                                                           type="text" placeholder="Telephone Number"
+                                                           ng-model="TelephoneNumberText"
+                                                           class="form-control input-md" autocomplete="off" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label">Email Address</label>
+                                                <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <input id="EmailAddress" name="EmailAddress"
+                                                           ng-pattern="word"
+                                                           type="text" placeholder="Email Address"
+                                                           ng-model="EmailAddressText"
+                                                           no-special-char=""
+                                                           class="form-control input-md"  required>
+                                                    <p class="error" ng-show="mail.EmailAddress.$error.pattern">Enter Valid MailID</p>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label">Status </label>
+                                                <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                    <select id="statusId" name="status"
+                                                            ng-model="status" ng-init="status='Active'"  class="form-control input-md">
+                                                        <option value="Active">Active</option>
+                                                        <option value="InActive">InActive</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                    </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-default" data-toggle="modal"
+                                data-target=".print-me" ng-click="saveuserDetails()">Save
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

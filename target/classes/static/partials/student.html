@@ -1,0 +1,1358 @@
+<style>
+    .form-horizontal .control-label {
+        padding-top: 7px;
+        margin-bottom: 0;
+        text-align: left !important;
+        padding: 10px 0 0 10px !important;
+    }
+
+    .modal-footer .btn + .btn {
+        margin-bottom: 0;
+        margin-left: 4px !important;
+        margin-right: 0px !important;
+    }
+
+    .modal-title {
+        margin: 0;
+        line-height: -31.571429 !important;
+    }
+
+    .form-horizontal .form-group {
+        margin-right: -54px;
+        margin-left: 5px;
+    }
+
+    .form-group {
+        margin-bottom: 5px;
+    }
+
+    .modal-header {
+        padding: 5px;
+        border-bottom: 1px solid #e5e5e5;
+    }
+
+    .modal-footer {
+        padding: 23px;
+        text-align: right;
+        border-top: 1px solid #e5e5e5;
+    }
+
+    label {
+        display: inline-block;
+        max-width: 100%;
+        margin-bottom: 5px;
+        font-weight: 100;
+    }
+
+    .btn btn-primary back {
+        padding: 5px;
+    }
+
+</style>
+<div class="container-fluid">
+    <div class="container cus_main_row">
+
+        <div class="row">
+            <h2 class="pos-header-new">
+                <div>Student</div>
+            </h2>
+        </div>
+        <div class="row inner_row_bg">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="panel-body" style="height: 65px;">
+                            <div class="col-md-4 col-lg-2 col-sm-6 col-xs-6">
+                                <form class="form-horizontal ng-pristine ng-valid">
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <p class="input-group" style="display: block;">
+                                                <input id="search_student" name="textinput" type="text"
+                                                       placeholder="search StudentName" ng-model="SearchText"
+                                                       class="form-control input-md"
+                                                />
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+
+                            <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9">
+
+                                <div class="form-group">
+                                    <div class="col-sm-1">
+                                        <button type="button" class="btn btn-primary hi_btn" ng-click="addNewStudent()">
+                                            Add
+                                        </button>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                         <span class="custom-dropdown custom-dropdown--white">
+                                           <select class="form-control input-md"
+                                                   ng-model="gradeNameText"
+                                                   ng-change="getStudentListBasedOnGrade(gradeNameText);getStudentList(SearchText,gradeNameText,studentText,checkboxStatusForStudent)"
+                                                   ng-options="grade.gradeId as grade.gradeName for grade in gradeList">
+                                                        <option value="">Select Grade</option>
+                                           </select>
+                                         </span>
+                                    </div>
+                                    <div class="col-sm-3">
+                                         <span class="custom-dropdown custom-dropdown--white">
+                                             <select class="form-control input-md"
+                                                     ng-model="studentText"
+                                                     ng-change="getStudentList(SearchText,gradeNameText,studentText)"
+                                                     ng-options="student.studentId as student.studentName for student in studentListBasedOnGrade">
+                                                        <option value="">Select Student</option>
+                                           </select>
+                                         </span>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <a href="/bs/studentExportToExcel?searchText={{SearchText}}&grade={{gradeNameText}}&student={{studentText}}&checkboxStatusForStudent={{checkboxStatusForStudent}}">
+                                            <button type="button" class="btn btn-default hi_btn"
+                                                    style="margin-bottom: 10px;background: #72319a;color: white">
+                                                Excel
+                                            </button>
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-2 col-md-3 col-sm-3">
+                                        <a href="/bs/feeExcel?searchText={{SearchText}}&grade={{gradeNameText}}&student={{studentText}}">
+                                            <button type="button" class="btn btn-default hi_btn"
+                                                    style="margin-bottom: 10px;background: #72319a;color: white">
+                                               Fee Excel
+                                            </button>
+                                        </a>
+                                    </div>
+                                    <div class="col-lg-2 col-md-3 col-sm-3">
+                                        <button type="button" class="btn btn-default hi_btn" ng-click="importPopup()">
+                                            Import
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-1">
+
+                                        <input type="checkbox" id="checkboxForStudent"
+                                               ng-model="checkboxStatusForStudent"
+                                               ng-init="checkboxStatusForStudent = checkboxStatusForStudent || false"
+                                               ng-click="getStudentList(searchText,gradeNameText,studentText,checkboxStatusForStudent)"/>
+
+                                    </div>
+                                    <span style="align-content: right">InActive</span>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                    <div class="modal fade" tabindex="-1" id="import_student" role="dialog" data-backdrop="static"
+                         aria-labelledby="mySmallModalLabel_1">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">Import Student</h4>
+                                </div>
+
+                                <form class="form-horizontal" id="studentDetails" method="post">
+
+                                <a href="resource/ImpotSheets/Student.xlsx" download><b>Download <mark>Student Details</mark> ExcelSheet</b></a>
+                                <div class="modal-body checkout-body">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="col-xs-5">
+                                                <input type="file" name="myFile"
+                                                       id="myFile"/>
+                                            </div>
+                                            <button type="submit" class="btn btn-default" data-toggle="modal" ng-disabled="isDisabled" ng-click="saveStudentImport()">Save</button>
+                                        </div>
+                                    </div>
+                                </div></form>
+
+
+                                <form class="form-horizontal" id="studentFeeDetails" method="post">
+                                <a href="resource/ImpotSheets/FeeDetails.xlsx" download><b>Download <mark> Student Fee </mark>ExcelSheet</b></a>
+                                <div class="modal-body checkout-body">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="col-xs-5">
+                                                <input type="file" name="myFile"
+                                                       id="myFile"/>
+                                            </div>
+                                            <button type="submit" class="btn btn-default" data-toggle="modal" ng-disabled="isDisabled" ng-click="saveFeeImport()">Save</button>
+                                        </div>
+                                    </div>
+                                </div></form>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="fixed-table-container">
+                        <div class="table_wrapfixed-table-container-inner">
+                            <div class="header-background"></div>
+                            <table data-toggle="table" data-cache="false" data-height="299"
+                                   class="hi_table table table-hover table-bordered table-striped table-fixed-header">
+                                <thead>
+                                <tr>
+                                    <th data-field="cntryname">
+                                        <div class="th-inner" align="center">Student Name</div>
+                                    </th>
+                                    <th data-field="edit">
+                                        <div class="th-inner" align="center">Student Profile Id</div>
+                                    </th>
+                                    <th data-field="edit">
+                                        <div class="th-inner" align="center">Grade</div>
+                                    </th>
+                                    <th data-field="edit">
+                                        <div class="th-inner" align="center">Parent Contact No</div>
+                                    </th>
+                                    <th data-field="edit">
+                                        <div class="th-inner" align="center">Status</div>
+                                    </th>
+
+                                    <th data-field="edit">
+                                        <div class="th-inner" align="center">Actions</div>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody id="parentTable">
+                                <tr ng-repeat="student in studentList|filter:SearchText">
+                                    <td hidden>{{student.studentId}}</td>
+                                    <td style="width: 20%!important;word-break: break-word">{{student.studentName}}</td>
+                                    <td>{{student.studentProfileId}}</td>
+                                    <td>{{student.gradeMaster.gradeName}}</td>
+                                    <td>{{student.primaryContactNo}}</td>
+                                    <td>{{student.studentStatus}}</td>
+
+                                    <td>
+                                        <!--<button type="button" class="btn btn-primary hi_btn"  ng-click="fee(feedetails)">Fee</button>-->
+                                        <button type="button" class="btn btn-primary hi_btn"
+                                                ng-click="ViewStudentFeeDetailsList(student)">View
+                                        </button>
+                                        <!--<div ng-if="student.studentStatus!='InActive'">-->
+                                        <button type="button" class="btn btn-primary hi_btn"
+                                                ng-click="studentFeeDetailsList(student)">Edit
+                                        </button>
+                                        <!--</div>-->
+                                        <!--<div>-->
+                                        <button type="button" class="btn btn-primary hi_btn"
+                                                ng-click="deleteStudent(student)">Delete
+                                        </button>
+                                        <!--</div>-->
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade Student" tabindex="-1" id="add_new_Student_modal" role="dialog"
+                     data-backdrop="static"
+                     aria-labelledby="mySmallModalLabel">
+                    <div class="modal-dialog modal-lg" style="width: 1000px !important;">
+                        <div class="modal-content checkout">
+                            <div class="modal-header">
+                                <button type="button" class="close" ng-click="removeStudentDetails()"
+                                        data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <h4 id="student-title" class="modal-title" style="color:red;" align="center">ADD
+                                    STUDENT</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <form class="form-horizontal" name="student">
+                                            <fieldset>
+                                                <div class="tab-content">
+                                                    <div class="tab-pane fade in active" id="sub_step12">
+                                                        <h4 class="modal-title" style="color:red;" align="center">Office
+                                                            Use</h4>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 control-label" for="">Academic
+                                                                    Year<span style="color:red;">*</span></label>
+                                                                <div class="col-md-6">
+                                                                    <strong>
+                                                                        <select class="form-control input-md"
+                                                                                ng-model="acdYearId" id="acdYearId"
+                                                                                ng-disabled="totalPaid>0"
+                                                                                ng-options="academicYear.acdyrId as academicYear.acdyrName for academicYear in academicYearList"
+                                                                                ng-change="selectedYearGrade(acdYearId)">
+                                                                            <option value="" selected>Select Academic
+                                                                                Year
+                                                                            </option>
+                                                                        </select>
+                                                                    </strong>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 control-label" for="">Date Of
+                                                                    Admission<span style="color:red;">*</span></label>
+                                                                <div class="col-md-6 col-sm-6"
+                                                                     style="position:relative;">
+                                                                    <p class="input-group">
+                                                                        <strong>
+                                                                            <input type="text" class="form-control"
+                                                                                   uib-datepicker-popup="{{format}}"
+                                                                                   ng-model="dobAdmission"
+                                                                                   is-open="popup2.opened"
+                                                                                   datepicker-options="dateOptions"
+                                                                                   ng-required="true" close-text="Close"
+                                                                                   alt-input-formats="altInputFormats"/>
+                                                                        </strong>
+                                                                        <span class="input-group-btn">
+                                                                            <button type="button"
+                                                                                    class="btn btn-default"
+                                                                                    ng-click="openDate2()">
+                                                                             <i class="glyphicon glyphicon-calendar"></i></button>
+                                                                        </span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 control-label" for="">Admission
+                                                                    Form No</label>
+                                                                <div class="col-md-6" style="position:relative;">
+                                                                    <strong><input id="admFrmNo" name="admFrmNo"
+                                                                                   limit-to="25"
+                                                                                   type="text"
+                                                                                   ng-model="admFrmNo"
+                                                                                   class="form-control input-md"
+                                                                                   required></strong>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 control-label" for="">Grade<span
+                                                                        style="color:red;">*</span></label>
+                                                                <div class="col-md-6">
+                                                                    <strong>
+                                                                        <select class="form-control input-md"
+                                                                                ng-disabled="totalPaid>0"
+                                                                                ng-model="gradeId" id="gradeId"
+                                                                                ng-change="getFeeTypeMasterList(acdYearId,gradeId,stuId)"
+                                                                                ng-options="grade.gradeId as grade.gradeName for grade in gradeList">
+                                                                            <option value="">Select Grade</option>
+                                                                        </select>
+                                                                    </strong>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 control-label" for="">Joining
+                                                                    Date</label>
+                                                                <div class="col-md-6 col-sm-6"
+                                                                     style="position:relative;">
+                                                                    <p class="input-group"><strong>
+                                                                        <input type="text" class="form-control"
+                                                                               uib-datepicker-popup="{{format}}"
+                                                                               ng-model="joinDate"
+                                                                               is-open="popup3.opened"
+                                                                               datepicker-options="dateOptions"
+                                                                               ng-required="true" close-text="Close"
+                                                                               alt-input-formats="altInputFormats"/>
+                                                                    </strong>
+                                                                        <span class="input-group-btn">
+                                                                        <button type="button" class="btn btn-default"
+                                                                                ng-click="openDate3()">
+                                                                        <i class="glyphicon glyphicon-calendar"></i></button>
+                                                                    </span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <br><br><br>
+                                                        </div>
+
+
+                                                        <h4 class="modal-title" style="color:red;" align="center">
+                                                            Student</h4>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 control-label" for="">Student
+                                                                    Name<span style="color:red;">*</span></label>
+                                                                <div class="col-md-6" style="position:relative;">
+                                                                    <strong>
+                                                                        <input id="studName" name="studName"
+                                                                               ng-pattern="/[aA-zZ\s]$/"
+                                                                               alpha-with-space
+                                                                               maxlength="60"
+                                                                               type="text"
+                                                                               ng-model="studName"
+                                                                               class="form-control input-md" required>
+                                                                    </strong>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 control-label" for="">Date Of
+                                                                    Birth<span style="color:red;">*</span></label>
+                                                                <div class="col-md-6 col-sm-6"
+                                                                     style="position:relative;">
+                                                                    <p class="input-group">
+                                                                        <strong>
+                                                                            <input type="text" class="form-control"
+                                                                                   uib-datepicker-popup="{{format}}"
+                                                                                   ng-model="dateOfBirth"
+                                                                                   is-open="popup1.opened"
+                                                                                   datepicker-options="dateOptions"
+                                                                                   ng-required="true" close-text="Close"
+                                                                                   alt-input-formats="altInputFormats"/>
+                                                                        </strong>
+                                                                        <span class="input-group-btn">
+                                                                    <button type="button" class="btn btn-default"
+                                                                            ng-click="openDate1()">
+                                                                      <i class="glyphicon glyphicon-calendar"></i></button>
+                                                                </span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 control-label" for="">Gender<span
+                                                                        style="color:red;">*</span></label>
+                                                                <div class="col-md-6" style="position:relative;">
+                                                                    <tbody>
+                                                                    <input type="radio" ng-model="value" value="male">Male
+                                                                    &nbsp;&nbsp;&nbsp;
+                                                                    <input type="radio" ng-model="value" value="female">Female
+                                                                    </tbody>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 control-label"
+                                                                       for="">Religion</label>
+                                                                <div class="col-md-6">
+                                                                    <strong>
+                                                                        <input id="Religion" name="Religion"
+                                                                               maxlength="25"
+                                                                               type="text"
+                                                                               ng-model="religion"
+                                                                               class="form-control input-md" required>
+                                                                    </strong>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 control-label" for="">Aadhaar
+                                                                    No</label>
+                                                                <div class="col-md-6">
+                                                                    <strong>
+                                                                        <input id="aadhaarNo" name="aadhaarNo"
+                                                                               limit-to="12"
+                                                                               type="text" num-with-out-space
+                                                                               ng-model="aadhaarNo"
+                                                                               class="form-control input-md" required>
+                                                                    </strong>
+                                                                </div>
+                                                            </div>
+
+                                                            <!--<div class="form-group">-->
+                                                            <!--<label class="col-md-4 control-label" for="">Document Upload</label>-->
+                                                            <!--<div class="col-xs-6">-->
+                                                            <!--<input type='file' accept='image/*' id="imageLoad" ng-model-instant-->
+                                                            <!--onchange="angular.element(this).scope().imageUpload(event)"><br>-->
+                                                            <!--&lt;!&ndash;<img class="image-preview"&ndash;&gt;-->
+                                                            <!--&lt;!&ndash;style="width:200px;height:200px; margin-left: 0px;">&ndash;&gt;-->
+                                                            <!--</div>-->
+                                                            <!--</div>-->
+
+
+                                                        </div>
+                                                        <div class="col-md-6">
+
+                                                            <!--<div class="form-group">-->
+                                                            <!--<label class="col-md-4 control-label" for="currency">Blood Group</label>-->
+                                                            <!--<div class="col-md-6">-->
+                                                            <!--<input id="bloodGroup" name="bloodGroup"  maxlength="25"-->
+                                                            <!--type="text" placeholder="Blood Group"-->
+                                                            <!--ng-model="bloodGroup"-->
+                                                            <!--class="form-control input-md" required>-->
+                                                            <!--</div>-->
+                                                            <!--</div>-->
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 control-label" for="">Permanent
+                                                                    Address</label>
+                                                                <div class="col-md-6">
+                                                                    <strong>
+                                                                        <textarea id="permanentAddress"
+                                                                                  name="permanentAddress"
+                                                                                  maxlength="150"
+                                                                                  type="text"
+                                                                                  ng-model="permanentAddress"
+                                                                                  class="form-control input-md"
+                                                                                  required>
+                                                            </textarea>
+                                                                    </strong>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 control-label" for="">Local/Present
+                                                                    Address</label>
+                                                                <div class="col-md-6">
+                                                                    <strong>
+                                                                    <textarea id="presentAddress" name="presentAddress"
+                                                                              maxlength="150"
+                                                                              type="text"
+                                                                              ng-model="presentAddress"
+                                                                              class="form-control input-md" required>
+                                                                      </textarea>
+                                                                    </strong>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 control-label" for=""> Physical
+                                                                    Condition</label>
+                                                                <div class="col-md-6">
+                                                                    <strong>
+                                                                        <input id="studentPhysicalCondition"
+                                                                               name="studentPhysicalCondition"
+                                                                               maxlength="60"
+                                                                               type="text"
+                                                                               ng-model="studentPhysicalCondition"
+                                                                               class="form-control input-md" required>
+                                                                    </strong>
+                                                                </div>
+                                                            </div>
+                                                            <br><br><br>
+                                                        </div>
+
+                                                        <h4 class="modal-title" style="color:red;" align="center">
+                                                            Parents</h4>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 control-label" for="">Father Name<span
+                                                                        style="color:red;">*</span></label>
+                                                                <div class="col-md-6" style="position:relative;">
+                                                                    <strong>
+                                                                        <input id="fatherName" name="fatherName"
+                                                                               maxlength="60"
+                                                                               ng-pattern="/[aA-zZ\s]$/"
+                                                                               alpha-with-space
+                                                                               type="text"
+                                                                               ng-model="fatherName"
+                                                                               class="form-control input-md" required>
+                                                                    </strong>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 control-label" for="">Father
+                                                                    Mobile</label>
+                                                                <div class="col-md-6">
+                                                                    <strong>
+                                                                        <input id="fatherMobile" name="fatherMobile"
+                                                                               limit-to="15"
+                                                                               type="text" mobile-num-with-space
+                                                                               ng-model="fatherMobile"
+                                                                               class="form-control input-md" required>
+                                                                    </strong>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 control-label" for="">Mother Name<span
+                                                                        style="color:red;">*</span></label>
+                                                                <div class="col-md-6" style="position:relative;">
+                                                                    <strong>
+                                                                        <input id="motherName" name="motherName"
+                                                                               maxlength="60"
+                                                                               ng-pattern="/[aA-zZ\s]$/"
+                                                                               alpha-with-space
+                                                                               type="text"
+                                                                               ng-model="motherName"
+                                                                               class="form-control input-md" required>
+                                                                    </strong>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 control-label" for="">Mother
+                                                                    Mobile</label>
+                                                                <div class="col-md-6">
+                                                                    <strong>
+                                                                        <input id="motherMobile" name="motherMobile"
+                                                                               limit-to="15"
+                                                                               type="text" mobile-num-with-space
+                                                                               ng-model="motherMobile"
+                                                                               class="form-control input-md" required>
+                                                                    </strong>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 control-label" for="">Primary
+                                                                    Contact No<span style="color:red;">*</span></label>
+                                                                <div class="col-md-6">
+                                                                    <strong>
+                                                                        <input id="contactNo" name="contactNo"
+                                                                               limit-to="15"
+                                                                               type="text" mobile-num-with-space
+                                                                               ng-model="contactNo"
+                                                                               class="form-control input-md" required>
+                                                                    </strong>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 control-label" for="currency">Parents
+                                                                    Annual Income</label>
+                                                                <div class="col-md-6">
+                                                                    <strong>
+                                                                        <input id="parentsAnnualIncome"
+                                                                               name="parentsAnnualIncome" limit-to="9"
+                                                                               type="text" number
+                                                                               ng-model="parentsAnnualIncome"
+                                                                               class="form-control input-md" required>
+                                                                    </strong>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 control-label"
+                                                                       for="">Status</label>
+                                                                <div class="col-md-1">
+
+                                                                    <input type="checkbox" id="checkboxStatus"
+                                                                           ng-model="statusText"
+                                                                           ng-init="statusText = statusText || true"/>
+
+
+                                                                </div>
+                                                                <div ng-if="statusText==true">
+                                                                    <span style="align-content: right">Active</span>
+                                                                </div>
+                                                                <div ng-if="statusText==false">
+                                                                    <span style="align-content: right">InActive</span>
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 control-label" for="">Father
+                                                                    Email Id</label>
+                                                                <div class="col-md-6" style="position:relative;">
+                                                                    <strong>
+                                                                        <input id="fatherEmailId" name="fatherEmailId"
+                                                                               maxlength="45"
+                                                                               type="text"
+                                                                               ng-model="fatherEmailId"
+                                                                               class="form-control input-md" required>
+                                                                    </strong>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 control-label" for="">Father
+                                                                    Occupation</label>
+                                                                <div class="col-md-6">
+                                                                    <strong>
+                                                                        <select name="fatherOccupation"
+                                                                                id="fatherOccupation"
+                                                                                ng-model="fatherOccupation"
+                                                                                class="form-control input-md" required>
+                                                                            <option value="">Select Occupation</option>
+                                                                            <option value="Business">Business</option>
+                                                                            <option value="Employee">Employee</option>
+                                                                        </select>
+                                                                    </strong>
+                                                                    <!--<input id="fatherOccupation" name="fatherOccupation" maxlength="25"-->
+                                                                    <!--ng-readonly="operation === 'Return'"-->
+                                                                    <!--type="text"-->
+                                                                    <!--ng-model="fatherOccupation"-->
+                                                                    <!--class="form-control input-md" required>-->
+                                                                    <!--</input>-->
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 control-label" for="">Mother
+                                                                    Email Id</label>
+                                                                <div class="col-md-6" style="position:relative;">
+                                                                    <strong>
+                                                                        <input id="motherEmailId" name="motherEmailId"
+                                                                               maxlength="45"
+                                                                               type="text"
+                                                                               ng-model="motherEmailId"
+                                                                               class="form-control input-md" required>
+                                                                    </strong>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 control-label" for="">Mother
+                                                                    Occupation</label>
+                                                                <div class="col-md-6">
+                                                                    <strong>
+                                                                        <select name="motherOccupation"
+                                                                                id="motherOccupation"
+                                                                                ng-model="motherOccupation"
+                                                                                class="form-control input-md" required>
+                                                                            <option value="">Select Occupation</option>
+                                                                            <option value="Employee">Employee</option>
+                                                                            <option value="Business">Business</option>
+                                                                            <option value="HouseWife">HouseWife</option>
+                                                                        </select>
+                                                                    </strong>
+
+                                                                    <!--<input id="motherOccupation" name="motherOccupation" maxlength="25"-->
+                                                                    <!--ng-readonly="operation === 'Return'"-->
+                                                                    <!--type="text"-->
+                                                                    <!--ng-model="motherOccupation"-->
+                                                                    <!--class="form-control input-md" required>-->
+                                                                    <!--</input>-->
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 control-label" for="currency">Local
+                                                                    Guardian Name</label>
+                                                                <div class="col-md-6">
+                                                                    <strong>
+                                                                        <input id="localGuardianName"
+                                                                               name="localGuardianName" maxlength="60"
+                                                                               type="text" alpha-with-space
+                                                                               ng-model="localGuardianName"
+                                                                               class="form-control input-md" required>
+                                                                    </strong>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 control-label" for="currency">Guardian
+                                                                    Number</label>
+                                                                <div class="col-md-6">
+                                                                    <strong>
+                                                                        <input id="guardianNo" name="guardianNo"
+                                                                               maxlength="15"
+                                                                               type="text" mobile-num-with-space
+                                                                               ng-model="guardianNo"
+                                                                               class="form-control input-md" required>
+                                                                    </strong>
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="tab-pane fade" id="sub_step22">
+                                                        <div class="fixed-table-container">
+                                                            <div class="table_wrapfixed-table-container-inner">
+                                                                <label class="col-md-4 control-label" for="currency"
+                                                                       style="color:#337ab7" ;>Fee Configuration</label>
+                                                                <div class="header-background"></div>
+                                                                <table data-toggle="table" data-cache="false"
+                                                                       data-height="299"
+                                                                       class="hi_table table table-hover table-bordered table-striped table-fixed-header">
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th></th>
+                                                                        <th class="th-inner" data-field="edit"
+                                                                            style="width: 20px;height: 10% ;font-size: 10px!important;"
+                                                                            data-field="cntryname">
+                                                                            <div class="th-inner">Fee Name</div>
+                                                                        </th>
+                                                                        <th class="th-inner" data-field="edit"
+                                                                            style="width: 10px;height: 10%;font-size: 10px !important;"
+                                                                            data-field="edit">
+                                                                            <div class="th-inner">Fee Amount</div>
+                                                                        </th>
+                                                                        <th class="th-inner" data-field="edit"
+                                                                            style="width: 10px ;height: 10%;font-size: 10px!important;"
+                                                                            data-field="edit">
+                                                                            <div class="th-inner">Discount</div>
+                                                                        </th>
+                                                                        <th class="th-inner" data-field="edit"
+                                                                            style="height: 10px ;font-size: 10px!important;"
+                                                                            data-field="edit">
+                                                                            <div class="th-inner">Payable</div>
+                                                                        </th>
+                                                                        <th class="th-inner" data-field="edit"
+                                                                            style="height: 10px ;font-size: 10px!important;"
+                                                                            data-field="edit" data-field="edit">
+                                                                            <div class="th-inner">Installments</div>
+                                                                        </th>
+                                                                        <th class="th-inner" data-field="edit"
+                                                                            style="width: 8px;height: 10%;font-size: 10px !important;"
+                                                                            data-field="edit">
+                                                                            <div class="th-inner">Instalments Amount
+                                                                            </div>
+                                                                        </th>
+                                                                        <th class="th-inner" data-field="edit"
+                                                                            style="width: 15px;height: 10%;font-size: 10px !important;"
+                                                                            data-field="edit">
+                                                                            <div class="th-inner">Due Date</div>
+                                                                        </th>
+                                                                        <th class="th-inner" data-field="edit"
+                                                                            style="width: 15px;height: 10%;font-size: 10px !important;"
+                                                                            data-field="edit">
+                                                                            <div class="th-inner">Remarks</div>
+                                                                        </th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody id="parentTable"
+                                                                           ng-repeat="student in selectedFeeList"
+                                                                           class="studentList"
+                                                                           ng-init="sectionIndex = $index">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div><input id="checkBox" type="checkBox"
+                                                                                        ng-model="student.checkBox"
+                                                                                        ng-disabled="student.paidAmt>0||student.feeTypeStatus==false"
+                                                                                        ng-change="getTotal(student.checkbox)"/>
+                                                                            </div>
+                                                                        </td>
+                                                                        <!--<td hidden>{{student.studentId}}</td>-->
+                                                                        <td colspan="1"
+                                                                            style="width: 15%;height: 10% !important;text-align: left">
+                                                                            {{student.feeTypeName}}
+                                                                        </td>
+                                                                        <td colspan="1"
+                                                                            style="width: 10%;height: 10% !important;text-align: right">
+                                                                            {{student.feeAmount|number:0}}
+                                                                        </td>
+                                                                        <td ng-show="student.checkBox===true"><input
+                                                                                type="text" style="text-align:right"
+                                                                                ng-change="configDiscount(student.discount,$index)"
+                                                                                ng-model-options="{debounce: 1000}"
+                                                                                placeholder="Discount" num-with-space
+                                                                                maxlength="9"
+                                                                                ng-model="student.discount"
+                                                                                ng-disabled="student.paidAmt>0">
+                                                                        </td>
+                                                                        <td ng-show="student.checkBox===false"
+                                                                            style="text-align: right">
+                                                                            {{student.discount}}
+                                                                        </td>
+                                                                        <td colspan="1"
+                                                                            style="width: 10%;height: 10% !important;text-align: right">
+                                                                            {{student.payingFee|number:0}}
+                                                                        </td>
+                                                                        <td ng-show="student.value==='true'&&student.checkBox===true">
+                                                                            <input style="text-align:right" type="text"
+                                                                                   ng-change="configDiscount(student.discount,$index)"
+                                                                                   placeholder="No.Of Inst"
+                                                                                   num-with-space maxlength="9"
+                                                                                   ng-model="student.installments"
+                                                                                   ng-disabled="student.paidAmt>0"/>
+                                                                        </td>
+                                                                        <td ng-show="student.value==='false'||student.checkBox===false"
+                                                                            colspan="1"
+                                                                            style="width: 10% ;height: 10%!important;text-align: right">
+                                                                            {{student.installments}}
+                                                                        </td>
+                                                                        <td ng-show="student.value==='true'&&student.checkBox===true">
+                                                                            <input type="text" style="text-align: right"
+                                                                                   placeholder="InstallmentAmount"
+                                                                                   num-with-space maxlength="9"
+                                                                                   ng-change="editSelectedFeeList(student,$index,0)"
+                                                                                   ng-model="student.installmentsPojosList[0].installmentsAmount"
+                                                                                   ng-disabled="student.paidAmt>0">
+                                                                        </td>
+                                                                        <td ng-show="student.value==='false'||student.checkBox===false"
+                                                                            style="text-align: right">
+                                                                            {{student.installmentsPojosList[0].installmentsAmount|number:0}}
+                                                                        </td>
+                                                                        <td ng-show="student.checkBox===true">
+                                                                            <div style="position:relative;">
+                                                                                <p class="input-group">
+                                                                                    <input type="text"
+                                                                                           class="form-control"
+                                                                                           ng-disabled="student.paidAmt>0"
+                                                                                           uib-datepicker-popup="{{format}}"
+                                                                                           ng-change="editSelectedFeeList(student,$index,0)"
+                                                                                           ng-model="student.installmentsPojosList[0].dueDate"
+                                                                                           is-open="$parent.opened[$index]"
+                                                                                           datepicker-options="dateOptions"
+                                                                                           ng-required="false"
+                                                                                           close-text="Close"/>
+                                                                                    <span class="input-group-btn">
+                                                                    <button type="button" class="btn btn-default"
+                                                                            ng-click="openCustom($event, $index)"
+                                                                            ng-disabled="student.paidAmt>0">
+                                                                    <i class="glyphicon glyphicon-calendar"></i>
+                                                                    </button>
+                                                                    </span>
+                                                                                </p>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td ng-show="student.checkBox===false">
+                                                                            {{student.installmentsPojosList[0].dueDate|date:'dd/MM/yyyy'}}
+                                                                        </td>
+                                                                        <td ng-show="student.checkBox===true"><textarea
+                                                                                type="text"
+                                                                                ng-model="student.discountRemarks"
+                                                                                maxlength="500"
+                                                                                ng-disabled="student.paidAmt>0"></textarea>
+                                                                        </td>
+                                                                        <td ng-show="student.checkBox===false"><textarea
+                                                                                type="text"
+                                                                                ng-model="student.discountRemarks"
+                                                                                maxlength="500" readonly></textarea>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr ng-repeat-start="installment in student.installmentsPojosList"
+                                                                        ng-show="!$first">
+                                                                        <td colspan="6"></td>
+                                                                        <td ng-show="student.checkBox===true"><input
+                                                                                type="text" style="text-align: right"
+                                                                                ng-change="editSelectedFeeList(student,sectionIndex,$index)"
+                                                                                num-with-space
+                                                                                placeholder="InstallmentAmount"
+                                                                                maxlength="9"
+                                                                                ng-model="installment.installmentsAmount"
+                                                                                ng-disabled="student.paidAmt>0">
+                                                                        </td>
+                                                                        <td ng-show="student.checkBox===false">
+                                                                            {{installment.installmentsAmount}}
+                                                                        </td>
+                                                                        <td ng-show="student.checkBox===true">
+                                                                            <div style="position:relative;">
+                                                                                <p class="input-group">
+                                                                                    <input type="text"
+                                                                                           ng-disabled="student.paidAmt>0"
+                                                                                           class="form-control"
+                                                                                           uib-datepicker-popup="{{format}}"
+                                                                                           ng-model="installment.dueDate"
+                                                                                           is-open="student.installmentsPojosList[$index].opened"
+                                                                                           datepicker-options="dateOptions"
+                                                                                           ng-required="false"
+                                                                                           close-text="Close"/>
+                                                                                    <span class="input-group-btn">
+                                                                    <button type="button" class="btn btn-default"
+                                                                            ng-click="open($event,installment)">
+                                                                    <i class="glyphicon glyphicon-calendar"></i></button>
+                                                                    </span>
+                                                                                </p>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td ng-show="student.checkBox===false">
+                                                                            {{installment.dueDate|date:'dd/MM/yyyy'}}
+                                                                        </td>
+                                                                        <td></td>
+                                                                    <tr ng-repeat-end></tr>
+                                                                    </tr>
+                                                                    </tbody>
+                                                                    <td><strong>Total</strong></td>
+                                                                    <td></td>
+                                                                    <td style="text-align: right"><strong>{{totalFeeValue|number:0}}</strong>
+                                                                    </td>
+                                                                    <td style="text-align: right"><strong>{{totalDiscountAmt|number:0}}</strong>
+                                                                    </td>
+                                                                    <td style="text-align: right"><strong>{{totalPayableAmt|number:0}}</strong>
+                                                                    </td>
+                                                                    <td style="text-align: right"><strong></strong></td>
+                                                                    <td style="text-align: right"><strong>{{totalInstallmentsAmt|number:0}}</strong>
+                                                                    </td>
+                                                                    <td></td>
+                                                                    <td></td>
+
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </fieldset>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer" style="border:none !important;">
+                                        <a class="btn btn-primary hi_btn next" id="next" href="javascript:void(0)"
+                                           ng-click="next_wizardEdit(acdYearId,gradeId);" data-toggle="tab"
+                                           data-step="2" style="color:#D5ECFF">Next</a>
+                                        <a class="btn btn-primary back" id="back" href="javascript:void(0)"
+                                           ng-click="back_wizardEdit()" data-toggle="tab" data-step="2">Back</a>
+
+                                        <button type="submit" class="btn btn-primary hi_btn" data-toggle="modal"
+                                                id="saveId"
+                                                data-target=".print-me" ng-click="saveStudent(feeTypeMasterList)">Save
+                                        </button>
+                                        <button type="button" class="btn btn-primary hi_btn" data-dismiss="modal"
+                                                ng-click="removeStudentDetails()"> Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade Student" tabindex="-1" id="view_Student_modal" role="dialog"
+                     data-backdrop="static"
+                     aria-labelledby="mySmallModalLabel">
+                    <div class="modal-dialog modal-lg" style="width: 1000px !important;">
+                        <div class="modal-content checkout">
+                            <div class="modal-header">
+                                <button type="button" class="close" ng-click="removeStudentDetails()"
+                                        data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <h4 id="view-student-title" class="modal-title" style="color:red;" align="left">STUDENT
+                                    DETAILS</h4>
+                            </div>
+                            <div class="panel-body" class="mini-print-wrapper"
+                                 style="width:992px;border:1px solid;height:482px; overflow-y: auto;">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <form class="form-horizontal" name="student">
+                                            <fieldset>
+                                                <div class="tab-content">
+                                                    <!--<div class="tab-pane fade in active" id="sub_step12">-->
+                                                    <h4 class="modal-title" style="color:red;" align="center">Office
+                                                        Use</h4>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="col-md-8 control-label" for="">Academic Year
+                                                                <span style="padding-left:150px !important; ">{{viewStudentList.academicYearMaster.acdyrName}}</span></label>
+                                                            <!--<div class="col-md-6">-->
+
+
+                                                            <!--</div>-->
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-md-8 control-label" for="">Date Of
+                                                                Admission<span style="padding-left:125px !important; ">  {{viewStudentList.dateOfAdmission|date:'dd/MM/yyyy'}}</span></label>
+
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-10 control-label" for="">Admission Form
+                                                                No <span style="padding-left:120px !important; ">{{viewStudentList.admissionFormNo}}</span></label>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="col-md-8 control-label" for="">Grade<span
+                                                                    style="padding-left:150px !important; ">{{viewStudentList.gradeMaster.gradeName}}</span></label>
+
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-md-8 control-label" for="">Joining Date
+                                                                <span style="padding-left:110px !important; ">{{viewStudentList.dateOfJoining|date:'dd/MM/yyyy'}}</span></label>
+
+                                                        </div>
+                                                        <br><br>
+                                                    </div>
+                                                    <h4 class="modal-title" style="color:red;" align="center">
+                                                        Student</h4>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="col-md-8 control-label" for="">Student Name
+                                                                <span style="padding-left:154px !important;word-break: break-word ">{{viewStudentList.studentName}}</span></label>
+
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-8 control-label" for="">Date Of Birth
+                                                                <span style="padding-left:163px !important; ">{{viewStudentList.dateofbirth|date:'dd/MM/yyyy'}}</span></label>
+
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-md-8 control-label" for="">Gender<span
+                                                                    style="padding-left:201px !important; ">{{viewStudentList.gender}}</span></label>
+                                                            <!--<div class="col-md-6" style="position:relative;">-->
+                                                            <!--<tbody>-->
+                                                            <!--<input type="radio" ng-model="value" ng-readonly="value" value="male">Male &nbsp;&nbsp;&nbsp;-->
+                                                            <!--<input type="radio" ng-model="value" ng-readonly="value" value="female">Female-->
+                                                            <!--</tbody>-->
+                                                            <!--</div>-->
+                                                        </div>
+
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-10 control-label" for="">Aadhaar
+                                                                No<span style="padding-left:169px !important; ">
+                                                            {{viewStudentList.aadhaarNo}}</span></label>
+                                                            <br><br>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-md-6">
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-8 control-label" for="">Permanent
+                                                                Address<span
+                                                                        style="padding-left:64px !important;word-break: break-word  ">
+                                                            {{viewStudentList.permanentAddress}}</span></label>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-md-8 control-label" for="">Local/Present
+                                                                Address:<span
+                                                                        style="padding-left:49px !important;word-break: break-word ">
+                                                            {{viewStudentList.presentAddress}}</span></label>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-8 control-label" for=""> Physical
+                                                                Condition<span style="padding-left:75px !important; ">
+                                                            {{viewStudentList.physicalCondition}}</span></label>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-md-8 control-label" for="">Religion<span
+                                                                    style="padding-left:141px !important; ">
+                                                                {{viewStudentList.religion}}</span></label>
+                                                        </div>
+                                                        <br><br><br><br>
+
+                                                    </div>
+
+                                                    <h4 class="modal-title" style="color:red;" align="center">
+                                                        Parents</h4>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="col-md-10 control-label" for="">Father
+                                                                Name<span
+                                                                        style="padding-left:159px !important; word-break: break-word">
+                                                            {{viewStudentList.fatherName}}</span></label>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-md-10 control-label" for="">Father
+                                                                Mobile<span style="padding-left:144px !important; ">
+                                                            {{viewStudentList.fatherContactNo}}</span></label>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-md-10 control-label" for="">Mother
+                                                                Name<span
+                                                                        style="padding-left:152px !important;word-break: break-word  ">
+                                                            {{viewStudentList.motherName}}</span></label>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-md-10 control-label" for="">Mother
+                                                                Mobile<span style="padding-left:138px !important; ">
+                                                            {{viewStudentList.motherContactNo}}</span></label>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-10 control-label" for="">Primary
+                                                                Contact No<span style="padding-left:103px !important; ">
+                                                            {{viewStudentList.primaryContactNo}}</span></label>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-md-8 control-label" for="currency">Parents
+                                                                Annual Income<span
+                                                                        style="padding-left:85px !important; ">
+                                                            {{viewStudentList.annualIncome}}</span></label>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-md-8 control-label" for="">Status
+                                                                <span style="padding-left:190px !important; ">
+                                                            {{viewStudentList.studentStatus}}</span></label>
+                                                        </div>
+
+
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="col-md-10 control-label" for="">Father Email
+                                                                Id
+                                                                <td style="padding-right:98px !important;word-break: break-word ">:</td><span style="padding-left:98px !important;word-break: break-word ">
+                                                            {{viewStudentList.fatherEmailId}}</span></label>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-8 control-label" for="">Father
+                                                                Occupation<span style="padding-left:80px !important; ">
+                                                            {{viewStudentList.fatherOccupation}}</span></label>
+                                                        </div>
+
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-10 control-label" for="">Mother Email
+                                                                Id<span style="padding-left:97px !important; ">
+                                                            {{viewStudentList.motherEmailId}}</span></label>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-md-8 control-label" for="">Mother
+                                                                Occupation<span style="padding-left:78px !important; ">
+                                                            {{viewStudentList.motherOccupation}}</span></label>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-md-8 control-label" for="currency">Local
+                                                                Guardian Name<span
+                                                                        style="padding-left:60px !important; ">
+                                                            {{viewStudentList.gaurdianName}}</span></label>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-md-8 control-label" for="currency">Guardian
+                                                                Number<span style="padding-left:85px !important; ">
+                                                            {{viewStudentList.gaurdianNumber}}</span></label>
+                                                        </div>
+                                                        <br><br><br><br>
+
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="fixed-table-container">
+                                                    <div class="table_wrapfixed-table-container-inner">
+                                                        <label class="col-md-4 control-label" for="currency"
+                                                               style="color:#337ab7" ;>Fee Configuration</label>
+                                                        <div class="header-background"></div>
+                                                        <table data-toggle="table" data-cache="false" data-height="299"
+                                                               class="hi_table table table-hover table-bordered table-striped table-fixed-header">
+                                                            <thead>
+                                                            <tr>
+                                                                <th class="th-inner" data-field="edit"
+                                                                    style="width: 20px;height: 10% ;font-size: 10px!important;text-align: left">
+                                                                    <div class="th-inner">Fee Name</div>
+                                                                </th>
+                                                                <th class="th-inner" data-field="edit"
+                                                                    style="width: 10px;height: 10%;font-size: 10px !important;text-align: right">
+                                                                    <div class="th-inner">Fee Amount</div>
+                                                                </th>
+                                                                <th class="th-inner" data-field="edit">
+                                                                    <div class="th-inner"
+                                                                         style="width: 10px ;height: 10%;font-size: 10px!important;text-align: right">
+                                                                        Discount
+                                                                    </div>
+                                                                </th>
+                                                                <th class="th-inner" data-field="edit"
+                                                                    style="height: 10px ;font-size: 10px!important;text-align: right">
+                                                                    <div class="th-inner">Payable</div>
+                                                                </th>
+                                                                <th class="th-inner" data-field="edit"
+                                                                    style="height: 10px ;font-size: 10px!important;text-align: right"
+                                                                    data-field="edit" data-field="edit">
+                                                                    <div class="th-inner">Installments</div>
+                                                                </th>
+                                                                <th class="th-inner" data-field="edit"
+                                                                    style="width: 8px;height: 10%;font-size: 10px !important;text-align: right"
+                                                                    data-field="edit">
+                                                                    <div class="th-inner">Instalments Amount</div>
+                                                                </th>
+                                                                <th class="th-inner" data-field="edit"
+                                                                    style="width: 10px;height: 10%;font-size: 10px !important;text-align: left"
+                                                                    data-field="edit">
+                                                                    <div class="th-inner">Due Date</div>
+                                                                </th>
+                                                                <th class="th-inner" data-field="edit"
+                                                                    style="width: 15px;height: 10%;font-size: 10px !important;text-align: left"
+                                                                    data-field="edit">
+                                                                    <div class="th-inner">Remarks</div>
+                                                                </th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody id="parentTable1"
+                                                                   ng-repeat="student in selectedFeeList"
+                                                                   class="studentList" ng-init="sectionIndex = $index"
+                                                                   ng-if="student.checkBox==true">
+                                                            <tr>
+                                                                <td style="text-align: left">
+                                                                    {{student.feeTypeName}}
+                                                                </td>
+                                                                <td style="text-align: right">
+                                                                    {{student.feeAmount|number:0}}
+                                                                </td>
+                                                                <td style="text-align: right">
+                                                                    {{student.discount}}
+                                                                </td>
+
+                                                                <td style="text-align: right">
+                                                                    {{student.payingFee|number:0}}
+                                                                </td>
+                                                                <td style="text-align: right">
+                                                                    {{student.installments}}
+                                                                </td>
+                                                                <td style="text-align: right">
+                                                                    {{student.installmentsPojosList[0].installmentsAmount}}
+                                                                </td>
+                                                                <td style="text-align: left">
+                                                                    {{student.installmentsPojosList[0].dueDate|date:'dd/MM/yyyy'}}
+                                                                </td>
+                                                                <td style="width: 20%!important;word-break: break-word;text-align: left">
+                                                                    {{student.discountRemarks}}
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr ng-repeat-start="installment in student.installmentsPojosList"
+                                                                ng-show="!$first">
+                                                                <td colspan="5"></td>
+                                                                <td style="text-align: right">
+                                                                    {{installment.installmentsAmount}}
+                                                                </td>
+                                                                <td ng-show="student.checkBox===true">
+                                                                    <div style="position:relative;text-align: left">
+                                                                        {{installment.dueDate|date:'dd/MM/yyyy'}}
+                                                                        </span>
+                                                                        </p>
+                                                                    </div>
+                                                                </td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            <tr ng-repeat-end></tr>
+                                                            </tr>
+                                                            </tbody>
+                                                            <td><strong>Total</strong></td>
+                                                            <td style="text-align: right"><strong>{{totalFeeValue|number:0}}</strong>
+                                                            </td>
+                                                            <td style="text-align: right"><strong>{{totalDiscountAmt|number:0}}</strong>
+                                                            </td>
+                                                            <td style="text-align: right"><strong>{{totalPayableAmt|number:0}}</strong>
+                                                            </td>
+                                                            <td style="text-align: right"><strong></strong></td>
+                                                            <td style="text-align: right"><strong>{{totalInstallmentsAmt|number:0}}</strong>
+                                                            </td>
+                                                            <td></td>
+                                                            <td></td>
+
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <!--<div class="col-md-3 col-sm-6">-->
+                                                <!--<select ng-model="exportsType" class="form-control " ng-change="GetValue()" style="margin-top: 0;">-->
+                                                <!--<option value=""> Select Type</option>-->
+                                                <!--<option value="pdf"> Pdf</option>-->
+                                                <!--<option value="excel"> Excel</option>-->
+                                                <!--</select>-->
+                                                <!--</div>-->
+                                                <div class="col-md-3 col-sm-6"
+                                                     style="margin-bottom: 10px;color: #0044cc;height: 10px;padding-top: 10px">
+                                                    <div class="col-sm-3 col-md-2">
+                                                        <a href="/bs/studentDetailsExcel?studentId={{viewStudentList.studentId }}">
+                                                            <button type="button" class="btn btn-default hi_btn"
+                                                                    style="margin-bottom: 10px;background: #72319a;color: white">
+                                                                Excel
+                                                            </button>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-sm-6"
+                                                     style="margin-bottom: 10px;color: #0044cc;width:10px;height: 10px;padding-top: 10px">
+                                                    <div class="col-sm-3 col-md-2">
+                                                        <a href="/bs/studentDetailsPdf?studentId={{viewStudentList.studentId }}">
+                                                            <button type="button" class="btn btn-default hi_btn"
+                                                                    style="margin-bottom: 10px;background: #72319a;color: white">
+                                                                Pdf
+                                                            </button>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </form>
+                                    </div>
+                                </div>
+                                </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>

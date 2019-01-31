@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<body>
+<div class="container-fluid">
+    <div class="container cus_main_row">
+
+        <div class="row">
+            <h2 class="pos-header-new">
+                <div>Masters</div>
+            </h2>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 rep_list_info">
+                <div class="custom_notif">
+                    &nbsp;&nbsp;&nbsp;<a id="feetypemasterLink" href="#!/feetypemaster" tabindex="-1"> <i
+                        class="fa fa-credit-card" style="font-size:60px;color:#72319a;" aria-hidden="true"></i></a>
+                    <div class="rep_info">Fee Type Master</div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3 rep_list_info">
+                <div class="custom_notif">
+                    &nbsp;&nbsp;&nbsp; <a id="grademasterLink" href="#!/grademaster" tabindex="-1"> <i
+                        class="fa fa-book" style="font-size:60px;color:#72319a;" aria-hidden="true"></i></a>
+                    <div class="rep_info">Grade Master</div>
+                </div>
+                </a>
+            </div>
+
+
+            <div class="col-md-3 rep_list_info">
+                <div class="custom_notif">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a id="academicyearmasterLink"
+                                                                  href="#!/academicyearmaster" tabindex="-1"> <i
+                        class="fa fa-calendar" style="font-size:60px;color:#72319a;" aria-hidden="true"></i></a>
+                    <div class="rep_info">Academic Year Master</div>
+                </div>
+                </a>
+            </div>
+
+            <!--<div class="col-md-3 rep_list_info">-->
+            <!--<div class="custom_notif">-->
+            <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a id="emailServer" href="#!/emailServer" tabindex="-1">-->
+            <!--<i class="fa fa-calendar" style="font-size:60px;color:#72319a;" aria-hidden="true"></i></a>-->
+            <!--<div class="rep_info">Email Server</div>-->
+            <!--</div>-->
+            <!--</a>-->
+            <!--</div>-->
+            <div class="col-md-3 rep_list_info">
+                <div class="custom_notif">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a id="studentSchoolDetailsLink"
+                                                                  href="#!/reportMailScheduler" tabindex="-1"> <i
+                        class="fa fa-book" style="font-size:60px;color:#72319a;" aria-hidden="true"></i></a>
+                    <div class="rep_info">Report Scheduler</div>
+                </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info">
+                <div class="custom_notif">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a id="studentSchoolDetailsLink"
+                                                                  href="#!/studentschooldetails" tabindex="-1"> <i
+                        class="fa fa-book" style="font-size:60px;color:#72319a;" aria-hidden="true"></i></a>
+                    <div class="rep_info">School Branch Details</div>
+                </div>
+                </a>
+            </div>
+
+            <div class="col-md-3 rep_list_info">
+                <div class="custom_notif">
+                    <a id="userLink"  href="#!/user"  tabindex="-1"> <i class="fa fa-users" style="font-size:60px;color:purple;" aria-hidden="true"></i></a>
+                    <!--</li>-->
+                    <!--<a href="#!/academicyearmaster">-->
+                    <!--<div class="custom_notif">-->
+                    <!--<img src="resource/images/academic.png"  width="150" height="97">-->
+                    <div class="rep_info">&nbsp;&nbsp;&nbsp; User</div>
+                </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info">
+                <div class="custom_notif">
+                    &nbsp;&nbsp;&nbsp; <a id="cartMaster" href="#!/cartMaster" tabindex="-1"> <i
+                        class="fa fa-book" style="font-size:60px;color:#72319a;" aria-hidden="true"></i></a>
+                    <div class="rep_info">Cart Master</div>
+                </div>
+                </a>
+            </div>
+            <div class="col-md-3 rep_list_info">
+                <div class="custom_notif">
+                    &nbsp;&nbsp;&nbsp; <a id="smsServer" href="#!/smsServer" tabindex="-1"> <i
+                        class="fa fa-comments-o" style="font-size:60px;color:#72319a;" aria-hidden="true"></i></a>
+                    <div class="rep_info">SMS Server</div>
+                </div>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

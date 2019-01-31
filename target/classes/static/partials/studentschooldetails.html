@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<div class="modal-header">
+    <h3 id = "student-title" class="modal-title">School Branch Details</h3><br><br>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-10 col-sm-10">
+               <form class="form-horizontal" name="school">
+
+                    <fieldset>
+                        <div class="tab-content">
+                            <div class="col-md-6">
+                                <input type="hidden" id="schoolBranchId" ng-model="schoolBranchId">
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for=""> Branch Code<span style="color:red;">*</span></label>
+                                    <div class="col-md-6" style="position:relative;">
+                                        <input id="branchCode" name="branchCode"  maxlength="25"
+                                               type="text" alphanum-with-space
+                                               ng-model="branchCode"
+                                               class="form-control input-md" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for=""> Branch Name<span style="color:red;">*</span></label>
+                                    <div class="col-md-6" style="position:relative;">
+                                        <input id="branchName" name="branchName"  maxlength="50"
+                                               type="text" alphanum-with-space
+                                               ng-model="branchName"
+                                               class="form-control input-md" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for=""> Address</label>
+                                    <div class="col-md-6" style="position:relative;">
+                                       <textarea id="address" name="address" maxlength="100"
+                                                 type="text"
+                                                 ng-model="address"
+                                                 class="form-control input-md" required>
+                                          </textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="">City</label>
+                                    <div class="col-md-6" style="position:relative;">
+                                        <input id="city" name="city" maxlength="32"
+                                               type="text" alphanum-with-space
+                                               ng-model="city"
+                                               class="form-control input-md" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for=""> PinCode</label>
+                                    <div class="col-md-6" style="position:relative;">
+                                        <input id="pinCode" name="pinCode" limit-to="8"
+                                               type="text" number
+                                               ng-model="pinCode"
+                                               class="form-control input-md" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="">State</label>
+                                    <div class="col-md-6" style="position:relative;">
+                                        <input id="state" name="state" maxlength="32"
+                                               type="text" alphanum-with-space
+                                               ng-model="state"
+                                               class="form-control input-md" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for=""> Phone Number</label>
+                                    <div class="col-md-6" style="position:relative;">
+                                        <input id="phoneNumber" name="phoneNumber" limit-to="15"
+                                               type="text" mobile-num-with-space
+                                               ng-model="phoneNumber"
+                                               class="form-control input-md" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for=""> Email ID</label>
+                                    <div class="col-md-6" style="position:relative;">
+                                        <input id="emailId" name="emailId"  maxlength="45"
+                                               ng-pattern="word"
+                                               type="text"
+                                               ng-model="emailId"
+                                               class="form-control input-md" required>
+                                        <p class="error" ng-show="school.emailId.$error.pattern">Enter Valid EmailId</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for=""> Receipt Number</label>
+                                    <div class="col-md-6" style="position:relative;">
+                                        <input id="receiptNo" name="receiptNo" limit-to="8"
+                                               type="text" number
+                                               ng-model="receiptNo"
+                                               class="form-control input-md" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for=""> Terms And Conditions</label>
+                                    <div class="col-md-6" style="position:relative;">
+                                          <textarea id="termsandconditions" name="termsandconditions" maxlength="256"
+                                                    type="text"
+                                                    ng-model="termsandconditions"
+                                                    class="form-control input-md" required>
+                                          </textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for=""> Receipt Footer</label>
+                                    <div class="col-md-6" style="position:relative;">
+                                         <textarea id="receiptfooterdesc" name="receiptfooterdesc" maxlength="150"
+                                                   type="text"
+                                                   ng-model="receiptfooterdesc"
+                                                   class="form-control input-md" required>
+                                          </textarea>
+                                    </div>
+                                </div>
+                                <br><br>
+                                <button type="submit" class="btn btn-primary hi_btn" data-toggle="modal"
+                                        data-target=".print-me" ng-click="saveSchoolsDetails()">Save
+                                </button>
+
+                                <button type="submit" class="btn btn-primary hi_btn" data-toggle="modal"
+                                        data-target=".print-me" ng-click="feeconfigurationList()">Back
+                                </button>
+
+                            </div>
+
+                        </div>
+                    </fieldset>
+
+               </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div class="container-fluid">
+    <div class="container cus_main_row" >
+        <div class="row">
+            <h2 class="pos-header-new">
+                <div>Email Server</div>
+            </h2>
+        </div>
+        <div class="row inner_row_bg">
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="panel">
+        <div class="panel-body" style="height: 65px;">
+            <div class="col-md-4 col-lg-3 col-sm-5 col-xs-5">
+                <form class="form-horizontal ng-pristine ng-valid">
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <p class="input-group" style="display: block;">
+                                <input id="textinput" name="textinput"  type="text"
+                                       placeholder="Search EMail" ng-model="mailSearchText" class="form-control input-md"
+                                       ng-keyup="$event.keyCode == 13 ? getMailList(mailSearchText) : null" />
+                            </p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-lg-7 col-md-9 col-sm-9">
+
+                <div class="form-group">
+                    <div class="col-sm-2">
+                        <button type="button" class="btn btn-default hi_btn"  ng-click="addNewEmailServer()" ng-hide="mailList.length > 0">Add</button>
+                    </div>
+
+                    <div class="col-lg-3 col-md-5 col-sm-5">
+                        <span class="custom-dropdown custom-dropdown--white">
+                            <select ng-model="exportsType" class="form-control "  ng-change="GetValue()">
+                                <option value=""> Select Type</option>
+                                <option value="pdf"> Pdf</option>
+                                <option value="excel"> Excel</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-4" >
+                        <div ng-if="exportsType"> <a href="/hipos/{custId}/emailExport?val={{mailSearchText}}&type={{exportsType}}"><button type="button" class="btn btn-default hi_btn">Export</button></a>
+                    </div>
+                        <div ng-if="!exportsType">
+                            <button type="button" class="btn btn-default hi_btn">Export</button>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="fixed-table-container">
+            <div class="table_wrap fixed-table-container-inner">
+                <div class="header-background"></div>
+                <table data-toggle="table" data-cache="false"  style="margin-bottom: 0px;" data-height="299" class="hi_table table table-hover table-bordered table-striped table-fixed-header">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th data-field="cntryname">
+                            <div class="th-inner">Email Id</div>
+                        </th>
+                        <th data-field="cntryname">
+                            <div class="th-inner">SMTP Server</div>
+                        </th>
+                        <th data-field="cntryname">
+                            <div class="th-inner">SMTP Port</div>
+                        </th>
+                        <th data-field="edit"><div class="th-inner"> Edit</div></th>
+                        <th data-field="edit"><div class="th-inner"> Delete</div></th>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="mail in mailList| filter:searchText">
+                        <td ng-show="operation !== 'Return'" style='width: 4% !important;'><input
+                                type="checkbox" ng-model="selectedMailListRemoval[$index]"></td>
+                        <td>{{mail.userName}}</td>
+                        <td>{{mail.smtpHost}}</td>
+                        <td>{{mail.port}}</td>
+                        <td><a id="edit" ng-click="editMail(mail)" class="edit"><i class="fa fa-pencil-square-o fa-fw orange"></i></a></td>
+                        <td><a id="del_{{$index}}" href="javascript:void(0)" ng-click="deleteMail(mail)" class="del"><i class="fa fa-trash-o fa-fw orange"></i></a>
+                        </td>
+                    </tr>
+                     </tbody>
+                </table>
+            </div>
+            <!--Button added for pagination @rahul-->
+
+        </div>
+
+<div class="modal fade EmailServer" tabindex="-1" id="add_new_addNewEmailServer_modal" role="dialog" data-backdrop="static"
+     aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content checkout">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 id = "mail-title" class="modal-title">Add Email Server</h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <form class="form-horizontal" name="mail">
+                            <fieldset>
+                                <input type="hidden" ng-model="mailObj.id" value="{{mailObj.id}}"/>
+                                <div class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label" for="">Email Id<span>*</span></label>
+                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                        <input id="EmailId" name="EmailId"
+                                               type="text" placeholder="Email Id"
+                                               ng-readonly="operation === 'Edit' "
+                                               ng-model="EmailIdText"
+                                               class="form-control input-md" autocomplete="off" required>
+                                        <!--ng-pattern="word"-->
+                                        <!--ng-value="mailObj.userName"-->
+                                        <!--<p class="error" ng-show="mail.EmailId.$error.pattern">Enter Valid MailID</p>-->
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label" for=""> Password<span>*</span></label>
+                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                        <input id="Password" name="Password"
+                                               allowpattern="[a-z]"
+                                               type="password" placeholder="Password"
+                                               ng-model="PasswordText"
+                                               class="form-control input-md" autocomplete="off" required>
+                                        <!--ng-value="mailObj.password"-->
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label" for="">SMTP Port<span>*</span></label>
+                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                        <input id="SMTPPort" name="SMTPPort" num-with-space maxlength="8"
+                                               allowpattern="[a-z]"
+                                               type="text" placeholder=" SMTP Port"
+                                               ng-value="mailObj.port"
+                                               ng-model="SMTPPortText"0
+                                               class="form-control input-md" autocomplete="off" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 col-sm-4 control-label" for="">SMTP Server<span>*</span></label>
+                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                        <input id="SMTPServer" name="SMTPServer"
+                                               allowpattern="[a-z]"
+                                               type="text" placeholder="SMTP Server"
+                                               ng-value="mailObj.smtpHost"
+                                               ng-model="SSMTPServerText"
+                                               class="form-control input-md" autocomplete="off" required>
+                                    </div>
+                                </div>
+
+                                <!--<div class="form-group">-->
+                                    <!--<label class="col-md-4 control-label" for="">For</label>-->
+                                    <!--<div class="col-md-6" style="position:relative;">-->
+                                        <!--<select name="" id=""-->
+                                                <!--ng-value="mailObj.forMail"-->
+                                                <!--ng-model="ForMailText" class="form-control input-md">-->
+                                            <!--<option value="Purchase">Purchase</option>-->
+                                            <!--<option value="Sales">Sales</option>-->
+                                        <!--</select>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+
+                            </fieldset>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-default" data-toggle="modal" ng-disabled="isDisabled"
+                        data-target=".print-me"  ng-disabled="!mail.$valid" ng-click="saveMail('add_new_addNewEmailServer_modal')">Save
+                </button>
+                <button type="button" class="btn btn-default" ng-click="removeProjectDetails()" data-dismiss="modal">Close</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+    </div>
+</body>
+</html>

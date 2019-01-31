@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div class="container-fluid">
+    <div class="container cus_main_row">
+
+        <div class="row">
+            <h2 class="pos-header-new">
+                <div>City</div>
+            </h2>
+        </div>
+
+        <div class="row inner_row_bg">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="panel">
+                    <div class="panel-body" style="height: 65px;">
+                        <div class="col-md-4 col-lg-3 col-sm-5 col-xs-5">
+                            <form class="form-horizontal ng-pristine ng-valid">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <p class="input-group" style="display: block;">
+                                            <input id="textinput" name="textinput" type="text"
+                                                   placeholder="Search City" ng-model="citySearchText" autocomplete="off"
+                                                   class="form-control input-md"
+                                                   ng-keyup="$event.keyCode == 13 ? getCityList('','',citySearchText) : null"/>
+                                        </p>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-9 col-lg-7 col-sm-9 ">
+
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <button type="button" class="btn btn-primary hi_btn"  ng-click="addNewCity()">Add</button>
+
+                                </div>
+                                <div class="col-lg-2 col-md-3 col-sm-4">
+                                    <button type="submit" id="colButn" class="btn btn-default" data-toggle="modal"
+                                            ng-model="inactiveStatus" data-target=".print-me" ng-click="inactiveCity()">
+                                        {{ButtonStatus}}
+                                    </button>
+                                </div>
+                                <!--<div class="col-sm-2">-->
+                                <!--<button id="cityImport" type="button" class="btn btn-primary hi_btn" ng-click="importPopup()">-->
+                                <!--City Import-->
+                                <!--</button>-->
+                                <!--</div>-->
+                                <!--<div class="col-lg-2 col-md-2 col-sm-2">-->
+                                <!--<span class="custom-dropdown custom-dropdown&#45;&#45;white">-->
+                                <!--<select ng-model="exportsType" class="form-control ">-->
+                                <!--<option value=""> Select Type</option>-->
+                                <!--<option value="pdf"> pdf</option>-->
+                                <!--<option value="excel"> Excel</option>-->
+                                <!--</select>-->
+                                <!--</span>-->
+                                <!--</div>-->
+                                <!--<div class="col-lg-2 col-md-3 col-sm-3">-->
+                                <!--<div ng-if="exportsType"><a-->
+                                <!--href="/hospital/CityExport?val={{searchText}}&type={{exportsType}}">-->
+                                <!--<button type="button" class="btn btn-primary hi_btn">Export</button>-->
+                                <!--</a>-->
+                                <!--</div>-->
+                                <!--<div ng-if="!exportsType">-->
+                                <!--<button type="button" class="btn btn-primary hi_btn">Export</button>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                                <div class="col-sm-2">
+                                    <button type="button" class="btn btn-primary hi_btn"  ng-click="backServices()">Back</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-sm-12 col-xs-12">
+
+                <div class="fixed-table-container">
+                    <div class="table_wrapfixed-table-container-inner">
+                        <div class="header-background"></div>
+                        <table data-toggle="table" data-cache="false" data-height="299"
+                               class="hi_table table table-hover table-bordered table-striped table-fixed-header">
+                            <thead>
+                            <th data-field="cntryname">
+                                <div class="th-inner" align="center">Country Name</div>
+                            </th>
+
+                            <th data-field="cntryname">
+                                <div class="th-inner" align="center">State Name</div>
+                            </th>
+                            <th data-field="cntryname">
+                                <div class="th-inner" align="center">City Name</div>
+                            </th>
+                            <th data-field="del">
+                                <div class="th-inner" align="center">Status</div>
+                            </th>
+                            <th data-field="edit">
+                                <div class="th-inner" align="center">Edit</div>
+                            </th>
+
+                            </tr></thead>
+
+                            <tbody id="parentTable">
+                            <tr ng-repeat="city in cityList| filter:citySearchText">
+                                <td>{{city.countryName}}</td>
+                                <td>{{city.state}}</td>
+                                <td>{{city.cityName}}</td>
+                                <td>{{city.status}}</td>
+                                <!--<td><a ng-click="editCity(city.cityName)"-->
+                                <!--class="edit"><i class="btn btn-primary hi_btn"></i></a> edit</td>-->
+                                <td><button id="edit_{{$index}}" type="button" href="javascript:void(0)"  class="btn btn-primary hi_btn"  ng-click="editCity(city.id)">Edit</button></td>
+
+                                <!--<td><a id="del_{{$index}}" href="javascript:void(0)" ng-click="deleteCity(city.)"-->
+                                <!--class="del"><i class="fa fa-trash-o fa-fw orange"></i></a>-->
+                                <!--</td>-->
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div ng-if="(cityList).length==0">
+                            <div id="notFoundDiv" style="color:red; font-weight: bold">No Records Found</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-12 pagination_">
+                            <button type="button" class="btn btn-default hi_btn" ng-class="{'diabled-class': first}"
+                                    ng-disabled="first"
+                                    ng-click="getCityList('','firstPage')" ng-model="first">First
+                            </button>
+                            <button type="button" class="btn btn-default hi_btn" ng-class="{'diabled-class': prev}"
+                                    ng-disabled="prev"
+                                    ng-click="getCityList('','prevPage')" ng-model="prev">Prev
+                            </button>
+                            <button type="button" class="btn btn-default hi_btn" name="next" ng-disabled="next"
+                                    ng-click="getCityList('','nextPage')" value="next" ng-class="{'diabled-class': next}"
+                                    ng-model="next">Next
+                            </button>
+                            <button type="button" class="btn btn-default hi_btn"
+                                    ng-click="getCityList('','lastPage')" ng-class="{'diabled-class': last}"
+                                    ng-disabled="last"
+                                    ng-model="last">Last
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="form-horizontal" id="cityDetails" method="post" ng-submit="saveCityImport()">
+                    <div class="modal fade" tabindex="-1" id="import_city" role="dialog" data-backdrop="static"
+                         aria-labelledby="mySmallModalLabel_1">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">Import City</h4>
+                                </div>
+                                <a href="resource\images\ImportSheets\City.xlsx" download>Download ExcelSheet</a>
+                                <div class="modal-body checkout-body">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="col-xs-5">
+                                                <input type="file" name="myFile"
+                                                       id="myFile"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary hi_btn" data-toggle="modal" ng-disabled="isDisabled">Save</button>
+                                    <button type="button" class="btn btn-primary hi_btn" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="modal fade City" tabindex="-1" id="add_new_City_modal" role="dialog" data-backdrop="static"
+                     aria-labelledby="mySmallModalLabel">
+                    <div class="modal-dialog modal-md">
+                        <div class="modal-content checkout">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <h4 id="city-title" class="modal-title">Add City</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <form class="form-horizontal">
+                                            <fieldset>
+                                                <input type="hidden" ng-model="cityObj" value="{{cityObj.id}}"/>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" >Country</label>
+                                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                        <select id="countryId" name="countryId" ng-model="countryName" ng-change="countryState(countryName)"
+                                                                ng-options="country.countryName as
+											country.countryName for country in country" class="form-control input-md">
+                                                            <option value="">Select</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label">State</label>
+                                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                        <select id="stateId" name="stateId" ng-model="stateId" ng-options="state.stateName as
+											state.stateName for state in stateList" class="form-control input-md">
+                                                            <option value="">Select</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label"
+                                                           for="cityname">city</label>
+                                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                        <input id="cityNameText" name="cityNameText"
+                                                               type="text" placeholder="City Name" maxlength="30"
+                                                               ng-model="cityNameText" alpha-with-space
+                                                               class="form-control input-md">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" for="">Status</label>
+                                                    <div class="col-md-6 col-sm-6">
+                                                        <select name="StatusText" id="StatusText" ng-model="StatusText"
+                                                                ng-init="StatusText='Active'" class="form-control input-md">
+                                                            <option value="Active">Active</option>
+                                                            <option value="InActive">InActive</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                            </fieldset>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary hi_btn" id="submit"
+                                                        data-toggle="modal" ng-disabled="isDisabled"
+                                                        data-target=".print-me" ng-click="saveCity('add_new_City_modal')">
+                                                    Save
+                                                </button>
+                                                <button type="button" class="btn btn-primary hi_btn" ng-click="removeCityDetails()"
+                                                        data-dismiss="modal">Close
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

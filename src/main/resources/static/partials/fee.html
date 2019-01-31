@@ -1,0 +1,995 @@
+<style>
+    .modal-footer .btn + .btn {
+        margin-bottom: 0;
+        margin-left: 4px !important;
+        margin-right: 13px !important;
+    }
+
+</style>
+
+
+<div class="container-fluid">
+    <div class="container cus_main_row">
+
+        <div class="row">
+            <h2 class="pos-header-new">
+                <div>Fee Payment</div>
+            </h2>
+        </div>
+        <div class="row inner_row_bg">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="panel-body" style="height: 65px;">
+                            <div class="col-md-4 col-lg-3 col-sm-5 col-xs-5">
+                                <form class="form-horizontal ng-pristine ng-valid">
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <p class="input-group" style="display: block;">
+                                                <input id="search_customer" name="textinput" type="text"
+                                                       placeholder="search StudentName" ng-model="SearchText"
+                                                       class="form-control input-md"
+                                                       ng-keyup="$event.keyCode == 13 ? getStudentFeeList(SearchText,grade,student,'search') : null"/>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="col-md-9 col-lg-7 col-sm-9 col-xs-7">
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                         <span class="custom-dropdown custom-dropdown--white">
+                                           <select class="form-control input-md"
+                                                   ng-model="gradeNameText"
+                                                   ng-change="getStudentListBasedOnGrade(gradeNameText);getStudentFeeList(SearchText,gradeNameText,studentText,'grade')"
+                                                   ng-options="grade.gradeId as grade.gradeName for grade in gradeList">
+                                               <option value="">Select Grade</option>
+                                           </select>
+                                         </span>
+                                    </div>
+                                    <div class="col-sm-4">
+                                         <span class="custom-dropdown custom-dropdown--white">
+                                             <select class="form-control input-md"
+                                                     ng-model="studentText"
+                                                     ng-change="getStudentFeeList(SearchText,gradeNameText,studentText,'student')"
+                                                     ng-options="student.studentId as student.studentName for student in studentListBasedOnGrade">
+                                                 <option value="">Select Student</option>
+                                           </select>
+                                         </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="fixed-table-container">
+                        <div class="table_wrapfixed-table-container-inner">
+                            <div class="header-background"></div>
+                            <table data-toggle="table" border="0" data-cache="false" data-height="299"
+                                   class="hi_table table table-hover table-bordered table-striped table-fixed-header">
+                                <thead>
+                                <tr>
+                                    <th data-field="cntryname">
+                                        <div class="th-inner" align="center">Student Name</div>
+                                    </th>
+                                    <th data-field="edit">
+                                        <div class="th-inner" align="center">Grade</div>
+                                    </th>
+                                    <th data-field="edit">
+                                        <div class="th-inner" align="center">Total Fee</div>
+                                    </th>
+                                    <th data-field="edit">
+                                        <div class="th-inner" align="center">Total Discount</div>
+                                    </th>
+                                    <th data-field="edit">
+                                        <div class="th-inner" align="center">Total Paid</div>
+                                    </th>
+                                    <th data-field="edit">
+                                        <div class="th-inner" align="center">Due Amount</div>
+                                    </th>
+                                    <th data-field="edit">
+                                        <div class="th-inner" align="center">Actions</div>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody id="parentTable">
+                                <tr ng-repeat-start="student in studentFeeList | filter:SearchText"
+                                    ng-style="{'background-color': student.screenColor}">
+                                    <td style="width: 20%!important;word-break: break-word"
+                                        ng-click="getReceiptDetails(student.studentFeeId,$index,student.showDetails);">
+                                        {{student.student.studentName}}
+                                    </td>
+                                    <td ng-click="getReceiptDetails(student.studentFeeId,$index,student.showDetails);">
+                                        {{student.gradeMaster.gradeName}}
+                                    </td>
+                                    <td ng-click="getReceiptDetails(student.studentFeeId,$index,student.showDetails);">
+                                        {{student.totalFeeAmount}}
+                                    </td>
+                                    <td ng-click="getReceiptDetails(student.studentFeeId,$index,student.showDetails);">
+                                        {{student.totalFeeAmount-student.totalPayable}}
+                                    </td>
+                                    <td ng-click="getReceiptDetails(student.studentFeeId,$index,student.showDetails);">
+                                        {{student.paidAmount}}
+                                    </td>
+                                    <td ng-click="getReceiptDetails(student.studentFeeId,$index,student.showDetails);">
+                                        {{student.dueAmount}}
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary hi_btn"
+                                                ng-disabled="student.status=='InActive'"
+                                                ng-click="studentFeeCollectDetails(student)">Collect
+                                        </button>
+                                    </td>
+                                <tr ng-show="student.showDetails && student.receiptList.length>0">
+                                    <th data-field="cntryname">
+                                    </th>
+                                    <th data-field="cntryname">
+                                    </th>
+                                    <th data-field="edit">
+                                        <div class="th-inner" style="font-style: italic;font-size: 10px" align="center">
+                                            Receipt No
+                                        </div>
+                                    </th>
+                                    <th data-field="edit">
+                                        <div class="th-inner" style="font-style: italic;font-size: 10px" align="center">
+                                            Receipt Date
+                                        </div>
+                                    </th>
+                                    <th data-field="edit">
+                                        <div class="th-inner" style="font-style: italic;font-size: 10px" align="center">
+                                            Total Paid
+                                        </div>
+                                    </th>
+                                    <th data-field="edit">
+                                        <div class="th-inner" style="font-style: italic;font-size: 10px" align="center">
+                                            Duplicate Receipt
+                                        </div>
+                                    </th>
+                                </tr>
+                                <tr ng-show="student.showDetails " ng-repeat-start="rep in student.receiptList">
+                                    <td></td>
+                                    <td></td>
+                                    <td style="font-size: 10px;font-style: italic">{{rep.receiptNo}}</td>
+                                    <td style="font-size: 10px;font-style: italic">{{rep.receiptDate| date:'dd/MM/yyyy'}}
+                                    </td>
+                                    <td style="font-size: 10px;font-style: italic">{{rep.paidAmt}}</td>
+                                    <td style="font-size: 10px;font-style: italic"><a id="edit" href="javascript:void(0)" ng-click="getDuplicatePrint(rep.receiptId,rep.receiptDate)" class="fa fa-print"></a></td>
+                                <tr ng-repeat-end></tr>
+                                <tr ng-repeat-end></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="modal fade" tabindex="-1" id="add_new_Student_Fee_modal" role="dialog"
+                     data-backdrop="static"
+                     aria-labelledby="mySmallModalLabel_1">
+                    <div class="modal-dialog modal-lg">
+                        <form class="form-horizontal" id="salesAddItem">
+                            <div class="modal-content" style="height: 563px;">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h2 align="center" class="modal-title"
+                                        style="color:black;font-size: 15px!important;text-align: center">FEE
+                                        PAYMENT </h2>
+                                </div>
+
+                                <div class="modal-body checkout-body" style="height: 443px; overflow-y: auto;">
+                                    <div class="modal-header_student">
+                                        <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close"><span
+                                                aria-hidden="true"></span></button>
+                                        <h4 class="modal-title_student"
+                                            style="color:black;font-size: 12px!important;text-align: left">
+                                            STUDENT DETAILS</h4>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <!-- Text input-->
+                                        <fieldset>
+                                            <div class="tab-content">
+                                                <div class="tab-pane fade in active"> <!--id="sub_step1"-->
+                                                    <div class="form-group">
+                                                        <label class="col-xs-5 control-label" for="FatherName"
+                                                               style="color:black;font-size: 10px">ACADEMIC YEAR:
+                                                        </label>
+                                                        <div class="col-xs-6">
+                                                            {{studentFeeDetails.academicYear}}
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-xs-5 control-label" for="FatherName"
+                                                               style="color:black;font-size: 10px">STUDENT NAME:
+                                                        </label>
+                                                        <div class="col-xs-6"
+                                                             style="!important;word-break: break-word">
+                                                            {{studentFeeDetails.studentName}}
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-xs-5 control-label" for="studentId"
+                                                               style="color:black;font-size: 10px">STUDENT PROFILE
+                                                            ID:
+                                                        </label>
+                                                        <div class="col-xs-6">
+                                                            {{studentFeeDetails.studentProfileId}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-5 control-label" for="FatherName"
+                                                   style="color:black;font-size: 10px">RECEIPT NO:
+                                            </label>
+                                            <div class="col-xs-6">
+                                                {{studentFeeDetails.receiptNo}}
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-xs-5 control-label" for="FatherName"
+                                                   style="color:black;font-size: 10px">FATHER NAME:
+                                            </label>
+                                            <div class="col-xs-6" style="!important;word-break: break-word">
+                                                {{studentFeeDetails.fatherName}}
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-xs-5 control-label" for="FatherName"
+                                                   style="color:black;font-size: 10px">GRADE:
+                                            </label>
+                                            <div class="col-xs-6">
+                                                {{studentFeeDetails.gradeName}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-header_student">
+                                        <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close"><span
+                                                aria-hidden="true"></span></button>
+                                        <h4 class="modal-title_student"
+                                            style="color:black;font-size: 12px!important;text-align: left">
+                                            FEE DETAILS</h4>
+                                    </div>
+
+                                    <div class="fixed-table-container">
+                                        <div class="table_wrapfixed-table-container-inner">
+                                            <!--<label class="col-md-4 control-label" for="currency">Fee Configuration</label>-->
+                                            <div class="header-background"></div>
+                                            <table data-toggle="table" data-cache="false" data-height="100%"
+                                                   class="hi_table table table-hover table-bordered table-striped table-fixed-header1">
+                                                <thead>
+                                                <th style="width: 1%;height: 10% ;font-size: 10px!important;"></th>
+                                                <th class="th-inner" data-field="edit"
+                                                    style="width: 25%;height: 10% ;font-size: 10px!important;">Fee Type
+                                                </th>
+                                                <th class="th-inner" data-field="edit"
+                                                    style="width: 10%;height: 10%;font-size: 10px !important;">Fees
+                                                </th>
+                                                <th class="th-inner" data-field="edit"
+                                                    style="width: 10% ;height: 10%;font-size: 10px!important;">
+                                                    Discounts
+                                                </th>
+                                                <th class="th-inner" data-field="edit"
+                                                    style="height: 10px ;font-size: 10px!important;">Payable Amount
+                                                </th>
+                                                <th class="th-inner" data-field="edit"
+                                                    style="width: 10%;height: 10% ;font-size: 10px!important;">Paid
+                                                    Amount
+                                                </th>
+                                                <th class="th-inner" data-field="edit"
+                                                    style="width: 10% ;height: 10%;font-size: 10px!important;">Due
+                                                    Amount
+                                                </th>
+                                                <th class="th-inner" data-field="edit"
+                                                    style="width: 5%;height: 10%;font-size: 10px !important;">Paying
+                                                    Amount
+                                                </th>
+                                                <th class="th-inner" data-field="edit"
+                                                    style="width: 10%;height: 10%;font-size: 10px !important;">Due Date
+                                                </th>
+                                                <th class="th-inner" data-field="edit"
+                                                    style="width: 15%;height: 10%;font-size: 10px !important;">Remarks
+                                                </th>
+                                                </thead>
+                                                <tbody id="parentTable1"
+                                                       ng-repeat="student in studentFeeDetails.studentFeeDetailsPojoList">
+                                                <tr>
+                                                    <td>
+                                                        <input id="{{$index}}" type="checkBox"
+                                                               ng-model="student.checkBox"
+                                                               ng-change="checkAmt(true,$index)"
+                                                               ng-disabled="student.dueAmount==0"/>
+                                                    </td>
+                                                    </td>
+                                                    <td colspan="1"
+                                                        style="width: 25%;height: 10% !important;text-align: left">
+                                                        {{student.feeTypeName}}
+                                                    </td>
+                                                    <td colspan="1"
+                                                        style="width: 8%;height: 10% !important;text-align: right">
+                                                        {{student.feeTypeAmount}}
+                                                    </td>
+                                                    <td colspan="1"
+                                                        style="width: 8%;height: 10% !important;text-align: right">
+                                                        {{student.discount}}
+                                                    </td>
+                                                    <td colspan="1"
+                                                        style="width: 8%;height: 10% !important;text-align: right">
+                                                        {{student.payable}}
+                                                    </td>
+                                                    <td colspan="1"
+                                                        style="width: 8% ;height: 10%!important;text-align: right">
+                                                        {{(student.paidAmount)}}
+                                                    </td>
+                                                    <td style="width: 10%;height: 8% !important;text-align: right">
+                                                        {{student.dueAmount}}
+                                                    </td>
+                                                    <td ng-if="student.installmentsPojos.length==1"><input
+                                                            style="text-align: right; width: 100px;" type="text"
+                                                            num-with-space maxlength="9"
+                                                            ng-model="student.installmentsPojos[0].payingAmt"
+                                                            ng-disabled="student.checkBox==false||student.dueAmount==0"
+                                                            ng-change="checkAmt()"></td>
+                                                    <td style="width: 5% ;height: 10%!important;text-align: right"
+                                                        ng-if="student.installmentsPojos.length!=1"></td>
+                                                    <td style="width: 15% ;height: 10%!important;text-align: right"
+                                                        ng-if="student.installmentsPojos.length==1">
+                                                        {{student.installmentsPojos[0].dueDate | date:'dd/MM/yyyy'}}
+                                                    </td>
+                                                    <td style="width: 15% ;height: 10%!important;text-align: right"
+                                                        ng-if="student.installmentsPojos.length!=1"></td>
+                                                    <td style="width: 15%;height: 8% !important;text-align: left">
+                                                        <textarea style="width: 100px;" type="text"
+                                                                  ng-model="student.discountRemarks" readonly
+                                                                  maxlength="500"></textarea>
+                                                    </td>
+
+                                                </tr>
+
+                                                <tr ng-repeat-start="installment in student.installmentsPojos"
+                                                    ng-if="student.installmentsPojos.length>1">
+                                                    <td><input id="{{$index1}}" type="checkBox"
+                                                               ng-change="checkAmt(false)"
+                                                               ng-model="installment.checkBox"
+                                                               ng-disabled="installment.installmentsAmount==0"/></td>
+                                                    <td>Installment {{$index+1}}</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td colspan="1"
+                                                        style="width: 10% ;height: 10%!important;text-align: right">
+                                                        {{(installment.installmentsAmount)|number:0}}
+                                                    </td>
+                                                    <td>
+                                                        <input style="width: 100px ;height: 10%!important;text-align: right"
+                                                               type="text" style="text-align: right;"
+                                                               ng-model="installment.payingAmt" num-with-space
+                                                               maxlength="9"
+                                                               ng-disabled="installment.checkBox==false||installment.installmentsAmount==0"
+                                                               ng-change="checkAmt()"></td>
+                                                    <td style="width: 15% ;height: 10%!important;text-align: right">
+                                                        {{installment.dueDate| date:'dd/MM/yyyy'}}
+                                                    </td>
+                                                <tr ng-repeat-end></tr>
+                                                </tr>
+                                                </tbody>
+                                                <td><strong>Total</strong></td>
+                                                <td></td>
+                                                <td style="width: 10%;height: 10% !important;text-align: right">
+                                                    <strong>{{totalFee|number:0}}</strong>
+                                                </td>
+                                                <td style="width: 10%;height: 10% !important;text-align: right">
+                                                    <strong>{{totalDiscount|number:0}}</strong>
+                                                </td>
+                                                <td style="width: 10%;height: 10% !important;text-align: right">
+                                                    <strong>{{totalPayable|number:0}}</strong>
+                                                </td>
+                                                <td style="width: 10%;height: 10% !important;text-align: right">
+                                                    <strong>{{totalPaid|number:0}}</strong>
+                                                </td>
+                                                <td style="width: 10%;height: 10% !important;text-align: right">
+                                                    <strong>{{totalDueAmt|number:0}}</strong>
+                                                </td>
+                                                <td style="width: 10%;height: 10% !important;text-align: right">
+                                                    <strong>{{payingFee|number:0}}</strong>
+                                                </td>
+                                                <td></td>
+                                            </table>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="modal-body checkout-body">
+                                        <div class="col-md-12" style="padding-left: -10px!important;">
+                                            <!-- Text input-->
+                                            <fieldset>
+                                                <div class="tab-content">
+                                                    <div class="tab-pane fade in active"> <!--id="sub_step1"-->
+                                                        <div class="form-group">
+                                                            <div class="col-md-6" style="position:relative;">
+                                                                <div class="col-md-4">
+                                                                    <p class="input-group margin_0px">
+                                                                        <input id="checkout" type="text" class="form-control" style="margin-left: -16px;width: 188px"  ng-model="paymentDate"
+                                                                               uib-datepicker-popup="{{format}}"  is-open="popup.opened"
+                                                                               datepicker-options="dateOptions1" readonly="readonly" ng-required="true"
+                                                                               close-text="Close" alt-input-formats="altInputFormats"/>
+                                                                        <span class="input-group-btn">
+                                                                   <button type="button" class="btn btn-default" ng-click="openDate()"><i
+                                                                           class="glyphicon glyphicon-calendar"></i></button>
+                                                                    </span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-2">
+                                                            <div class="form-group">
+                                                                <!--<label class="col-md-5 control-label" for="Payment Type">Payment Type</label>-->
+                                                                <!--<div class="col-md-6">-->
+                                                                <select id="paymentType" class="form-control input-md"
+                                                                        ng-model="paymentTypeText"
+                                                                        ng-change="paymentTypeAmount()">
+                                                                    <option value="">---Select ---</option>
+                                                                    <option value='Cash'>Cash</option>
+                                                                    <option value='Bank'>Bank</option>
+                                                                    <option value='Card'>Card</option>
+                                                                    <option value='Online'>Online</option>
+                                                                </select>
+                                                                <!--</div>-->
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-10">
+                                                            <div ng-if="paymentTypeText != 'Bank' && paymentTypeText != 'Card'&&paymentTypeText == 'Cash'">
+                                                                <div class="col-md-8 bank_no_info" style="padding: 0px">
+                                                                    <div class="form-group" id="cash_info">
+                                                                        <div class="col-md-4">
+                                                                            <input id="cashAmt{{$index+1}}"
+                                                                                   ng-model="totalCPAmountTendered"
+                                                                                   name="totalCPAmountTendered"
+                                                                                   placeholder="Card Amt"
+                                                                                   type="number" readonly
+                                                                                   ng-model-options="{ debounce:100 }"
+                                                                                   class="resetClass form-control input-md"
+                                                                                   required/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- CARD -->
+                                                            <div ng-if="paymentTypeText != 'Bank' && paymentTypeText == 'Card'&&paymentTypeText != 'Cash'">
+                                                                <div class="card_info row"
+                                                                     style="margin: 0px -10px !important;">
+                                                                    <div class="row">
+                                                                        <div class="col-md-4 cardAmount_info no-pad">
+                                                                            <input name="cardAmt"
+                                                                                   id="cardAmt{{$index+1}}" readonly
+                                                                                   ng-model="cardAmount"
+                                                                                   placeholder="Card Amount"
+                                                                                   type="text"
+                                                                                   class="resetClass form-control input-md cardAmt"/>
+                                                                        </div>
+                                                                        <div class="col-md-4 TransactionNo_info no-pad">
+                                                                            <input type="text" id="cardNo{{$index+1}}"
+                                                                                   ng-model="card.cardNo"
+                                                                                   name="cardTransactionNo"
+                                                                                   maxlength="25"
+                                                                                   placeholder="Card No"
+                                                                                   class="resetClass form-control input-md transcNo">
+
+                                                                        </div>
+                                                                        <div class="col-md-4 no-pad">
+                                                                            <input id="cardBankAccount{{$index+1}}"
+                                                                                   type="text"
+                                                                                   class="resetClass form-control input-md"
+                                                                                   ng-model="card.cardTransactionNo"
+                                                                                   maxlength="25"
+                                                                                   name="cardBankAccount"
+                                                                                   placeholder="Transaction No">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- BANK -->
+                                                            <div ng-if="paymentTypeText === 'Bank' && paymentTypeText != 'Card'&&paymentTypeText != 'Cash'">
+                                                                <!--{{banks}}-->
+                                                                <div class="Bank_info row">
+                                                                    <div class="row">
+                                                                        <div class="col-md-3 bank_no_info">
+                                                                            <div class="form-group">
+                                                                                <!-- <label class="col-md-4 control-label">Amount</label>-->
+                                                                                <div class="col-md-12 cardAmount_info no-pad">
+                                                                                    <input id="amount{{$index+1}}"
+                                                                                           ng-model="bankAmount"
+                                                                                           name="bankAmount"
+                                                                                           type="number" readonly
+                                                                                           class="resetClass form-control input-md"
+                                                                                           placeholder="Bank Amt"
+                                                                                           ng-required="true"/>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-3 bank_no_info">
+                                                                            <div class="form-group">
+                                                                                <input
+                                                                                        ng-model="bank.bankName"
+                                                                                        name="bankName" maxlength="50"
+                                                                                        type="text"
+                                                                                        placeholder="Bank Name"
+                                                                                        class="resetClass form-control input-md voucher_No"/>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="col-md-3 bank_no_info">
+                                                                            <div class="form-group">
+                                                                                <input id="invoiceNo{{$index+1}}"
+                                                                                       ng-model="bank.chequeNo"
+                                                                                       maxlength="25"
+                                                                                       name="bankinvoiceNo"
+                                                                                       type="text"
+                                                                                       placeholder="Cheque No/Trans Id"
+                                                                                       class="resetClass form-control input-md voucher_No">
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-3 TransactionNo_info">
+                                                                            <div style="position:relative;">
+                                                                                <p class="input-group">
+                                                                                    <input type="text"
+                                                                                           class="form-control"
+                                                                                           uib-datepicker-popup="{{format}}"
+                                                                                           ng-model="bank.chequeDate"
+                                                                                           placeholder="Cheque Date"
+                                                                                           is-open="popup1.opened"
+                                                                                           datepicker-options="dateOptions"
+                                                                                           close-text="Close"
+                                                                                           alt-input-formats="altInputFormats"/>
+                                                                                    <span class="input-group-btn">
+                                                             <button type="button" class="btn btn-default"
+                                                                     ng-click="openDate1()">
+                                                                 <i class="glyphicon glyphicon-calendar"></i></button>
+                                                            </span>
+                                                                                </p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- VOUCHER -->
+                                                            <div ng-if="paymentTypeText === 'Online' && paymentTypeText != 'Card'&&paymentTypeText != 'Cash'">
+                                                                <!--{{banks}}-->
+                                                                <div class="Bank_info row">
+                                                                    <div class="row">
+                                                                        <div class="col-md-3 bank_no_info">
+                                                                            <div class="form-group">
+                                                                                <!-- <label class="col-md-4 control-label">Amount</label>-->
+                                                                                <div class="col-md-12 cardAmount_info no-pad">
+                                                                                    <input id="amount{{$index+1}}"
+                                                                                           ng-model="bankAmount"
+                                                                                           name="bankAmount"
+                                                                                           type="number" readonly
+                                                                                           class="resetClass form-control input-md"
+                                                                                           placeholder="Bank Amt"
+                                                                                           ng-required="true"/>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-3 bank_no_info">
+                                                                            <div class="form-group">
+                                                                                <input id="bankName{{$index+1}}"
+                                                                                       ng-model="bank.bankName"
+                                                                                       name="bankName" maxlength="50"
+                                                                                       type="text"
+                                                                                       placeholder="Bank Name"
+                                                                                       class="resetClass form-control input-md voucher_No">
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="col-md-3 bank_no_info">
+                                                                            <div class="form-group">
+                                                                                <input id="invoiceNo{{$index+1}}"
+                                                                                       ng-model="bank.chequeNo"
+                                                                                       maxlength="25"
+                                                                                       name="bankinvoiceNo"
+                                                                                       type="text"
+                                                                                       placeholder="Transaction No"
+                                                                                       class="resetClass form-control input-md voucher_No">
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-3 TransactionNo_info">
+                                                                            <div style="position:relative;">
+                                                                                <p class="input-group">
+                                                                                    <input type="text"
+                                                                                           class="form-control"
+                                                                                           uib-datepicker-popup="{{format}}"
+                                                                                           ng-model="bank.chequeDate"
+                                                                                           placeholder="Date"
+                                                                                           is-open="popup1.opened"
+                                                                                           datepicker-options="dateOptions"
+                                                                                           close-text="Close"
+                                                                                           alt-input-formats="altInputFormats"/>
+                                                                                    <span class="input-group-btn">
+                                                             <button type="button" class="btn btn-default"
+                                                                     ng-click="openDate1()">
+                                                                 <i class="glyphicon glyphicon-calendar"></i></button>
+                                                            </span>
+                                                                                </p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </div>
+
+                                    </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" style="float: right;" class="btn btn-primary" data-toggle="modal"
+                                data-target=".print-me" ng-click="removeItemPopUpDetails()">Close
+                        </button>
+                        <button id="saveButton" type="submit" style="float: right;" class="btn btn-primary"
+                                data-toggle="modal"
+                                data-target=".print-me" ng-click="saveStudentFee()">Save
+                        </button>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="modal fade printreceiptA4" tabindex="-1" id="receiptPaymentA5" role="dialog"
+             data-backdrop="static"
+             aria-labelledby="mySmallModalLabel">
+
+            <div class="modal-dialog modal-lg" style="width:700px !important;min-height:0px;border-top-width: 1px">
+                <div class="modal-content checkout">
+                    <div id="receiptPaymentPritableArea" class="panel-body" class="mini-print-wrapper"
+                         style="width:700px;border:1px solid;height:482px; overflow-y: auto;">
+                        <style>
+                            h1, h2, h3, h4, h5, h6 {
+                                margin: 0;
+                                font-family: 'Karla', sans-serif;
+                                font-weight: bold;
+                                color: #317eac;
+                                text-rendering: optimizelegibility;
+                            }
+
+                            hr {
+                                margin: 18px 0;
+                                border: 0;
+                                border-top: 1px solid #f5f5f5;
+                                border-bottom: 1px solid #ffffff;
+                            }
+
+                            #feeHeading {
+                                margine-right: 50px;
+                                width: auto !important;
+                                /*display: inline-block !important;*/
+                                border: 1px solid #000000 !important;
+                                /*padding: 5px 20px !important;*/
+                            }
+
+                            .main_div {
+                                border: 2px solid #000;
+                            }
+
+                            .no_pad {
+                                padding: 0;
+                            }
+
+                            .top_bar {
+                                width: 100%;
+                                border-bottom: 1px solid #000;
+                            }
+
+                            .top_bar p {
+                                font-size: 12px;
+                                margin: 10px 0 0 0;
+                            }
+
+                            .top_bar h4 {
+                                font-size: 14px;
+                                margin: 10px 0 0 0;
+                            }
+
+                            .total_form {
+                                width: 100%;
+                                margin: 0 auto;
+                            }
+
+                            .table_02 {
+                                width: 100%;
+                            }
+
+                            .table_03 {
+                                width: 100%;
+                            }
+
+                            .table_03 th {
+                                border: 1px solid #000;
+                            }
+
+                            .table_03 tr td {
+                                border-bottom: 0px solid #000;
+                                border-right: 1px solid #000;
+                            }
+
+                            .table_03 th:nth-child(1) {
+                                width: 15% !important;
+                            }
+
+                            .table_03 th:nth-child(2) {
+                                width: 70% !important;
+                            }
+
+                            .table_03 th:nth-child(3) {
+                                width: 15% !important;
+                            }
+
+                            .clearfix:after {
+                                content: " "; /* Older browser do not support empty content */
+                                visibility: hidden;
+                                display: block;
+                                height: 0;
+                                clear: both;
+                            }
+
+                            .clearfix:after {
+                                content: "";
+                                display: table;
+                                clear: both;
+                            }
+
+                            .main_div td {
+                                font-size: 12px !important;
+                            }
+                        </style>
+                        <div class="total_form">
+                            <div class="main_div">
+                                <div class="top_bar">
+                                    <div class="logo" style="width: 30%;">
+                                        <img src="resource/images/BrainyStarsSchool.png"
+                                             style="width: 100%; float: left;">
+                                    </div>
+                                    <div class="top_cont" style="width: 70%; float: right;">
+                                        <h4 style="text-align: center; color:#5f0078;">INTERNATIONAL HOLISTIC MONTESSORI
+                                            & SCHOOL</h4>
+                                        <p style="text-align: center;">{{address}}, {{branchName}}, {{city}} -
+                                            {{pinCode}}.</p>
+                                        <p style="text-align: center;">Telephone: {{phoneNumber}} Email: {{emailId}}</p>
+                                        <p style="text-align: center;">FEE RECEIPT</p>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="table_02">
+                                    <div class="recipt" style="width: 100%;">
+                                        <div class="recipt" style="width: 70%; float: left;">
+                                            <table>
+                                                <tr>
+                                                    <td>Receipt No:</td>
+                                                    <td>&nbsp; {{studentFeeDetails.receiptNo}}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="recipt" style="width: 30%; float: right;">
+                                            <table>
+                                                <tr>
+                                                    <td>Date:</td>
+                                                    <td>&nbsp; {{date|date:'dd/MM/yyyy'}}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="recipt" style="width: 100%; float: left;">
+                                        <table>
+                                            <tr>
+                                                <td>Name:</td>
+                                                <td>&nbsp; {{studentFeeDetails.studentName}}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="recipt" style="width: 100%;">
+                                        <div class="recipt" style="width: 70%; float: left;">
+                                            <table>
+                                                <tr>
+                                                    <td>Admission No:</td>
+                                                    <td>&nbsp;{{studentFeeDetails.studentProfileId}}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="recipt" style="width: 30%; float: right;">
+                                            <table>
+                                                <tr>
+                                                    <td>Academic Year:</td>
+                                                    <td>&nbsp; {{studentFeeDetails.academicYear}}</td>
+                                                </tr>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                    <div class="recipt" style="width: 70%; float: left;">
+                                        <table>
+                                            <tr>
+                                                <td>Parent Name:</td>
+                                                <td>&nbsp; {{studentFeeDetails.fatherName}}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="recipt" style="width: 30%; float: right;">
+                                        <table>
+                                            <tr>
+                                                <td>Grade:</td>
+                                                <td>&nbsp;{{studentFeeDetails.gradeName}}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="table_03">
+                                    <table border="0" class="table"
+                                           style="margin: 0px; width: 100%; border-collapse: collapse;">
+                                        <thead>
+                                        <tr>
+                                            <th style="border-left: 0px; text-align: left !important; font-size: 12px;">
+                                                Sl.No
+                                            </th>
+                                            <th style="text-align:left !important; font-size: 12px;">Particulars</th>
+                                            <th style="border-right: 0px; text-align: right !important; font-size: 12px;">
+                                                Amount
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody ng-repeat="student in studentFeeDetailsPojoList" id="parentTable2"
+                                               class="studentList">
+                                        <tr>
+                                            <td style="text-align:left !important;">{{$index+1}}</td>
+                                            <td style="text-align:left !important;">{{student.feeTypeName}}</td>
+                                            <td style="text-align:right !important;">{{student.payingAmt|number:2}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="recipt" style="width: 100%; border-top: 1px solid #000;">
+                                    <!-- <div class="recipt" style="width: 80%; float: left;"><p>Total:</p></div>
+                                    <div class="recipt" style="width: 20%; float: right;"><p>768,92,00</p></div> -->
+                                    <table style="width: 100%;">
+                                        <tr>
+                                            <td style="width: 15%; text-align: left !important;">Total</td>
+                                            <td style="width: 70%;"></td>
+                                            <td style="width: 9%; text-align: right !important;">
+                                                {{payingFee|number:2}}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="recipt"
+                                     style="width: 100%; border-top: 1px solid #000; border-bottom: 0px solid #000;">
+                                    <table>
+                                        <tr>
+                                            <td style="font-size: 12px;">Amount In Words:</td>
+                                            <td style="font-size: 10px;">&nbsp;{{numberToWord}} Rupees Only</td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="recipt"
+                                     style="width: 100%; border-top: 1px solid #000; border-bottom: 1px solid #000;">
+                                    <table style="width: 100%; padding: 0 !important;">
+                                        <tr>
+                                            <div class="modeofpayment" style="width: 100%;padding-left: 10px;"
+                                                 ng-if="paymentTypeText=='Cash'">
+                                                <p style="font-size: 10px; margin: 0 !important;"><b>BY:</b>
+                                                    {{paymentTypeText}}&nbsp;&nbsp;&nbsp;<b>Amount:</b>
+                                                    {{studentFeeDetails.cashAmt|number:2}}&nbsp;&nbsp;&nbsp;</p>
+                                            </div>
+                                            <div class="modeofpayment" style="width: 100%;padding-left: 10px;"
+                                                 ng-if="paymentTypeText=='Card'">
+                                                <p style="font-size: 10px; margin: 0 !important;"><b>BY:</b>
+                                                    {{paymentTypeText}}&nbsp;&nbsp;&nbsp;<b>Amount:</b>
+                                                    {{studentFeeDetails.cardAmt|number:2}}&nbsp;&nbsp;&nbsp;<b>Card
+                                                        No:</b> {{studentFeeDetails.cardNo}}&nbsp;&nbsp;&nbsp;<b>Transaction
+                                                        No:</b> {{studentFeeDetails.approvalCode}}&nbsp;</p>
+                                            </div>
+                                            <div class="modeofpayment" style="width: 100%;padding-left: 10px;"
+                                                 ng-if="paymentTypeText=='Bank'">
+                                                <p style="font-size:10px; margin: 0 !important;"><b>BY:</b>
+                                                    {{paymentTypeText}}&nbsp;&nbsp;&nbsp;<b>Amount:</b>
+                                                    {{studentFeeDetails.bankAmt|number:2}}&nbsp;&nbsp;&nbsp;<b>Bank
+                                                        Name:</b> {{studentFeeDetails.bankName}}&nbsp;&nbsp;&nbsp;<b>Cheque
+                                                        No:</b>
+                                                    {{studentFeeDetails.chequeNo}}&nbsp;&nbsp;&nbsp;<b>Date:</b>
+                                                    {{studentFeeDetails.chequeDate|date:'dd/MM/yyyy'}}&nbsp;</p>
+                                            </div>
+                                            <div class="modeofpayment" style="width: 100%;padding-left: 10px;"
+                                                 ng-if="paymentTypeText=='Online'">
+                                                <p style="font-size: 10px; margin: 0 !important;"><b>BY:</b>
+                                                    {{paymentTypeText}}&nbsp;&nbsp;&nbsp;<b>Amount:</b>
+                                                    {{studentFeeDetails.bankAmt|number:2}}&nbsp;&nbsp;&nbsp;<b>Bank
+                                                        Name:</b> {{studentFeeDetails.bankName}}&nbsp;&nbsp;&nbsp;<b>Transaction
+                                                        No:</b>
+                                                    {{studentFeeDetails.chequeNo}}&nbsp;&nbsp;&nbsp;<b>Date:</b>
+                                                    {{studentFeeDetails.chequeDate|date:'dd/MM/yyyy'}}&nbsp;</p>
+                                            </div>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div ng-if="dueAmt>0">
+                                    <div class="recipt"
+                                         style="width: 100%; border-top: 0px solid #000; border-bottom: 0px solid #000;">
+                                        <table>
+                                            <tr>
+                                                <td>Total Fee:</td>
+                                                <td>&nbsp; {{totConfiguredFee|number:2}}</td>
+                                                <td>Total Discount:</td>
+                                                <td>&nbsp;{{totDiscount|number:2}}</td>
+                                                <td>Total Paid:</td>
+                                                <td>&nbsp; {{totalPaidAmt|number:2}}</td>
+                                                <td>Due Amount:</td>
+                                                <td>&nbsp;{{dueAmt|number:2}}</td>
+                                            </tr>
+
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div ng-if="termsandconditions">
+                                    <div class="recipt"
+                                         style="width: 100%; border-top: 1px solid #000; border-bottom: 1px solid #000;">
+                                        <table>
+                                            <tr>
+                                                <td style="font-size: 12px;">Terms & Conditions:</td>
+                                                <td style="word-break:break-all !important; font-size: 12px; width:100% !important; overflow:hidden; display: inline-block;"
+                                                    valign="top">{{termsandconditions}}
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="recipt" style="width: 40%; float: left;"></div>
+                                <div class="recipt" style="width: 60%; float: right;">
+                                    <p style="text-align: center; margin-top: 5px; margin-bottom:0px; font-size:12px;">
+                                        For: International Holistic Montessori & School</p>
+                                    <p style="text-align: center; font-size:12px; margin-top: 20px;margin-bottom:5px;">
+                                        Authorized Signature</p>
+                                </div>
+
+
+                                <div class="clearfix"></div>
+
+                            </div>
+                            <div class="recipt" style="width: 100%;">
+                                <p style="text-align: left; font-size:10px; margin-top: 5px;">NOTE:
+                                    {{receiptfooterdesc}}</p>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <button type="button" id="printbutton" ng-click="printDivA5('receiptPaymentPritableArea')"
+                            class="btn btn-default">Print
+                    </button>
+                    <button type="button" ng-click="reloadPage()" class="btn btn-default" data-dismiss="modal">Close
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

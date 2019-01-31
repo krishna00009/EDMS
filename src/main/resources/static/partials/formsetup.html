@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<style>
+    .th-inner{
+        padding-left: 0;
+        margin-left: 0;
+    }
+</style>
+<div class="container-fluid">
+    <div class="container cus_main_row" >
+
+        <div class="row">
+            <h2 class="pos-header-new">
+                <div>Form Setup</div>
+            </h2>
+        </div>
+        <div class="row inner_row_bg">
+            <!--<div class="col-md-12 col-sm-12">-->
+            <!--<div class="panel">-->
+            <!--<div class="panel-body">-->
+            <!--<div class="col-md-2">-->
+            <!--<form class="form-horizontal ng-pristine ng-valid">-->
+            <!--<div class="form-group">-->
+            <!--<div class="col-sm-12">-->
+            <!--<p class="input-group" style="display: block;">-->
+            <!--<input id="textinput" name="textinput"  type="text"-->
+            <!--placeholder="Search FormSetup" ng-model="formSetupSearchText" class="form-control input-md"-->
+            <!--ng-keyup="$event.keyCode == 13 ? formsetList(formSetupSearchText) : null" />-->
+            <!--</p>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</form>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;<div class="form-group ">&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="col-md-4">&ndash;&gt;-->
+            <!--&lt;!&ndash;<label class="col-md-5 control-label" style="margin-top: 10px;" for="">Select User Location:</label>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="col-md-7">&ndash;&gt;-->
+            <!--&lt;!&ndash;<span class="custom-dropdown custom-dropdown&#45;&#45;white">&ndash;&gt;-->
+            <!--&lt;!&ndash;<select   class="form-control input-md"&ndash;&gt;-->
+            <!--&lt;!&ndash;ng-model="loc"&ndash;&gt;-->
+            <!--&lt;!&ndash;name="Location"&ndash;&gt;-->
+            <!--&lt;!&ndash;ng-options="loc.inventoryLocationId as loc.inventoryLocationName for loc in inventoryLocationList">&ndash;&gt;-->
+            <!--&lt;!&ndash;<option value="">Select</option>&ndash;&gt;-->
+            <!--&lt;!&ndash;</select>&ndash;&gt;-->
+            <!--&lt;!&ndash;</span>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="col-md-2 col-sm-4">&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<button type="button" class="btn btn-default hi_btn" ng-click="formsetList(formsetup,loc)">View&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</button>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;<button type="button" class="btn btn-default hi_btn" ng-click="addNewFormSetupPopulate()">Add&ndash;&gt;-->
+            <!--&lt;!&ndash;</button>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<div class="col-md-3">&ndash;&gt;&ndash;&gt;-->
+            <!--<div class="col-sm-2">-->
+            <!--<button type="button" class="btn btn-primary hi_btn"  ng-click="BackServices()">Back</button>-->
+
+            <!--</div>-->
+
+            <!--&lt;!&ndash;&lt;!&ndash;<div class="form-group">&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<div class="col-sm-6">&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<button type="button" class="btn btn-default hi_btn" ng-click="">search</button>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
+
+
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--</div>-->
+
+            <!--</div>-->
+            <!--</div>-->
+
+            <div class="col-md-12 col-sm-12">
+
+
+                <div class="fixed-table-container">
+                    <div class="table_wrapfixed-table-container-inner">
+                        <div class="header-background"></div>
+                        <table data-toggle="table" data-cache="false" data-height="299" style="margin-bottom: 0;" class="hi_table table table-hover table-fixed-header">
+                            <thead>
+                            <tr>
+
+                                <th data-field="agentname">
+                                    <div class="th-inner">Type Name</div>
+                                </th>
+                                <th data-field="agentemail">
+                                    <div class="th-inner">Type Prefix</div>
+                                </th>
+                                <th data-field="commission">
+                                    <div class="th-inner">Current Ref</div>
+                                </th>
+                                <th data-field="commission">
+                                    <div class="th-inner">Transaction Type</div>
+                                </th>
+                                <!--<th data-field="commission">-->
+                                <!--<div class="th-inner">Edit Print Layout</div>-->
+                                <!--</th>-->
+
+                                <!--<th data-field="commission">-->
+                                <!--<div class="th-inner">Edit</div>-->
+                                <!--</th>-->
+
+                                <!--<th data-field="commission">-->
+                                <!--<div class="th-inner">Term and Condition</div>-->
+                                <!--</th>-->
+                            </tr>
+                            </thead>
+                            <tbody id="originallist">
+
+
+                            <tr ng-repeat = "formsetup in formsetupList |filter:formSetupSearchText">
+                                <td>{{formsetup.typename}}</td>
+                                <td>{{formsetup.typeprefix}}</td>
+                                <td>{{formsetup.nextref}}</td>
+                                <td>{{formsetup.transactionType}}</td>
+                                <!--<td>-->
+                                <!--<a id="edit_print_layout" type="listAnchor"-->
+                                <!--href="#!/edittemplate/{{formsetup.formsetupId}}"><i-->
+                                <!--class="fa fa-th fa-fw orange"></i></a>-->
+                                <!--</td>-->
+                                <!--<td>-->
+                                <!--<a id="edit_25" ng-click="editFormsetupPopulate(formsetup.typename)" class="edit"><i class="fa fa-pencil-square-o fa-fw orange"></i></a>-->
+                                <!--</td>-->
+                            </tr>
+
+                            </tbody>
+                            </tbody>
+
+
+                            <tbody id="searchlist"></tbody>
+
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="modal fade addCustomer" tabindex="-1" id="edit_modal" role="dialog" data-backdrop="static"
+                 aria-labelledby="mySmallModalLabel">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content checkout">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h4 id = "formsetup-title" class="modal-title">Add FormSetup</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form class="form-horizontal">
+                                        <fieldset>
+                                            <div class="form-group">
+                                                <input type="hidden" ng-model="formsetupObj.formsetupId" value="{{formsetupObj.formsetupId}}"/>
+                                                <label class="col-md-4 control-label" for="">Type Name</label>
+                                                <div class="col-md-6" style="position:relative;">
+                                                    <input id="typename" name="typename"
+                                                           allowpattern="[a-z]"
+                                                           type="text" placeholder="Type Name"
+                                                           ng-model="typename"
+
+                                                           class="form-control input-md" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label" for="">Type Prefix</label>
+                                                <div class="col-md-6" style="position:relative;">
+                                                    <input id="type Prefix" name="typeprefix"
+                                                           allowpattern="[a-z]"
+                                                           type="text" placeholder="Type Prefix"
+                                                           ng-model="typeprefix"
+
+                                                           class="form-control input-md" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label" for="">Current Ref</label>
+                                                <div class="col-md-6" style="position:relative;">
+                                                    <input id="currentref" name="currentref"
+                                                           allowpattern="[a-z]"
+                                                           type="text" placeholder="Current Ref"
+                                                           ng-model="currentref"
+
+                                                           class="form-control input-md" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label" for="nextRef">Transaction Type</label>
+                                                <div class="col-md-6" style="position:relative;">
+                                                    <input id="nextRef" name="nextRef"
+                                                           type="text" placeholder="Email"
+                                                           ng-model="transtype"alpha-without-space
+                                                           class="form-control input-md" autocomplete="off" required>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-default" data-toggle="modal"
+                                    data-target=".print-me" ng-model="formsetupId"
+                                    ng-click="saveOrUpdateformsetup()">Save
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-2">
+                <button type="button" class="btn btn-primary hi_btn"  ng-click="BackServices()">Back</button>
+
+            </div>
+            <!--<div class="form-group">-->
+            <!--<div class="col-sm-12 pagination_">-->
+            <!--<button type="button" class="btn btn-default hi_btn" ng-class="{'diabled-class': first}" ng-disabled="first"-->
+            <!--ng-click="formsetList('firstPage')"  ng-model="first">First-->
+            <!--</button>-->
+            <!--<button type="button" class="btn btn-default hi_btn"  ng-class="{'diabled-class': prev}" ng-disabled="prev"-->
+            <!--ng-click="formsetList('prevPage')"   ng-model="prev">Prev-->
+            <!--</button>-->
+            <!--<button type="button" class="btn btn-default hi_btn"  name="next" ng-disabled="next"-->
+            <!--ng-click="formsetList('nextPage')"  value="next"  ng-class="{'diabled-class': next}" ng-model="next">Next-->
+            <!--</button>-->
+            <!--<button type="button" class="btn btn-default hi_btn"-->
+            <!--ng-click="formsetList('lastPage')"   ng-class="{'diabled-class': last}" ng-disabled="last"-->
+            <!--ng-model="last">Last-->
+            <!--</button>-->
+            <!--</div>-->
+            <!--</div>-->
+        </div>
+
+        <div class="modal fade" tabindex="-1" id="term_desc" role="dialog" data-backdrop="static"
+             aria-labelledby="mySmallModalLabel">
+            <div class="modal-dialog modal-lg" style="width: 910px;">
+                <div class="modal-content checkout">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Term</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form class="form-horizontal">
+                                    <fieldset>
+                                        <div class="form-group">
+
+                                            <!--<label class="col-md-4 control-label" for="">Description</label>-->
+                                            <!--<div class="col-md-6" style="position:relative;">-->
+                                            <!--<textarea id="Description" name="Description"-->
+                                            <!--allowpattern="[a-z]"-->
+                                            <!--type="text" placeholder="Description"-->
+                                            <!--ng-model="DescriptionText"-->
+                                            <!--ng-model-options="{ debounce: 1000 }"-->
+                                            <!--ng-blur="hideAutoComplete()"-->
+                                            <!--class="form-control input-md"> </textarea>-->
+                                            <!--</div>-->
+
+
+                                            <label class="col-sm-1 col-md-1 col-lg-1 control-label">Description</label>
+                                            <!--<div class="col-md-6" style="position:relative;">-->
+                                            <div class="col-sm-11 col-md-11 col-lg-11">
+                                                <input type="hidden" name="TermsAndConditionDesc" value="" id="TermsAndConditionDesc">
+                                                <!-- Buttons for RTE- RichTextEditor  -->
+                                                <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor" id="editorButtons">
+                                                    <div class="btn-group">
+                                                        <a class="btn dropdown-toggle fonts tooltip-f" data-toggle="dropdown" title=""><i class="icon-font"></i><b class="caret"></b></a>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a data-edit="fontName Arial" style="font-family:'Arial'">Arial</a></li>
+                                                            <li><a data-edit="fontName Arial Black" style="font-family:'Arial Black'">Arial Black</a></li>
+                                                            <li><a data-edit="fontName Courier" style="font-family:'Courier'">Courier</a></li>
+                                                            <li><a data-edit="fontName Courier New" style="font-family:'Courier New'">Courier New</a></li>
+                                                            <li><a data-edit="fontName Comic Sans MS" style="font-family:'Comic Sans MS'">Comic Sans MS</a></li>
+                                                            <li><a data-edit="fontName Helvetica" style="font-family:'Helvetica'">Helvetica</a></li>
+                                                            <li><a data-edit="fontName Impact" style="font-family:'Impact'">Impact</a></li>
+                                                            <li><a data-edit="fontName Lucida Sans" style="font-family:'Lucida Sans'">Lucida Sans</a></li>
+                                                            <li><a data-edit="fontName Tahoma" style="font-family:'Tahoma'">Tahoma</a></li>
+                                                            <li><a data-edit="fontName Times" style="font-family:'Times'">Times</a></li>
+                                                            <li><a data-edit="fontName Times New Roman" style="font-family:'Times New Roman'">Times New Roman</a></li>
+                                                            <li><a data-edit="fontName Verdana" style="font-family:'Verdana'">Verdana</a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="btn-group">
+                                                        <a class="btn dropdown-toggle tooltip-f" data-toggle="dropdown" title=""><i class="icon-text-height"></i>&nbsp;<b class="caret"></b></a>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a data-edit="fontSize 5"><font size="5">Huge</font></a></li>
+                                                            <li><a data-edit="fontSize 3"><font size="3">Normal</font></a></li>
+                                                            <li><a data-edit="fontSize 1"><font size="1">Small</font></a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="btn-group">
+                                                        <a class="btn tooltip-f btn-info" data-edit="bold" title=""><i class="icon-bold"></i></a>
+                                                        <a class="btn tooltip-f" data-edit="italic" title=""><i class="icon-italic"></i></a>
+                                                        <a class="btn tooltip-f" data-edit="strikethrough" title=""><i class="icon-strikethrough"></i></a>
+                                                        <a class="btn tooltip-f" data-edit="underline" title=""><i class="icon-underline"></i></a>
+                                                    </div>
+                                                    <div class="btn-group">
+                                                        <a class="btn tooltip-f" data-edit="insertunorderedlist" title=""><i class="icon-list-ul"></i></a>
+                                                        <a class="btn tooltip-f" data-edit="insertorderedlist" title=""><i class="icon-list-ol"></i></a>
+                                                        <a class="btn tooltip-f" data-edit="outdent" title=""><i class="icon-indent-left"></i></a>
+                                                        <a class="btn tooltip-f" data-edit="indent" title=""><i class="icon-indent-right"></i></a>
+                                                    </div>
+                                                    <div class="btn-group">
+                                                        <a class="btn tooltip-f btn-info" data-edit="justifyleft" title=""><i class="icon-align-left"></i></a>
+                                                        <a class="btn tooltip-f" data-edit="justifycenter" title=""><i class="icon-align-center"></i></a>
+                                                        <a class="btn tooltip-f" data-edit="justifyright" title=""><i class="icon-align-right"></i></a>
+                                                        <a class="btn tooltip-f" data-edit="justifyfull" title=""><i class="icon-align-justify"></i></a>
+                                                    </div>
+                                                    <div class="btn-group">
+                                                        <a class="btn dropdown-toggle tooltip-f" data-toggle="dropdown" title=""><i class="icon-link"></i></a>
+                                                        <div class="dropdown-menu input-append">
+                                                            <input class="span2" placeholder="URL" type="text" data-edit="createLink">
+                                                            <button class="btn" type="button">Add</button>
+                                                        </div>
+                                                        <a class="btn tooltip-f" data-edit="unlink" title=""><i class="icon-cut"></i></a>
+                                                    </div>
+                                                    <div class="btn-group">
+                                                        <a class="btn tooltip-f" title="" id="pictureBtn"><i class="icon-picture"></i></a>
+                                                        <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" style="opacity: 0; position: absolute; top: 0px; left: 0px; width: 0px; height: 0px;">
+                                                    </div>
+                                                    <div class="btn-group">
+                                                        <a class="btn tooltip-f" data-edit="undo" title=""><i class="icon-undo"></i></a>
+                                                        <a class="btn tooltip-f" data-edit="redo" title=""><i class="icon-repeat"></i></a>
+                                                    </div>
+                                                    <input type="text" value="" data-edit="inserttext" id="voiceBtn" x-webkit-speech="" style="display: none;">
+                                                </div>
+                                                <!-- RTE div -->
+                                                <div id="editor" contenteditable="true"  ng-model="desc">
+                                                    {{desc}}
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-default" data-toggle="modal"
+                                data-target=".print-me" ng-model="setupId" ng-click="saveFormsetupDesc('term_desc')">Save
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,144 @@
+
+
+
+<html ng-app="myApp">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>BrainyStars Student Management System</title>
+	<link href='./css/style.css' rel="stylesheet" type="text/css" />
+	<link href='./css/css/font-awesome.css' rel="stylesheet" type="text/css" />
+	<link href='./css/vendors/bootstrap-datetimepicker.min.css' rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href= './css/css/angular-ui-notification.min.css' type="text/css" />
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+	<link href="css/login.css" rel="stylesheet" type="text/css" />
+	<link href='./css/vendors/bootstrap.min.css' rel="stylesheet" type="text/css" />
+	<!--<title>HiAccounts</title>-->
+</head>
+<body>
+<div class="generic-container">
+	<h2>BrainyStars Student Management System
+		<ul style="float:right;">
+			<li><a href="#!/login" id="logoutButton"  tabindex="-1" style="color: #fff !important;; font-size:14px !important;"> LogOut</a></li>
+		</ul>
+	</h2>
+
+	<!--<ul class="nav navbar-nav navbar-right hidden-xs">-->
+	<!--<li>-->
+	<!--<a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false" tabindex="-1">-->
+	<!--<span class="white">{{userName}}</span>-->
+	<!--<i class="fa fa-angle-down white" style="font-size: inherit;"></i>-->
+	<!--</a>-->
+
+
+	<!--</li>-->
+	<!--</ul>-->
+
+
+
+	<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+		<div id="nav_side_menu" class="menu_section">
+			<ul class="nav side-menu">
+				<li id="dashboard">
+					<a id="dashboardLink"  href="#!/dashboard"  tabindex="-1"> <i class="fa fa-dashboard" style="font-size:20px;color:#72319a;" aria-hidden="true"></i><span>  DashBoard  </span></a>
+				</li>
+				<li id="student">
+					<a id="studentLink" href="#!/student" tabindex="-1"> <i class="fa fa-male" style="font-size:20px;color:#72319a;" aria-hidden="true"></i><span>  Student  </span></a>
+				</li>
+				<li id="fee">
+					<a id="feeLink" href="#!/fee"  tabindex="-1"> <i class="fa fa-credit-card" style="font-size:20px;color:#72319a;" aria-hidden="true"></i><span>  Fee  </span></a>
+				</li>
+				<li id="configuration">
+					<a id="configurationLink" href="#!/configuration"  tabindex="-1"> <i class="fa fa-cogs" style="font-size:20px;color:#72319a;" aria-hidden="true"></i><span>  Configuration  </span></a>
+				</li>
+				<li id="fee">
+					<a id="feeLink" href="#!/enquiryForm"  tabindex="-1"> <i class="fa fa-credit-card" style="font-size:20px;color:#72319a;" aria-hidden="true"></i><span> EnquiryForm </span></a>
+				</li>
+				<li id="reports">
+					<a id="reportsLink" href="#!/reports"  tabindex="-1"> <i class="fa fa-area-chart" style="font-size:20px;color:#72319a;" aria-hidden="true"></i><span>  Reports  </span></a>
+				</li>
+				<li id="support">
+					<a id="supportLink" href="#!/support"  tabindex="-1"> <i class="fa fa-info fa-fw" style="font-size:20px;color:#72319a;" aria-hidden="true"></i><span>  Support  </span></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+
+</div>
+
+
+
+<div ng-view="true"></div>
+<!--<script>-->
+<!--var PAGE_NAME = '<%out.print(request.getAttribute("pageName"));%>'-->
+<!--</script>-->
+<!-- JQuery -->
+<script src="./js/vendors/jquery.min.js"></script>
+<!-- Jquery UI Scripts -->
+<script src="./js/vendors/jquery-ui.js"></script>
+<script src="./js/jspdf.min.js"></script>
+<script src="./js/base64.js"></script>
+<script src="./js/jquery-base64.js"></script>
+<script src="./js/sprintf.js"></script>
+<!-- Bootstrap -->
+<script src="./js/vendors/bootstrap.min.js"></script>
+<!-- JQuery -->
+<script src="./js/vendors/jquery.min.js"></script>
+<!-- Jquery UI Scripts -->
+<script src="./js/vendors/jquery-ui.js"></script>
+<script src="./js/jspdf.min.js"></script>
+<script src="./js/base64.js"></script>
+<script src="./js/jquery-base64.js"></script>
+<script src="./js/sprintf.js"></script>
+<!-- Bootstrap -->
+<script src="./js/vendors/bootstrap.min.js"></script>
+
+
+<!-- Angular js -->
+<script src="./js/vendors/angular.min.js"></script>
+<script src="./js/vendors/angular-route.js"></script>
+<script src="./js/vendors/angular-animate.min.js"></script>
+<script src="./js/vendors/angular-sanitize.min.js"></script>
+<script src="./js/vendors/select2.min.js"></script>
+<script src="./js/vendors/angular-ui-notification.min.js"></script>
+<script src="./js/vendors/angular-cookies.min.js"></script>
+<script type="text/javascript" src="./js/vendors/moment.js"></script>
+<script src="./js/vendors/bootstrap-datetimepicker.min.js"></script>
+<script src="./js/vendors/ng-table.min.js"></script>
+<script src="./js/vendors/Chart.min.js"></script>
+<script src="./js/vendors/angular-chart.js"></script>
+<script src="./js/vendors/bootbox.min.js"></script>
+<script src="./js/vendors/ui-bootstrap-tpls.min.js"></script>
+<script src="./js/vendors/angular-filter.js"></script>
+
+<!-- Custom Theme Scripts -->
+<script src="./js/main.js"></script>
+<script  src="./js/custom.js"></script>
+<script src="./js/bootstrap-wysiwyg.js"></script>
+<script src="./js/jquery.hotkeys.js"></script>
+<script src="./js/controller/login.js"></script>
+<script src="./js/controller/dashboard.js"></script>
+<script src="./js/controller/student.js"></script>
+<script src="./js/controller/fee.js"></script>
+<script src="./js/controller/feeDueReports.js"></script>
+<script src="./js/controller/feeCollectedReports.js"></script>
+<script src="./js/controller/feeReceiptNoReport.js"></script>
+<script src="./js/controller/feetypemaster.js"></script>
+<script src="./js/controller/grademaster.js"></script>
+<script src="./js/controller/emailserver.js"></script>
+<script src="./js/controller/reportMailScheduler.js"></script>
+<script src="./js/controller/user.js"></script>
+<script src="./js/controller/academicyearmaster.js"></script>
+<script src="./js/controller/studentschooldetails.js"></script>
+<script src="./js/controller/header.js"></script>
+<script src="./js/controller/country.js"></script>
+<script src="./js/controller/state.js"></script>
+<script src="./js/controller/city.js"></script>
+<script src="./js/controller/enquiryForm.js"></script>
+
+<script src="./js/controller/cartMaster.js"></script>
+<script src="./js/controller/SmsServer.js"></script>
+<script src="./js/controller/formsetup.js"></script>
+<script type="text/javascript" src="./js/controller/numberToWord.js"></script>
+</body>
+</html>

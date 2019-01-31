@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div class="container-fluid">
+    <div class="container cus_main_row" >
+        <div class="row">
+            <h2 class="pos-header-new">
+                <div>Sms Server</div>
+            </h2>
+        </div>
+        <div class="row inner_row_bg">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="panel">
+                    <div class="panel-body" style="height: 65px;">
+                        <div class="col-md-4 col-lg-3 col-sm-5 col-xs-5">
+                            <form class="form-horizontal ng-pristine ng-valid">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <p class="input-group" style="display: block;">
+                                            <input id="textinput" name="textinput"  type="text"
+                                                   placeholder="Search SMS" ng-model="smsSearchText" class="form-control input-md"
+                                                   ng-keyup="$event.keyCode == 13 ? getSmsList(smsSearchText) : null" />
+                                        </p>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="col-lg-7 col-md-9 col-sm-9">
+
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <button type="button" class="btn btn-default hi_btn"  ng-click="addNewSmsServer()" ng-hide="smsList.length > 0">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="fixed-table-container">
+                    <div class="table_wrap fixed-table-container-inner">
+                        <div class="header-background"></div>
+                        <table data-toggle="table" data-cache="false"  style="margin-bottom: 0px;" data-height="299" class="hi_table table table-hover table-bordered table-striped table-fixed-header">
+                            <thead>
+                            <tr>
+                                <th data-field="cntryname">
+                                    <div class="th-inner">SMS Url</div>
+                                </th>
+                                <th data-field="cntryname">
+                                    <div class="th-inner">API Key</div>
+                                </th>
+                                <th data-field="cntryname">
+                                    <div class="th-inner">Sender Id</div>
+                                </th>
+                                <th data-field="edit"><div class="th-inner"> Edit</div></th>
+                                <th data-field="edit"><div class="th-inner"> Delete</div></th>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="sms in smsList">
+                                <td>{{sms.smsURL}}</td>
+                                <td>{{sms.apiKey}}</td>
+                                <td>{{sms.senderId}}</td>
+                                <td><a id="edit" ng-click="editSMS(sms)" class="edit"><i class="fa fa-pencil-square-o fa-fw orange"></i></a></td>
+                                <td><a id="del_{{$index}}" href="javascript:void(0)" ng-click="deleteSMS(sms)" class="del"><i class="fa fa-trash-o fa-fw orange"></i></a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+                <div class="modal fade SMSServer" tabindex="-1" id="add_new_sms_modal" role="dialog" data-backdrop="static"
+                     aria-labelledby="mySmallModalLabel">
+                    <div class="modal-dialog modal-md">
+                        <div class="modal-content checkout">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <h4 id = "sms-title" class="modal-title">Add SMS Server</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <form class="form-horizontal" name="sms">
+                                            <fieldset>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" for="">SMS URL<span>*</span></label>
+                                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                        <input id="smsId" name="smsId"
+                                                               type="text" placeholder="sms url"
+                                                               ng-readonly="operation === 'Edit' "
+                                                               ng-model="smsUrlText"
+                                                               class="form-control input-md" autocomplete="off" required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" for=""> API KEY<span>*</span></label>
+                                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                        <input id="apiKey" name="apiKey"
+                                                               type="text" placeholder="api key"
+                                                               ng-model="apiKeyText"
+                                                               class="form-control input-md" autocomplete="off" required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" for="">Sender Id<span>*</span></label>
+                                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                        <input id="senderId" name="senderId"
+                                                               allowpattern="[a-z]"
+                                                               type="text" placeholder="sender Id"
+                                                               ng-model="senderIdText"
+                                                               class="form-control input-md" autocomplete="off" required>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-default" data-toggle="modal" ng-disabled="isDisabled"
+                                        data-target=".print-me"  ng-disabled="!sms.$valid" ng-click="saveSMS()">Save
+                                </button>
+                                <button type="button" class="btn btn-default" ng-click="removeSMSDetails()" data-dismiss="modal">Close</button>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+</html>

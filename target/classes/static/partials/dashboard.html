@@ -1,0 +1,176 @@
+<!--style-->
+<style>
+    .headerText {
+        border-bottom: 1px solid #eee;
+        margin: -10px -15px;
+        padding-bottom: 10px;
+    }
+
+    .headerBody1{
+        text-align: center;
+        color: #1b4374;
+        font-weight: 600;
+        font-size: 1.0em;
+        margin: 20px 5px 10px;
+    }
+    .h3, h3 {
+        font-size: 20px !important;
+    }
+
+    .headerBody2{
+        color: #666 !important;
+        font-family: "monospace","sans-serif","Helvetica Neue",Helvetica,Arial;
+        margin-top:0;
+    }
+
+    h3 .headerBody2 {
+        font-size: 14px !important;
+    }
+
+
+    .chart_dimension{
+        max-width: 661px !important;
+        max-height: 230px !important;
+    }
+
+    /*    .panel-body{
+            min-height: 200px;
+        }*/
+
+    .mr-0{
+        margin:0;
+    }
+
+</style>
+<div class="container cus_main_row">
+    <!--<div class="tab">-->
+    <!--<button class="tablinks"><a href="#!/dashboard" style="color:#fff;"> Dashboard </a></button>-->
+    <!--<button class="tablinks"><a href="#!/notification" style="color:#fff;"> Notification </a></button>-->
+    <!--</div>-->
+    <div class="row tab">
+        <div class="col-md-10">
+            <h2 class="pos-header-double active tablinks"  style="border-right: 25px solid #bfcbd9;">
+                <div><a href="#!/dashboard"  style="color:#fff;"> Dashboard </a></div>
+            </h2>
+            <h2 class="pos-header-double tablinks" style="border-right: 25px solid #e0eeff;">
+                <div><a href="#!/notification" style="color:#fff;"> Notification </a></div>
+            </h2>
+        </div>
+    </div>
+
+    <div class="row inner_row_bg" style="margin-top: 8px !important;">
+        <div class="row">
+    <div class="container-fluid dashboard_info">
+        <div class="col-sm-12 col-md-8">
+            <div class="row mr-0">
+                <div class="panel">
+                    <h3 class="pull-right">
+                        <button class="btn btn-xs btn-primary" style="margin-right: 0; width: 35px;"
+                                ng-style="{ 'opacity' : !showLine ? 1 : 0.2}"
+                                ng-click="showLine = false;">
+                            Bar
+                        </button>
+                        <button class="btn btn-xs btn-primary" style="width: 35px;"
+                                ng-style="{ 'opacity' : showLine ? 1 : 0.2}"
+                                ng-click="showLine = true;">
+                            Line
+                        </button>
+                    </h3>
+                    <div class="panel-body"  style="max-height: 275px;">
+                        <canvas id="line" class="chart chart-line chart_dimension"
+                                chart-data="lineData"
+                                chart-colors="colors"
+                                chart-labels="lineLabel"
+                                chart-series="lineSeries"
+                                chart-options="lineOption"
+                                ng-if="showLine">
+                        </canvas>
+                        <canvas id="bar" class="chart chart-bar chart_dimension"
+                                chart-data="lineData"
+                                chart-colors="colors"
+                                chart-labels="lineLabel"
+                                chart-series="lineSeries"
+                                chart-options="lineOption"
+                                ng-if="!showLine">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mr-0">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="panel-body"  style="max-height: 240px;">
+                            <canvas id="doughnut" class="chart chart-doughnut chart_dimension"
+                                    chart-colors="colors"
+                                    chart-data="doughnutTotalAmountData"
+                                    chart-labels="doughnutTotalAmountLabel"
+                                    chart-options="doughnutTotalAmountOption">
+                            </canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-sm-12 col-md-4">
+
+            <div class="row mr-0">
+                <div class="panel">
+                    <i class="fa fa-calendar-check-o first-box-icon"></i>
+                    <div class="panel-body" style="height: 94px; ">
+                         <h3 class="headerText first-box-dashboard">Current Date and Time</h3>
+                        <h2 class="headerBody1">{{currentTime}}</h2>
+                        <h3 class="headerBody2 extra-header">{{currentDate}}</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!--<div class="row mr-0">-->
+                <!--<div class="panel">-->
+                    <!--<i class="fa fa-money  second-box-icon" aria-hidden="true"></i>-->
+                    <!--<div class="panel-body" style="height: 89px; ">-->
+                        <!--<h3 class="headerText second-box-dashboard">cash in hand</h3>-->
+                        <!--<h2 class="headerBody1">{{cashInHand | number:2}}</h2>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <!--<div class="row mr-0">-->
+                <!--<i class="fa fa-bank  third-box-icon" aria-hidden="true"></i>-->
+                <!--<div class="panel">-->
+                    <!--<div class="panel-body" style="height: 79px; ">-->
+                        <!--<h3 class="headerText third-box-dashboard">cash in bank</h3>-->
+                        <!--<h2 class="headerBody1">{{cashInBank | number:2}}</h2>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <!--<div class="row mr-0">-->
+                <!--<i class="fa fa-inbox fourth-box-icon" aria-hidden="true"></i>-->
+                <!--<div class="panel">-->
+                    <!--<div class="panel-body" style="height: 7px; min-height: 92px;">-->
+                        <!--<h3 class="headerText fourth-box-dashboard">Total Receivable</h3>-->
+                        <!--<h2 class="headerBody1">{{totalRecievable | number:2}}</h2>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+
+            <!--<div class="row mr-0">-->
+                <!--<i class="fa fa-credit-card fifth-box-icon" aria-hidden="true"></i>-->
+                <!--<div class="panel">-->
+                    <!--<div class="panel-body" style="height: 81px; ">-->
+                        <!--<h3 class="headerText fifth-box-dashboard">Total Payable</h3>-->
+                        <!--<h2 class="headerBody1">{{totalPayable | number:2}}</h2>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+        </div>
+
+      </div>
+  </div>
+ </div>
+</div>

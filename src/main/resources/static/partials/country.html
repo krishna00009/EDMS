@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div class="container-fluid">
+    <div class="container cus_main_row" style="height: 715px;">
+        <div class="row">
+            <h2 class="pos-header-new">
+                <div>Country</div>
+            </h2>
+        </div>
+        <div class="row inner_row_bg">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="panel">
+                    <div class="panel-body" style="height: 65px;">
+                        <div class="col-md-4 col-lg-3 col-sm-5 col-xs-5">
+                            <form class="form-horizontal ng-pristine ng-valid">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <p class="input-group" style="display: block;">
+                                            <input id="textinput" name="textinput" type="text"
+                                                   placeholder="Search Country" ng-model="searchText" autocomplete="off"
+                                                   class="form-control input-md"
+                                                   ng-keyup="$event.keyCode == 13 ? getPaginatedCountryList(searchText) : null"/>
+                                        </p>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2">
+                                <button type="button" class="btn btn-primary hi_btn"  ng-click="addNewcountryPopulate()">Add</button>
+
+                            </div>
+                            <div class="col-lg-1 col-md-2 col-sm-2">
+                                <button type="submit" id="colButn" class="btn btn-default" data-toggle="modal"
+                                        ng-model="inactiveStatus" data-target=".print-me"
+                                        ng-click="inactiveCountry()">{{ButtonStatus}}
+                                </button>
+                            </div>
+                            <!--<div class="col-sm-1">-->
+                            <!--<button id="countryImport" type="button" class="btn btn-primary hi_btn" ng-click="importPopup()">-->
+                            <!--Country Import-->
+                            <!--</button>-->
+                            <!--</div>-->
+                            <!--<div class="col-sm-3">-->
+                            <!--<button type="button" class="btn btn-default hi_btn" ng-click="importCountry()">-->
+                            <!--Import Country-->
+                            <!--</button>-->
+                            <!--</div>-->
+                            <!--<div class="col-lg-2 col-md-2 col-sm-2">-->
+                            <!--<span class="custom-dropdown custom-dropdown&#45;&#45;white">-->
+                            <!--<select ng-model="exportsType" class="form-control ">-->
+                            <!--<option value=""> Select Type</option>-->
+                            <!--<option value="pdf"> pdf</option>-->
+                            <!--<option value="excel"> Excel</option>-->
+                            <!--</select>-->
+                            <!--</span>-->
+                            <!--</div>-->
+                            <!--<div class="col-lg-2 col-md-3 col-sm-3">-->
+                            <!--<div ng-if="exportsType"><a-->
+                            <!--href="/hospital/countryExport?val={{searchText}}&type={{exportsType}}">-->
+                            <!--<button type="button" class="btn btn-primary hi_btn">Export</button>-->
+                            <!--</a>-->
+                            <!--</div>-->
+                            <!--<div ng-if="!exportsType">-->
+                            <!--<button type="button" class="btn btn-primary hi_btn">Export</button>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <div class="col-sm-1">
+                                <button type="button" class="btn btn-primary hi_btn"  ng-click="backServices()">Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="fixed-table-container">
+                    <div class="table_wrapsasdsafixed-table-container-innerdsad" style="    max-height: 317px;">
+                        <div class="table-responsive">
+                            <table data-toggle="table" data-cache="false" data-height="299" style="margin-bottom: 0;"
+                                   class="hi_table table table-hover table-bordered table-striped table-fixed-header">
+                                <thead>
+                                <tr>
+
+                                    <th data-field="cntryname">
+                                        <div class="th-inner" align="center">Country Name</div></th>
+                                    <th data-field="edit">
+                                        <div class="th-inner" align="center">Status</div></th>
+                                    <th data-field="edit">
+                                        <div class="th-inner" align="center">Edit</div></th>
+                                </tr>
+                                </thead>
+                                <tbody id="parentTable">
+                                <tr ng-repeat="country in countryList">
+                                    <td>{{country.countryName}}</td>
+                                    <td>{{country.status}}</td>
+                                    <!--<td><a id="edit_{{$index}}" href="javascript:void(0)"-->
+                                    <!--ng-click="editCountry(country.countryName)" class="edit"><i-->
+                                    <!--class="fa fa-pencil-square-o fa-fw orange"></i></a></td>-->
+                                    <!--<td><a id="del_{{$index}}" href="javascript:void(0)"-->
+                                    <!--ng-click="deleteCountry(country.countryName)" class="delete"><i-->
+                                    <!--class="fa fa-trash-o fa-fw orange"></i></a></td>-->
+
+                                    <td><button id="edit_{{$index}}" type="button"  href="javascript:void(0)"  class="btn btn-primary hi_btn"  ng-click="editCountry(country.countryName)">Edit</button></td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <div ng-if="(countryList).length==0">
+                                <div id="notFoundDiv" style="color:red; font-weight: bold">No Records Found</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Button added for pagination @rahul-->
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12 pagination_">
+
+                        <button type="button" class="btn btn-default hi_btn" ng-class="{'diabled-class': first}"
+                                ng-disabled="first"
+                                ng-click="getPaginatedCountryList('firstPage')" ng-model="first">First
+                        </button>
+                        <button type="button" class="btn btn-default hi_btn" ng-class="{'diabled-class': prev}"
+                                ng-disabled="prev"
+                                ng-click="getPaginatedCountryList('prevPage')" ng-model="prev">Prev
+                        </button>
+                        <button type="button" class="btn btn-default hi_btn" name="next" ng-disabled="next"
+                                ng-click="getPaginatedCountryList('nextPage')" value="next"
+                                ng-class="{'diabled-class': next}" ng-model="next">Next
+                        </button>
+                        <button type="button" class="btn btn-default hi_btn"
+                                ng-click="getPaginatedCountryList('lastPage')" ng-class="{'diabled-class': last}"
+                                ng-disabled="last"
+                                ng-model="last">Last
+                        </button>
+                    </div>
+                    <div align="center"><span style="color: red;"></span></div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <form class="form-horizontal" id="countryDetails" method="post" ng-submit="saveCountryImport()">
+            <div class="modal fade" tabindex="-1" id="import_Country" role="dialog" data-backdrop="static"
+                 aria-labelledby="mySmallModalLabel_1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Import Country</h4>
+                        </div>
+                        <a href="resource\images\ImportSheets\Country.xlsx" download>Download ExcelSheet</a>
+                        <div class="modal-body checkout-body">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="col-xs-5">
+                                        <input type="file" name="myFile" id="myFile"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" data-toggle="modal"
+                                    ng-disabled="isDisabled">Save
+                            </button>
+                            <button type="button" class="btn btn-primary hi_btn" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <!--<form class="form-horizontal" id="countyDetails" method="post" ng-submit="saveCountryImport()">-->
+        <!--<div class="modal fade" tabindex="-1" id="import_Country" role="dialog" data-backdrop="static"-->
+        <!--aria-labelledby="mySmallModalLabel_1">-->
+        <!--<div class="modal-dialog modal-lg">-->
+        <!--<div class="modal-content">-->
+        <!--<div class="modal-header">-->
+        <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span-->
+        <!--aria-hidden="true">&times;</span></button>-->
+        <!--<h4 class="modal-title">Import Country</h4>-->
+        <!--</div>-->
+        <!--<a href="resource\ImportSheets\Country.xlsx" download>Download ExcelSheet</a>-->
+        <!--<div class="modal-body checkout-body">-->
+        <!--<div class="col-md-6">-->
+        <!--<div class="form-group">-->
+        <!--<div class="col-xs-5">-->
+        <!--<input type="file" name="myFile" id="myFile"/>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="modal-footer">-->
+        <!--<button type="submit" class="btn btn-default" data-toggle="modal"-->
+        <!--ng-disabled="isDisabled">Save-->
+        <!--</button>-->
+        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</form>-->
+
+
+        <div class="modal fade addCustomer" tabindex="-1" id="add_new_country_modal" role="dialog"
+             data-backdrop="static"
+             aria-labelledby="mySmallModalLabel">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content checkout">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 id="country-title" class="modal-title">Add Country</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <form class="form-horizontal" name="form">
+                                    <fieldset>
+                                        <div class="form-group">
+                                            <input type="hidden" ng-model="setupobj.countryId"
+                                                   value="{{setupobj.countryId}}"/>
+                                            <label class="col-md-4 col-sm-4 control-label" for="">Country Name
+                                                <span>*</span></label>
+                                            <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                <input id="CountryName" name="CountryName" alpha-with-space
+                                                       ng-pattern="/[aA-zZ\s]$/"
+                                                       type="text" placeholder="CountryName"
+                                                       ng-model="CountryNameText" maxlength="125"
+                                                       ng-value="setupobj.countryName"
+                                                       class="form-control input-md" autocomplete="off" required>
+                                                <p class="error" ng-show="form.CountryName.$error.pattern">Alphabets
+                                                    only, please.</p>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-4 col-sm-4 control-label" for="">Status</label>
+                                            <div class="col-md-6 col-sm-6">
+                                                <select name="StatusText" id="StatusText" ng-model="StatusText"
+                                                        ng-init="StatusText='Active'" class="form-control input-md">
+                                                    <option value="Active">Active</option>
+                                                    <option value="InActive">InActive</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary hi_btn" data-toggle="modal" ng-disabled="isDisabled"
+                                data-target=".print-me" ng-disabled="!form.$valid" id="submit"
+                                ng-click="saveCountry('add_new_country_modal')">Save
+                        </button>
+                        <button type="button" class="btn btn-primary hi_btn" ng-click="removeCountryDetails()"
+                                data-dismiss="modal">Close
+                        </button>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

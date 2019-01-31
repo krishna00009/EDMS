@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div class="container-fluid">
+    <div class="container cus_main_row" >
+        <div class="row">
+            <h2 class="pos-header-new">
+                <div>Enquiry Form</div>
+            </h2>
+        </div>
+        <div class="row inner_row_bg">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="panel">
+                    <div class="panel-body" style="height: 65px;">
+                        <div class="col-md-4 col-lg-3 col-sm-5 col-xs-5">
+                            <form class="form-horizontal ng-pristine ng-valid">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="col-lg-7 col-md-9 col-sm-9">
+
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <button type="button" class="btn btn-default hi_btn"  ng-click="addEnquiry()">Add Enquiry Form</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="fixed-table-container">
+                        <div class="table_wrap fixed-table-container-inner">
+                            <div class="header-background"> </div>
+                            <table data-toggle="table" data-cache="false" data-height="299" style="margin-bottom: 0;" class="hi_table table table-hover table-bordered table-striped table-fixed-header">
+                                <thead>
+                                <th data-field="cntryname">
+                                    <div class="th-inner" align="center">New Student Enquiry No</div></th>
+                                <th data-field="cntryname">
+                                    <div class="th-inner" align="center">Old Student Enquiry Form No</div>
+                                </th>
+                                <th data-field="cntryname">
+                                    <div class="th-inner" align="center">Student Full Name</div></th>
+                                <th data-field="cntryname">
+                                    <div class="th-inner" align="center">Father Full Name</div></th>
+                                <th data-field="cntryname">
+                                    <div class="th-inner" align="center">Father Mobile</div></th>
+                                <th data-field="cntryname">
+                                    <div class="th-inner" align="center">Father Email</div></th>
+                                <th data-field="cntryname">
+                                    <div class="th-inner" align="center">Edit</div></th>
+                                </tr>
+                                </thead>
+                                <tbody id="parentTable">
+                                <tr ng-repeat="user in enquiryList| filter:searchText">
+                                    <td>{{user.enquiryNo}}</td>
+                                    <td>{{user.oldEnquiryNo}}</td>
+                                    <td>{{user.studentFullName}}</td>
+                                    <td>{{user.fatherFullName}}</td>
+                                    <td>{{user.fatherMobile}}</td>
+                                    <td>{{user.fatherEmail}}</td>
+                                    <!--<td>{{user.email}}</td>-->
+                                    <td><a id="edit" href="javascript:void(0)" ng-click="editEnquiry(user)" class="Edit Student"><i
+                                            class="fa fa-pencil-square-o fa-fw orange"></i></a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade Student" tabindex="-1" id="add_enquiry_master" role="dialog" data-backdrop="static"
+                     aria-labelledby="mySmallModalLabel">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content checkout" style="width: 1050px;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <h4 id="enquiry-title" class="modal-title">A) Student Details</h4>
+                                <!--<button type="button" class="btn btn-primary hi_btn" ng-click="invoice(appointment)">+-->
+                                <!--</button>-->
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <form class="form-horizontal" name="student">
+                                            <div class="col-md-12" style="padding: 0px;">
+                                                <h4 id="appointment" class="modal-title">Enquiry Form:</h4>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="">New
+                                                        Student</label>
+                                                    <div class="col-md-4" style="position:relative;">
+                                                        <input type="radio"  name="patient" ng-model="student"
+                                                               ng-click="addNewStudent()" value="new">New
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="">Existing
+                                                        Student</label>
+                                                    <div class="col-md-4" style="position:relative;">
+                                                        <input type="radio" name="patient" ng-model="student"
+                                                               ng-click="addOldStudent()" value="old">Old
+                                                    </div>
+                                                </div>
+                                                <!--<h3 id="customer" class="modal-title">New Student Details</h3>-->
+                                                <!--<div class="form-group" ng-hide="student=='new'">-->
+                                                    <!--<label class="col-md-6 control-label" for="">Enquiry Form-->
+                                                        <!--No</label>-->
+                                                    <!--<div class="col-md-6"-->
+                                                         <!--style="position:relative;">-->
+                                                        <!--<input id="enquiry" name="enquiry" maxlength="30"-->
+                                                               <!--type="text" placeholder="No."-->
+                                                               <!--ng-model="enquiry" num-with-space-->
+                                                               <!--class="form-control input-md"-->
+                                                               <!--ng-readonly=true>-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
+                                                <div class="form-group" ng-show="student=='old'">
+                                                    <label class="col-md-6 control-label" for="">Enquiry Form
+                                                        No</label>
+                                                    <div class="col-md-6"
+                                                         style="position:relative;">
+                                                        <input id="enquiry" name="enquiry" maxlength="30"
+                                                               type="text" placeholder="No."
+                                                               ng-model="oldenquiry" num-with-space
+                                                               class="form-control input-md">
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group" ng-hide="student=='new'">
+                                                    <label class="col-md-6 control-label" for="">Grade<span style="color:red;">*</span></label>
+                                                    <div class="col-md-6"
+                                                         style="position:relative;">
+                                                        <select class="form-control input-md"
+                                                                ng-model="grade" id="grade" readonly>
+                                                            <!--ng-options="servies.id as servies.name for servies in servicesList">-->
+                                                            <option value="">Select</option>
+                                                            <option value="male">M0</option>
+                                                            <option value="female">M1</option>
+                                                            <option value="female">M2</option>
+                                                            <option value="female">M3</option>
+                                                            <optgroup label="More Grades">
+                                                                <option value="female">1</option>
+                                                                <option value="female">2</option>
+                                                                <option value="female">3</option>
+                                                                <option value="female">4</option>
+                                                                <option value="female">5</option>
+                                                                <option value="female">6</option>
+                                                                <option value="female">7</option>
+                                                                <option value="female">8</option>
+                                                                <option value="female">9</option>
+                                                                <option value="female">10</option>
+                                                            </optgroup>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div class="form-group" ng-hide="student=='new'">
+                                                    <label class="col-md-6 control-label" for="">Branch
+                                                        <span style="color:red;">*</span></label>
+                                                    <div class="col-md-6" style="position:relative;">
+                                                        <input id="division" name="division" maxlength="30"
+                                                               type="text" placeholder="Branch"
+                                                               ng-model="division" alphanumWithSpace
+                                                               class="form-control input-md" required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for="">Student Full Name
+                                                        </label>
+                                                    <div class="col-md-6" style="position:relative;">
+                                                        <input id="StudentFullName" name="StudentFullName" maxlength="150"
+                                                               type="text" placeholder="First name"
+                                                               ng-model="studentFullName" alpha-with-space
+                                                               class="form-control input-md" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for=""> Father Full Name</label>
+                                                    <div class="col-md-6" style="position:relative;">
+                                                        <input id="FatherFullName" name="FatherFullName" maxlength="150"
+                                                               type="text" placeholder="Father Full Name"
+                                                               ng-model="fatherFullName" alpha-with-space
+                                                               class="form-control input-md" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for="">Father Occupation</label>
+                                                    <div class="col-md-6"
+                                                         style="position:relative;">
+                                                        <select class="form-control input-md"
+                                                                ng-model="fatherOccupation" id="FatherOccupation">
+                                                            <!--ng-options="servies.id as servies.name for servies in servicesList">-->
+                                                            <option value="">Select</option>
+                                                            <option value="male">Business</option>
+                                                            <option value="female">Employee</option>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for="">Father Income</label>
+                                                    <div class="col-md-6"
+                                                         style="position:relative;">
+                                                        <select class="form-control input-md"
+                                                                ng-model="fatherIncome" id="FatherIncome">
+                                                            <!--ng-options="servies.id as servies.name for servies in servicesList">-->
+                                                            <option value="">Select</option>
+                                                            <option value="male">Less than 50,000.00</option>
+                                                            <option value="female">50,000.00 to 1,00,000.00</option>
+                                                            <option value="female">More than 1,00,000.00</option>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for="">Mother Full Name
+                                                    </label>
+                                                    <div class="col-md-6" style="position:relative;">
+                                                        <input id="MotherFullName" name="MotherFullName" maxlength="150"
+                                                               type="text" placeholder="Mother Full Name"
+                                                               ng-model="motherFullName" alpha-with-space
+                                                               class="form-control input-md" required>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for="">Mother Occupation</label>
+                                                    <div class="col-md-6"
+                                                         style="position:relative;">
+                                                        <select class="form-control input-md"
+                                                                ng-model="motherOccupation" id="MotherOccupation">
+                                                            <!--ng-options="servies.id as servies.name for servies in servicesList">-->
+                                                            <option value="">Select</option>
+                                                            <option value="male">Business</option>
+                                                            <option value="female">Employee</option>
+                                                            <option value="female">House Wife</option>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for="">Mother Income</label>
+                                                    <div class="col-md-6"
+                                                         style="position:relative;">
+                                                        <select class="form-control input-md"
+                                                                ng-model="motherIncome" id="MotherIncome">
+                                                            <!--ng-options="servies.id as servies.name for servies in servicesList">-->
+                                                            <option value="">Select</option>
+                                                            <option value="male">Less than 50,000.00</option>
+                                                            <option value="female">50,000.00 to 1,00,000.00</option>
+                                                            <option value="female">More than 1,00,000.00</option>
+                                                            <option value="female">NA</option>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for="">Gender</label>
+                                                    <div class="col-md-6"
+                                                         style="position:relative;">
+                                                        <select class="form-control input-md"
+                                                                ng-model="gender" id="gender">
+                                                            <!--ng-options="servies.id as servies.name for servies in servicesList">-->
+                                                            <option value="">Select</option>
+                                                            <option value="male">male</option>
+                                                            <option value="female">female</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for=""
+                                                           style="padding-left: 10px; text-align: right;">Date Of Birth</label>
+                                                    <div class="col-md-6" style="padding-left: 0px;">
+                                                        <p class="input-group">
+                                                            <input type="text" id="AppointmentDate"
+                                                                   ng-model="dob" class="form-control"
+                                                                   ng-change="calculateAge()" readonly
+                                                                   uib-datepicker-popup="{{format}}"
+                                                                   is-open="popup1.opened"
+                                                                   datepicker-options="dateOptions"
+                                                                   close-text="Close"
+                                                                   alt-input-formats="altInputFormats"/>
+                                                            <span class="input-group-btn">
+                                                                     <button type="button" class="btn btn-default"
+                                                                             ng-click="open1()">
+                                                                         <i class="glyphicon glyphicon-calendar"></i></button>
+                                                                     </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for="">Age ::</label>
+                                                    <div class="col-md-6"
+                                                         style="position:relative;">
+                                                        <input id="age" name="age" maxlength="3"
+                                                               type="text" placeholder="Age" readonly
+                                                               ng-model="age" num-with-out-space
+                                                               class="form-control input-md">
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for="">Father Mobile
+                                                    </label>
+                                                    <div class="col-md-6">
+                                                        <input id="FatherphoneNumber" name="FatherphoneNumber"
+                                                               limit-to="16"
+                                                               type="text" mobile-num-with-space
+
+                                                               ng-model="fatherMobile" placeholder="Father Mobile"
+                                                               class="form-control input-md">
+
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for="">Mother Mobile
+                                                    </label>
+                                                    <div class="col-md-6">
+
+                                                        <input id="MotherphoneNumber" name="MotherphoneNumber"
+                                                               limit-to="16"
+                                                               type="text" mobile-num-with-space
+
+                                                               ng-model="motherMobile" placeholder="Mother Mobile"
+                                                               class="form-control input-md">
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for="">Father
+                                                        Email Id</label>
+                                                    <div class="col-md-6" style="position:relative;">
+
+                                                            <input id="fatherEmailId" name="fatherEmailId"
+                                                                   maxlength="45"
+                                                                   type="text"
+                                                                   ng-model="fatherEmail"
+                                                                   class="form-control input-md" required>
+
+                                                    </div>
+                                                </div>
+
+                                                <!--<div class="form-group">-->
+                                                    <!--<label class="col-md-6 control-label" for="">Father Email ID-->
+                                                    <!--</label>-->
+                                                    <!--<div class="col-md-6">-->
+
+                                                        <!--<input id="FatherEmail" name="FatherEmail"-->
+                                                               <!--limit-to="16"-->
+                                                               <!--type="text"-->
+
+                                                               <!--ng-model="fatherEmail" placeholder="FatherEmail"-->
+                                                               <!--class="form-control input-md">-->
+
+                                                    <!--</div>-->
+                                                <!--</div>-->
+
+
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for="">Mother Email ID
+                                                    </label>
+                                                    <div class="col-md-6">
+
+                                                        <input id="MotherEmail" name="MotherEmail"
+                                                               limit-to="46"
+                                                               type="text"
+
+                                                               ng-model="motherEmail"
+                                                               class="form-control input-md" required>
+
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="modal-header">
+
+                                                    <h3 id="old-title" class="modal-title">B) Residential Address</h3>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for="">Residential Address</label>
+                                                    <div class="col-md-6" style="position:relative;">
+                                                    <textarea id="remarks" name="remarks" maxlength="500"
+                                                              type="text"
+                                                              ng-model="area"
+                                                              class="form-control input-md" required>
+                                                    </textarea>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for="">Area
+                                                    </label>
+                                                    <div class="col-md-6">
+                                                        <strong>
+                                                            <input id="Area" name="Area"
+
+                                                                   type="text"
+
+                                                                   ng-model-options='{ debounce: 1000 }'
+                                                                   ng-model="area1" placeholder="Area"
+                                                                   class="form-control input-md">
+                                                        </strong>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for="">Country </label>
+                                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                        <select id="country" name="countryId"
+                                                                ng-model="countryName" ng-change="countryState(countryName)"
+                                                                ng-options="country.countryName as country.countryName for country in countryList"
+                                                                class="form-control input-md">
+                                                            <option value="select">Select</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for="">State </label>
+                                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                        <select id="state" name="stateId" ng-model="stateName"
+                                                                ng-change="stateCity(stateName)"
+                                                                ng-options="state.stateName as
+											state.stateName for state in stateList" class="form-control input-md">
+                                                            <option value="Select">Select</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for="">City </label>
+                                                    <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                        <select id="cityId" name="cityId" ng-model="city"
+                                                                ng-options="city.cityName as
+                                                                city.cityName for city in cityList"
+                                                                class="form-control input-md">
+                                                            <option value="">Select</option>
+                                                        </select>
+                                                    </div>
+                                                    <!--<div class="col-sm-2">-->
+                                                    <!--<button type="button" class="btn btn-primary hi_btn" style="position: absolute; left: 419px; bottom: 2px" ng-click="addNewCity()">+</button>-->
+
+                                                    <!--</div>-->
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for="">PincCode
+                                                    </label>
+                                                    <div class="col-md-6">
+
+                                                        <input id="Pincode" name="Pincode"
+                                                               limit-to="6"
+                                                               type="text" number
+
+                                                               ng-model-options='{ debounce: 1000 }'
+                                                               ng-model="pincode" placeholder="Pincode"
+                                                               class="form-control input-md">
+
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="modal-header">
+
+                                                    <h3 id="old-title" class="modal-title">C) Current School(Applicable for non BSIM Student)</h3>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for="">School Name
+                                                    </label>
+                                                    <div class="col-md-6">
+
+                                                            <input id="SchoolName" name="SchoolName"
+                                                                   limit-to="30"
+                                                                   type="text" alpha-with-space
+                                                                   ng-model="schoolName" placeholder="SchoolName"
+                                                                   class="form-control input-md">
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for="">Grade<span style="color:red;">*</span></label>
+                                                    <div class="col-md-6"
+                                                         style="position:relative;">
+                                                        <select class="form-control input-md"
+                                                                ng-model="grade1" id="gender">
+                                                            <!--ng-options="servies.id as servies.name for servies in servicesList">-->
+                                                            <option value="">Select</option>
+                                                            <option value="male">M0</option>
+                                                            <option value="female">M1</option>
+                                                            <option value="female">M2</option>
+                                                            <option value="female">M3</option>
+                                                            <optgroup label="More Grades">
+                                                                <option value="female">1</option>
+                                                                <option value="female">2</option>
+                                                                <option value="female">3</option>
+                                                                <option value="female">4</option>
+                                                                <option value="female">5</option>
+                                                                <option value="female">6</option>
+                                                                <option value="female">7</option>
+                                                                <option value="female">8</option>
+                                                                <option value="female">9</option>
+                                                                <option value="female">10</option>
+                                                            </optgroup>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for="">Board</label>
+                                                    <div class="col-md-6"
+                                                         style="position:relative;">
+                                                        <select class="form-control input-md"
+                                                                ng-model="board" id="gender">
+                                                            <!--ng-options="servies.id as servies.name for servies in servicesList">-->
+                                                            <option value="">Select</option>
+                                                            <option value="male">CBSE</option>
+                                                            <option value="female">ICSC</option>
+                                                            <option value="female">Montessori </option>
+                                                            <option value="female">Kindergarten</option>
+                                                            <option value="female">Others</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+
+
+
+
+                                                <div class="modal-header">
+
+                                                    <h3 id="old-title" class="modal-title">D) How Do You Know About Us?</h3>
+
+
+
+                                                    <div class="col-md-6"
+                                                         style="position:relative;">
+                                                        <select class="form-control input-md"
+                                                                ng-model="media" id="media">
+
+                                                            <!--ng-options="servies.id as servies.name for servies in servicesList">-->
+                                                            <option value="">Select</option>
+                                                            <option value="male">Existing Student from other branch.</option>
+                                                            <option value="female">Existing Parent reference</option>
+                                                            <optgroup label="Social Media">
+                                                                <option value=" Facebook"> Facebook</option>
+                                                                <option value=" Google"> Google</option>
+                                                                <option value=" Email"> Email</option>
+                                                                <option value=" SMS"> SMS</option>
+                                                                <option value=" Website"> Website</option>
+                                                                <option value=" Watsapp"> Watsapp</option>
+                                                            </optgroup>
+                                                            <option value="female">Newspaper/Magazine</option>
+                                                            <!--<option value="female">Magazine</option>-->
+                                                            <option value="female">Flyers / Banners</option>
+
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="modal-header">
+
+                                                    <h3 id="old-title" class="modal-title">E) Sibling Information(For BSIS Students)</h3>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for="">Siblings</label>
+                                                    <div class="col-md-6"
+                                                         style="position:relative;">
+                                                        <select class="form-control input-md"
+                                                                ng-model="siblings" id="Siblings">
+                                                            <!--ng-options="servies.id as servies.name for servies in servicesList">-->
+                                                            <option value="">Select</option>
+                                                            <option value="male">Nil</option>
+                                                            <option value="female">1</option>
+                                                            <option value="female">2</option>
+                                                            <option value="female">3 or More</option>
+                                                            <!--<option value="female">Others</option>-->
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for="">Full Name
+                                                    </label>
+                                                    <div class="col-md-6">
+
+                                                            <input id="SiblingsFullName" name="SiblingsFullName"
+                                                                   limit-to="16"
+                                                                   type="text" alpha-with-space
+
+                                                                   ng-model-options='{ debounce: 1000 }'
+                                                                   ng-model="siblingsFullName" placeholder="Full Name"
+                                                                   class="form-control input-md">
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for="">Gender</label>
+                                                    <div class="col-md-6"
+                                                         style="position:relative;">
+                                                        <select class="form-control input-md"
+                                                                ng-model="siblingsGender" id="SiblingsGender">
+                                                            <!--ng-options="servies.id as servies.name for servies in servicesList">-->
+                                                            <option value="">Select</option>
+                                                            <option value="male">male</option>
+                                                            <option value="female">female</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+
+                                                <!--<div class="form-group">-->
+                                                    <!--<label class="col-md-6 control-label" for="">Current School</label>-->
+                                                    <!--<div class="col-md-6"-->
+                                                         <!--style="position:relative;">-->
+                                                        <!--<select class="form-control input-md"-->
+                                                                <!--ng-model="currentSchool" id="currentSchool">-->
+                                                            <!--&lt;!&ndash;ng-options="servies.id as servies.name for servies in servicesList">&ndash;&gt;-->
+                                                            <!--<option value="">Select</option>-->
+                                                            <!--<option value="male">Montessori </option>-->
+                                                            <!--<option value="female">Kindergarten</option>-->
+                                                        <!--</select>-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
+
+
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for="">Current School
+                                                    </label>
+                                                    <div class="col-md-6">
+
+                                                            <input id="CurrentSchool" name="CurrentSchool"
+                                                                   limit-to="16"
+                                                                   type="text" alpha-with-space
+
+                                                                   ng-model-options='{ debounce: 1000 }'
+                                                                   ng-model="currentSchool" placeholder="CurrentSchool"
+                                                                   class="form-control input-md">
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for="">Board</label>
+                                                    <div class="col-md-6"
+                                                         style="position:relative;">
+                                                        <select class="form-control input-md"
+                                                                ng-model="siblingsBoard" id="SiblingsBoard">
+                                                            <!--ng-options="servies.id as servies.name for servies in servicesList">-->
+                                                            <option value="">Select</option>
+                                                            <option value="male">CBSE</option>
+                                                            <option value="female">ICSC</option>
+                                                            <option value="female">Montesori</option>
+                                                            <option value="female">Kindergardon</option>
+                                                            <option value="female">Others</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for="">Grade<span style="color:red;">*</span></label>
+                                                    <div class="col-md-6"
+                                                         style="position:relative;">
+                                                        <select class="form-control input-md"
+                                                                ng-model="siblingsGrade" id="SiblingsGrade">
+                                                            <!--ng-options="servies.id as servies.name for servies in servicesList">-->
+                                                            <option value="">Select</option>
+                                                            <option value="male">M0</option>
+                                                            <option value="female">M1</option>
+                                                            <option value="female">M2</option>
+                                                            <option value="female">M3</option>
+                                                            <optgroup label="More Grades">
+                                                                <option value="female">1</option>
+                                                                <option value="female">2</option>
+                                                                <option value="female">3</option>
+                                                                <option value="female">4</option>
+                                                                <option value="female">5</option>
+                                                                <option value="female">6</option>
+                                                                <option value="female">7</option>
+                                                                <option value="female">8</option>
+                                                                <option value="female">9</option>
+                                                                <option value="female">10</option>
+                                                            </optgroup>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for=""
+                                                           style="padding-left: 10px; text-align: right;">Date</label>
+                                                    <div class="col-md-6" style="padding-left: 0px;">
+                                                        <p class="input-group">
+                                                            <input type="text" id="AppointmentDate"
+                                                                   ng-model="siblingsDate" class="form-control"
+
+                                                                   uib-datepicker-popup="{{format}}"
+                                                                   is-open="popup3.opened"
+                                                                   datepicker-options="dateOptions"
+                                                                   close-text="Close"
+                                                                   alt-input-formats="altInputFormats"/>
+                                                            <span class="input-group-btn">
+                                                                     <button type="button" class="btn btn-default"
+                                                                             ng-click="open3()">
+                                                                         <i class="glyphicon glyphicon-calendar"></i></button>
+                                                                     </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="modal-header">
+
+                                                    <h3 id="old-title" class="modal-title">F) For Office Use</h3>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for=""
+                                                           style="padding-left: 10px; text-align: right;">Date</label>
+                                                    <div class="col-md-6" style="padding-left: 0px;">
+                                                        <p class="input-group">
+                                                            <input type="text" id="AppointmentDate"
+                                                                   ng-model="dateofc" class="form-control"
+
+                                                                   uib-datepicker-popup="{{format}}"
+                                                                   is-open="popup2.opened"
+                                                                   datepicker-options="dateOptions"
+                                                                   close-text="Close"
+                                                                   alt-input-formats="altInputFormats"/>
+                                                            <span class="input-group-btn">
+                                                                     <button type="button" class="btn btn-default"
+                                                                             ng-click="open2()">
+                                                                         <i class="glyphicon glyphicon-calendar"></i></button>
+                                                                     </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for="">Attended By
+                                                    </label>
+                                                    <div class="col-md-6">
+
+                                                            <input id="Attended" name="Attended"
+                                                                   limit-to="16"
+                                                                   type="text" alpha-with-space
+
+                                                                   ng-model-options='{ debounce: 1000 }'
+                                                                   ng-model="attended" placeholder="Attended"
+                                                                   class="form-control input-md">
+
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for="">PRO's Remarks</label>
+                                                    <div class="col-md-6" style="position:relative;">
+                                                    <textarea id="Proremarks" name="Proremarks" maxlength="500"
+                                                              type="text" alpha-with-space
+                                                              ng-model="proremarks"
+                                                              class="form-control input-md" required>
+                                                    </textarea>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label" for="">Management Remarks</label>
+                                                    <div class="col-md-6" style="position:relative;">
+                                                    <textarea id="Managementremarks" name="Managementremarks" maxlength="500"
+                                                              type="text" alpha-with-space
+                                                              ng-model="managementremarks"
+                                                              class="form-control input-md" required>
+                                                    </textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer" ng-hide="student=='old'">
+                                <button type="button" class="btn btn-primary" ng-disabled="appointmentDisabled" ng-click="saveStudent()">SaveNew</button>
+                                <button type="button" class="btn btn-primary" ng-click="removeFloors()" data-dismiss="modal">Close
+                                </button>
+                            </div>
+                        <div class="modal-footer" ng-hide="student=='new'">
+                            <button type="button" class="btn btn-primary" ng-disabled="appointmentDisabled" ng-click="saveOldStudent()">SaveOld</button>
+                            <button type="button" class="btn btn-primary" ng-click="removeFloors()" data-dismiss="modal">Close
+                            </button>
+                        </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal fade Student" tabindex="-1" id="add_enquiry_master" role="dialog" data-backdrop="static"
+             aria-labelledby="mySmallModalLabel" style="overflow: auto">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content checkout" width="850px">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 id="patient-title" class="modal-title"></h4>
+                        <!--<button type="button" class="btn btn-primary hi_btn" ng-click="invoice(appointment)">+-->
+                        <!--</button>-->
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <form class="form-horizontal" name="student">
+                                    <fieldset>
+                                        <div class="tab-content">
+                                            <div class="tab-pane fade in active" id="sub_step12">
+                                                <div class="col-md-12" style="padding: 0px;">
+                                                    <div class="col-md-6">
+                                                        <div class="col-md-12">
+                                                            <!--<h3 id="customer" class="modal-title">New Student Details</h3>-->
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">Enquiry Form-->
+                                                                    <!--No</label>-->
+                                                                <!--<div class="col-md-6"-->
+                                                                     <!--style="position:relative;">-->
+                                                                    <!--<input id="enquiry" name="enquiry" maxlength="30"-->
+                                                                           <!--type="text" placeholder="No."-->
+                                                                           <!--ng-model="enquiry" num-with-space-->
+                                                                           <!--class="form-control input-md"-->
+                                                                           <!--ng-readonly=true>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">Grade<span style="color:red;">*</span></label>-->
+                                                                <!--<div class="col-md-6"-->
+                                                                     <!--style="position:relative;">-->
+                                                                    <!--<select class="form-control input-md"-->
+                                                                            <!--ng-model="grade" id="grade" readonly>-->
+                                                                        <!--&lt;!&ndash;ng-options="servies.id as servies.name for servies in servicesList">&ndash;&gt;-->
+                                                                        <!--<option value="">Select</option>-->
+                                                                        <!--<option value="male">M0</option>-->
+                                                                        <!--<option value="female">M1</option>-->
+                                                                        <!--<option value="female">M2</option>-->
+                                                                        <!--<option value="female">M3</option>-->
+                                                                        <!--<optgroup label="More Grades">-->
+                                                                            <!--<option value="female">1</option>-->
+                                                                            <!--<option value="female">2</option>-->
+                                                                            <!--<option value="female">3</option>-->
+                                                                            <!--<option value="female">4</option>-->
+                                                                            <!--<option value="female">5</option>-->
+                                                                            <!--<option value="female">6</option>-->
+                                                                            <!--<option value="female">7</option>-->
+                                                                            <!--<option value="female">8</option>-->
+                                                                            <!--<option value="female">9</option>-->
+                                                                            <!--<option value="female">10</option>-->
+                                                                        <!--</optgroup>-->
+                                                                    <!--</select>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+
+                                                            <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
+                                                            <!--&lt;!&ndash;<label class="col-md-6 control-label" for="">Grade<span style="color:red;">*</span></label>&ndash;&gt;-->
+                                                            <!--&lt;!&ndash;<div class="col-md-6"&ndash;&gt;-->
+                                                            <!--&lt;!&ndash;style="position:relative;">&ndash;&gt;-->
+                                                            <!--&lt;!&ndash;<select class="form-control input-md"&ndash;&gt;-->
+                                                            <!--&lt;!&ndash;ng-model="grade1" id="gender" readonly>&ndash;&gt;-->
+                                                            <!--&lt;!&ndash;&lt;!&ndash;ng-options="servies.id as servies.name for servies in servicesList">&ndash;&gt;&ndash;&gt;-->
+                                                            <!--&lt;!&ndash;<option value="">Select</option>&ndash;&gt;-->
+                                                            <!--&lt;!&ndash;<option value="male">1</option>&ndash;&gt;-->
+                                                            <!--&lt;!&ndash;<option value="female">2</option>&ndash;&gt;-->
+                                                            <!--&lt;!&ndash;<option value="female">3</option>&ndash;&gt;-->
+                                                            <!--&lt;!&ndash;<option value="female">4</option>&ndash;&gt;-->
+                                                            <!--&lt;!&ndash;<option value="female">5</option>&ndash;&gt;-->
+                                                            <!--&lt;!&ndash;<option value="female">6</option>&ndash;&gt;-->
+                                                            <!--&lt;!&ndash;<option value="female">7</option>&ndash;&gt;-->
+                                                            <!--&lt;!&ndash;<option value="female">8</option>&ndash;&gt;-->
+                                                            <!--&lt;!&ndash;<option value="female">9</option>&ndash;&gt;-->
+                                                            <!--&lt;!&ndash;<option value="female">10</option>&ndash;&gt;-->
+                                                            <!--&lt;!&ndash;</select>&ndash;&gt;-->
+                                                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">Division-->
+                                                                    <!--<span style="color:red;">*</span></label>-->
+                                                                <!--<div class="col-md-6" style="position:relative;">-->
+                                                                    <!--<input id="division" name="division" maxlength="30"-->
+                                                                           <!--type="text" placeholder="Division"-->
+                                                                    <!--ng-model="division" alphanumWithSpace-->
+                                                                    <!--class="form-control input-md" required>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">Student Full Name-->
+                                                                    <!--<span style="color:red;">*</span></label>-->
+                                                                <!--<div class="col-md-6" style="position:relative;">-->
+                                                                    <!--<input id="StudentFullName" name="StudentFullName" maxlength="30"-->
+                                                                           <!--type="text" placeholder="First name"-->
+                                                                    <!--ng-model="studentFullName" alpha-with-space-->
+                                                                    <!--class="form-control input-md" required>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for=""> Father Full Name <span style="color:red;">*</span></label>-->
+                                                                <!--<div class="col-md-6" style="position:relative;">-->
+                                                                    <!--<input id="FatherFullName" name="FatherFullName" maxlength="150"-->
+                                                                           <!--type="text" placeholder="Father Full Name"-->
+                                                                           <!--ng-model="fatherFullName" alpha-with-space-->
+                                                                           <!--class="form-control input-md" required>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">Father Occupation</label>-->
+                                                                <!--<div class="col-md-6"-->
+                                                                     <!--style="position:relative;">-->
+                                                                    <!--<select class="form-control input-md"-->
+                                                                            <!--ng-model="fatherOccupation" id="FatherOccupation">-->
+                                                                        <!--&lt;!&ndash;ng-options="servies.id as servies.name for servies in servicesList">&ndash;&gt;-->
+                                                                        <!--<option value="">Select</option>-->
+                                                                        <!--<option value="male">Business</option>-->
+                                                                        <!--<option value="female">Employee</option>-->
+
+                                                                    <!--</select>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">Father Income</label>-->
+                                                                <!--<div class="col-md-6"-->
+                                                                     <!--style="position:relative;">-->
+                                                                    <!--<select class="form-control input-md"-->
+                                                                            <!--ng-model="fatherIncome" id="FatherIncome">-->
+                                                                        <!--&lt;!&ndash;ng-options="servies.id as servies.name for servies in servicesList">&ndash;&gt;-->
+                                                                        <!--<option value="">Select</option>-->
+                                                                        <!--<option value="male">Less than 50,000.00</option>-->
+                                                                        <!--<option value="female">50,000.00 to 1,00,000.00</option>-->
+                                                                        <!--<option value="female">More than 1,00,000.00</option>-->
+
+                                                                    <!--</select>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+
+
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">Mother Full Name-->
+                                                                <!--</label>-->
+                                                                <!--<div class="col-md-6" style="position:relative;">-->
+                                                                    <!--<input id="MotherFullName" name="MotherFullName" maxlength="150"-->
+                                                                           <!--type="text" placeholder="Mother Full Name"-->
+                                                                           <!--ng-model="motherFullName" alpha-with-space-->
+                                                                           <!--class="form-control input-md" required>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">Mother Occupation</label>-->
+                                                                <!--<div class="col-md-6"-->
+                                                                     <!--style="position:relative;">-->
+                                                                    <!--<select class="form-control input-md"-->
+                                                                            <!--ng-model="motherOccupation" id="MotherOccupation">-->
+                                                                        <!--&lt;!&ndash;ng-options="servies.id as servies.name for servies in servicesList">&ndash;&gt;-->
+                                                                        <!--<option value="">Select</option>-->
+                                                                        <!--<option value="male">Business</option>-->
+                                                                        <!--<option value="female">Employee</option>-->
+                                                                        <!--<option value="female">House Wife</option>-->
+
+                                                                    <!--</select>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">Mother Income</label>-->
+                                                                <!--<div class="col-md-6"-->
+                                                                     <!--style="position:relative;">-->
+                                                                    <!--<select class="form-control input-md"-->
+                                                                            <!--ng-model="motherIncome" id="MotherIncome">-->
+                                                                        <!--&lt;!&ndash;ng-options="servies.id as servies.name for servies in servicesList">&ndash;&gt;-->
+                                                                        <!--<option value="">Select</option>-->
+                                                                        <!--<option value="male">Less than 50,000.00</option>-->
+                                                                        <!--<option value="female">50,000.00 to 1,00,000.00</option>-->
+                                                                        <!--<option value="female">More than 1,00,000.00</option>-->
+                                                                        <!--<option value="female">NA</option>-->
+
+                                                                    <!--</select>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">Gender</label>-->
+                                                                <!--<div class="col-md-6"-->
+                                                                     <!--style="position:relative;">-->
+                                                                    <!--<select class="form-control input-md"-->
+                                                                            <!--ng-model="gender" id="gender">-->
+                                                                        <!--&lt;!&ndash;ng-options="servies.id as servies.name for servies in servicesList">&ndash;&gt;-->
+                                                                        <!--<option value="">Select</option>-->
+                                                                        <!--<option value="male">male</option>-->
+                                                                        <!--<option value="female">female</option>-->
+                                                                    <!--</select>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+
+
+
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for=""-->
+                                                                       <!--style="padding-left: 61px; text-align: left;">Date Of Birth</label>-->
+                                                                <!--<div class="col-md-6" style="padding-left: 0px;">-->
+                                                                    <!--<p class="input-group">-->
+                                                                        <!--<input type="text" id="AppointmentDate"-->
+                                                                               <!--ng-model="dob" class="form-control"-->
+                                                                                <!--ng-change="calculateAge()" readonly-->
+                                                                               <!--uib-datepicker-popup="{{format}}"-->
+                                                                               <!--is-open="popup1.opened"-->
+                                                                               <!--datepicker-options="dateOptions"-->
+                                                                               <!--close-text="Close"-->
+                                                                               <!--alt-input-formats="altInputFormats"/>-->
+                                                                        <!--<span class="input-group-btn">-->
+                                                                     <!--<button type="button" class="btn btn-default"-->
+                                                                             <!--ng-click="open1()">-->
+                                                                         <!--<i class="glyphicon glyphicon-calendar"></i></button>-->
+                                                                     <!--</span>-->
+                                                                    <!--</p>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">Age ::</label>-->
+                                                                <!--<div class="col-md-6"-->
+                                                                     <!--style="position:relative;">-->
+                                                                    <!--<input id="age" name="age" maxlength="3"-->
+                                                                           <!--type="text" placeholder="Age" readonly-->
+                                                                           <!--ng-model="age" num-with-out-space-->
+                                                                           <!--class="form-control input-md">-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">Father Mobile-->
+                                                                <!--</label>-->
+                                                                <!--<div class="col-md-6">-->
+                                                                        <!--<input id="FatherphoneNumber" name="FatherphoneNumber"-->
+                                                                               <!--limit-to="16"-->
+                                                                               <!--type="text" mobile-num-with-space-->
+
+                                                                               <!--ng-model-options='{ debounce: 1000 }'-->
+                                                                               <!--ng-model="fatherMobile" placeholder="Father Mobile"-->
+                                                                               <!--class="form-control input-md">-->
+                                                                    <!---->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+
+
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">Mother Mobile-->
+                                                                <!--</label>-->
+                                                                <!--<div class="col-md-6">-->
+                                                                    <!---->
+                                                                        <!--<input id="MotherphoneNumber" name="MotherphoneNumber"-->
+                                                                               <!--limit-to="16"-->
+                                                                               <!--type="text" mobile-num-with-space-->
+
+                                                                        <!--ng-model-options='{ debounce: 1000 }'-->
+                                                                        <!--ng-model="motherMobile" placeholder="Mother Mobile"-->
+                                                                        <!--class="form-control input-md">-->
+                                                                    <!---->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">Father Email ID-->
+                                                                <!--</label>-->
+                                                                <!--<div class="col-md-6">-->
+                                                                    <!---->
+                                                                        <!--<input id="FatherEmail" name="FatherEmail"-->
+                                                                               <!--limit-to="16"-->
+                                                                               <!--type="text"-->
+
+                                                                        <!--ng-model="fatherEmail" placeholder="FatherEmail"-->
+                                                                        <!--class="form-control input-md">-->
+                                                                    <!---->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">Mother Email ID-->
+                                                                <!--</label>-->
+                                                                <!--<div class="col-md-6">-->
+                                                                    <!---->
+                                                                        <!--<input id="MotherEmail" name="MotherEmail"-->
+                                                                               <!--limit-to="16"-->
+                                                                               <!--type="text"-->
+
+                                                                        <!--ng-model="motherEmail" placeholder="MotherEmail"-->
+                                                                        <!--class="form-control input-md">-->
+                                                                    <!---->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+
+                                                            <!--<div class="modal-header">-->
+
+                                                                <!--<h3 id="old-title" class="modal-title">B) Residential Address</h3>-->
+                                                            <!--</div>-->
+
+
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">Residential Address</label>-->
+                                                                <!--<div class="col-md-6" style="position:relative;">-->
+                                                    <!--<textarea id="remarks" name="remarks" maxlength="500"-->
+                                                              <!--type="text"-->
+                                                              <!--ng-model="area"-->
+                                                              <!--class="form-control input-md" required>-->
+                                                    <!--</textarea>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">Area-->
+                                                                <!--</label>-->
+                                                                <!--<div class="col-md-6">-->
+                                                                    <!--<strong>-->
+                                                                        <!--<input id="Area" name="Area"-->
+
+                                                                               <!--type="text"-->
+
+                                                                        <!--ng-model-options='{ debounce: 1000 }'-->
+                                                                        <!--ng-model="area1" placeholder="Area"-->
+                                                                        <!--class="form-control input-md">-->
+                                                                    <!--</strong>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">Country </label>-->
+                                                                <!--<div class="col-md-6 col-sm-6" style="position:relative;">-->
+                                                                    <!--<select id="country" name="countryId"-->
+                                                                            <!--ng-model="countryName" ng-change="countryState(countryName)"-->
+                                                                            <!--ng-options="country.countryName as country.countryName for country in countryList"-->
+                                                                            <!--class="form-control input-md">-->
+                                                                        <!--<option value="select">Select</option>-->
+                                                                    <!--</select>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">State </label>-->
+                                                                <!--<div class="col-md-6 col-sm-6" style="position:relative;">-->
+                                                                    <!--<select id="state" name="stateId" ng-model="stateName"-->
+                                                                            <!--ng-change="stateCity(stateName)"-->
+                                                                            <!--ng-options="state.stateName as-->
+											<!--state.stateName for state in stateList" class="form-control input-md">-->
+                                                                        <!--<option value="Select">Select</option>-->
+                                                                    <!--</select>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">City </label>-->
+                                                                <!--<div class="col-md-6 col-sm-6" style="position:relative;">-->
+                                                                    <!--<select id="cityId" name="cityId" ng-model="city"-->
+                                                                            <!--ng-options="city.cityName as-->
+                                                                <!--city.cityName for city in cityList"-->
+                                                                            <!--class="form-control input-md">-->
+                                                                        <!--<option value="">Select</option>-->
+                                                                    <!--</select>-->
+                                                                <!--</div>-->
+                                                                <!--&lt;!&ndash;<div class="col-sm-2">&ndash;&gt;-->
+                                                                <!--&lt;!&ndash;<button type="button" class="btn btn-primary hi_btn" style="position: absolute; left: 419px; bottom: 2px" ng-click="addNewCity()">+</button>&ndash;&gt;-->
+
+                                                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                                            <!--</div>-->
+
+
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">PincCode-->
+                                                                <!--</label>-->
+                                                                <!--<div class="col-md-6">-->
+                                                                    <!---->
+                                                                        <!--<input id="Pincode" name="Pincode"-->
+                                                                               <!--limit-to="6"-->
+                                                                               <!--type="text" number-->
+
+                                                                        <!--ng-model-options='{ debounce: 1000 }'-->
+                                                                        <!--ng-model="pincode" placeholder="Pincode"-->
+                                                                        <!--class="form-control input-md">-->
+                                                                    <!---->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+
+                                                            <!--<div class="modal-header">-->
+
+                                                                <!--<h3 id="old-title" class="modal-title">C) Current School(Applicable for non BSIM Student)</h3>-->
+                                                            <!--</div>-->
+
+
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">School Name-->
+                                                                <!--</label>-->
+                                                                <!--<div class="col-md-6">-->
+                                                                    <!--<strong>-->
+                                                                        <!--<input id="SchoolName" name="SchoolName"-->
+                                                                               <!--limit-to="16"-->
+                                                                               <!--type="text" alpha-with-space-->
+
+                                                                        <!--ng-model-options='{ debounce: 1000 }'-->
+                                                                        <!--ng-model="schoolName" placeholder="SchoolName"-->
+                                                                        <!--class="form-control input-md">-->
+                                                                    <!--</strong>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">Grade<span style="color:red;">*</span></label>-->
+                                                                <!--<div class="col-md-6"-->
+                                                                     <!--style="position:relative;">-->
+                                                                    <!--<select class="form-control input-md"-->
+                                                                            <!--ng-model="grade" id="gender">-->
+                                                                        <!--&lt;!&ndash;ng-options="servies.id as servies.name for servies in servicesList">&ndash;&gt;-->
+                                                                        <!--<option value="">Select</option>-->
+                                                                        <!--<option value="male">M0</option>-->
+                                                                        <!--<option value="female">M1</option>-->
+                                                                        <!--<option value="female">M2</option>-->
+                                                                        <!--<option value="female">M3</option>-->
+                                                                        <!--<optgroup label="More Grades">-->
+                                                                            <!--<option value="female">1</option>-->
+                                                                            <!--<option value="female">2</option>-->
+                                                                            <!--<option value="female">3</option>-->
+                                                                            <!--<option value="female">4</option>-->
+                                                                            <!--<option value="female">5</option>-->
+                                                                            <!--<option value="female">6</option>-->
+                                                                            <!--<option value="female">7</option>-->
+                                                                            <!--<option value="female">8</option>-->
+                                                                            <!--<option value="female">9</option>-->
+                                                                            <!--<option value="female">10</option>-->
+                                                                        <!--</optgroup>-->
+                                                                    <!--</select>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">Board</label>-->
+                                                                <!--<div class="col-md-6"-->
+                                                                     <!--style="position:relative;">-->
+                                                                    <!--<select class="form-control input-md"-->
+                                                                            <!--ng-model="board" id="gender">-->
+                                                                        <!--&lt;!&ndash;ng-options="servies.id as servies.name for servies in servicesList">&ndash;&gt;-->
+                                                                        <!--<option value="">Select</option>-->
+                                                                        <!--<option value="male">CBSE</option>-->
+                                                                        <!--<option value="female">ICSC</option>-->
+                                                                        <!--<option value="female">Montesori</option>-->
+                                                                        <!--<option value="female">Kindergardon</option>-->
+                                                                        <!--<option value="female">Others</option>-->
+                                                                    <!--</select>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+
+
+
+
+                                                            <!--<div class="modal-header">-->
+
+                                                                <!--<h3 id="old-title" class="modal-title">D) How Do You Know About Us?</h3>-->
+
+
+
+                                                                <!--<div class="col-md-6"-->
+                                                                     <!--style="position:relative;">-->
+                                                                    <!--<select class="form-control input-md"-->
+                                                                            <!--ng-model="media" id="media">-->
+
+                                                                        <!--&lt;!&ndash;ng-options="servies.id as servies.name for servies in servicesList">&ndash;&gt;-->
+                                                                        <!--<option value="">Select</option>-->
+                                                                        <!--<option value="male">Existing Student from other branch.</option>-->
+                                                                        <!--<option value="female">Existing Parent reference</option>-->
+                                                                        <!--<optgroup label="Social Media">-->
+                                                                            <!--<option value=" Facebook"> Facebook</option>-->
+                                                                            <!--<option value=" Google"> Google</option>-->
+                                                                            <!--<option value=" Email"> Email</option>-->
+                                                                            <!--<option value=" SMS"> SMS</option>-->
+                                                                            <!--<option value=" Website"> Website</option>-->
+                                                                            <!--<option value=" Watsapp"> Watsapp</option>-->
+                                                                        <!--</optgroup>-->
+                                                                        <!--<option value="female">Newspaper/Magazine</option>-->
+                                                                        <!--&lt;!&ndash;<option value="female">Magazine</option>&ndash;&gt;-->
+                                                                        <!--<option value="female">Flyers / Banners</option>-->
+
+
+                                                                    <!--</select>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+
+                                                            <!--<div class="modal-header">-->
+
+                                                                <!--<h3 id="old-title" class="modal-title">E) Sibling Information(For BSIS Students)</h3>-->
+                                                            <!--</div>-->
+
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">Siblings</label>-->
+                                                                <!--<div class="col-md-6"-->
+                                                                     <!--style="position:relative;">-->
+                                                                    <!--<select class="form-control input-md"-->
+                                                                            <!--ng-model="siblings" id="Siblings">-->
+                                                                        <!--&lt;!&ndash;ng-options="servies.id as servies.name for servies in servicesList">&ndash;&gt;-->
+                                                                        <!--<option value="">Select</option>-->
+                                                                        <!--<option value="male">Nil</option>-->
+                                                                        <!--<option value="female">1</option>-->
+                                                                        <!--<option value="female">2</option>-->
+                                                                        <!--<option value="female">3 or More</option>-->
+                                                                        <!--&lt;!&ndash;<option value="female">Others</option>&ndash;&gt;-->
+                                                                    <!--</select>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">Full Name-->
+                                                                <!--</label>-->
+                                                                <!--<div class="col-md-6">-->
+                                                                    <!--<strong>-->
+                                                                        <!--<input id="SiblingsFullName" name="SiblingsFullName"-->
+                                                                               <!--limit-to="16"-->
+                                                                               <!--type="text" alpha-with-space-->
+
+                                                                        <!--ng-model-options='{ debounce: 1000 }'-->
+                                                                        <!--ng-model="siblingsFullName" placeholder="Full Name"-->
+                                                                        <!--class="form-control input-md">-->
+                                                                    <!--</strong>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">Gender</label>-->
+                                                                <!--<div class="col-md-6"-->
+                                                                     <!--style="position:relative;">-->
+                                                                    <!--<select class="form-control input-md"-->
+                                                                            <!--ng-model="siblingsGender" id="SiblingsGender">-->
+                                                                        <!--&lt;!&ndash;ng-options="servies.id as servies.name for servies in servicesList">&ndash;&gt;-->
+                                                                        <!--<option value="">Select</option>-->
+                                                                        <!--<option value="male">male</option>-->
+                                                                        <!--<option value="female">female</option>-->
+                                                                    <!--</select>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">Current School-->
+                                                                <!--</label>-->
+                                                                <!--<div class="col-md-6">-->
+                                                                    <!--<strong>-->
+                                                                        <!--<input id="CurrentSchool" name="CurrentSchool"-->
+                                                                               <!--limit-to="16"-->
+                                                                               <!--type="text" alpha-with-space-->
+
+                                                                        <!--ng-model-options='{ debounce: 1000 }'-->
+                                                                        <!--ng-model="currentSchool" placeholder="CurrentSchool"-->
+                                                                        <!--class="form-control input-md">-->
+                                                                    <!--</strong>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">Board</label>-->
+                                                                <!--<div class="col-md-6"-->
+                                                                     <!--style="position:relative;">-->
+                                                                    <!--<select class="form-control input-md"-->
+                                                                            <!--ng-model="siblingsBoard" id="SiblingsBoard">-->
+                                                                        <!--&lt;!&ndash;ng-options="servies.id as servies.name for servies in servicesList">&ndash;&gt;-->
+                                                                        <!--<option value="">Select</option>-->
+                                                                        <!--<option value="male">CBSE</option>-->
+                                                                        <!--<option value="female">ICSC</option>-->
+                                                                        <!--<option value="female">Montesori</option>-->
+                                                                        <!--<option value="female">Kindergardon</option>-->
+                                                                        <!--<option value="female">Others</option>-->
+                                                                    <!--</select>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">Grade<span style="color:red;">*</span></label>-->
+                                                                <!--<div class="col-md-6"-->
+                                                                     <!--style="position:relative;">-->
+                                                                    <!--<select class="form-control input-md"-->
+                                                                            <!--ng-model="siblingsGrade" id="SiblingsGrade">-->
+                                                                        <!--&lt;!&ndash;ng-options="servies.id as servies.name for servies in servicesList">&ndash;&gt;-->
+                                                                        <!--<option value="">Select</option>-->
+                                                                        <!--<option value="male">M0</option>-->
+                                                                        <!--<option value="female">M1</option>-->
+                                                                        <!--<option value="female">M2</option>-->
+                                                                        <!--<option value="female">M3</option>-->
+                                                                        <!--<optgroup label="More Grades">-->
+                                                                            <!--<option value="female">1</option>-->
+                                                                            <!--<option value="female">2</option>-->
+                                                                            <!--<option value="female">3</option>-->
+                                                                            <!--<option value="female">4</option>-->
+                                                                            <!--<option value="female">5</option>-->
+                                                                            <!--<option value="female">6</option>-->
+                                                                            <!--<option value="female">7</option>-->
+                                                                            <!--<option value="female">8</option>-->
+                                                                            <!--<option value="female">9</option>-->
+                                                                            <!--<option value="female">10</option>-->
+                                                                        <!--</optgroup>-->
+                                                                    <!--</select>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+                                                            <!--<div class="modal-header">-->
+
+                                                                <!--<h3 id="old-title" class="modal-title">F) For Office Use</h3>-->
+                                                            <!--</div>-->
+
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for=""-->
+                                                                       <!--style="padding-left: 61px; text-align: left;">Date</label>-->
+                                                                <!--<div class="col-md-6" style="padding-left: 0px;">-->
+                                                                    <!--<p class="input-group">-->
+                                                                        <!--<input type="text" id="AppointmentDate"-->
+                                                                               <!--ng-model="dateofc" class="form-control"-->
+
+                                                                               <!--uib-datepicker-popup="{{format}}"-->
+                                                                               <!--is-open="popup2.opened"-->
+                                                                               <!--datepicker-options="dateOptions"-->
+                                                                               <!--close-text="Close"-->
+                                                                               <!--alt-input-formats="altInputFormats"/>-->
+                                                                        <!--<span class="input-group-btn">-->
+                                                                     <!--<button type="button" class="btn btn-default"-->
+                                                                             <!--ng-click="open2()">-->
+                                                                         <!--<i class="glyphicon glyphicon-calendar"></i></button>-->
+                                                                     <!--</span>-->
+                                                                    <!--</p>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">Attended By-->
+                                                                <!--</label>-->
+                                                                <!--<div class="col-md-6">-->
+                                                                    <!--<strong>-->
+                                                                        <!--<input id="Attended" name="Attended"-->
+                                                                               <!--limit-to="16"-->
+                                                                               <!--type="text" alpha-with-space-->
+
+                                                                        <!--ng-model-options='{ debounce: 1000 }'-->
+                                                                        <!--ng-model="attended" placeholder="Attended"-->
+                                                                        <!--class="form-control input-md">-->
+                                                                    <!--</strong>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">PRO's Remarks</label>-->
+                                                                <!--<div class="col-md-6" style="position:relative;">-->
+                                                    <!--<textarea id="Proremarks" name="Proremarks" maxlength="500"-->
+                                                              <!--type="text" alpha-with-space-->
+                                                              <!--ng-model="proremarks"-->
+                                                              <!--class="form-control input-md" required>-->
+                                                    <!--</textarea>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+
+                                                            <!--<div class="form-group">-->
+                                                                <!--<label class="col-md-6 control-label" for="">Management Remarks</label>-->
+                                                                <!--<div class="col-md-6" style="position:relative;">-->
+                                                    <!--<textarea id="Managementremarks" name="Managementremarks" maxlength="500"-->
+                                                              <!--type="text" alpha-with-space-->
+                                                              <!--ng-model="managementremarks"-->
+                                                              <!--class="form-control input-md" required>-->
+                                                    <!--</textarea>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" ng-disabled="appointmentDisabled" ng-click="saveStudent()">Save</button>
+                                    <button type="button" class="btn btn-primary" ng-click="removeFloors()" data-dismiss="modal">Close
+                                    </button>
+                                </div>  </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+</body>
+</html>

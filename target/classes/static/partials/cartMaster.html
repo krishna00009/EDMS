@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+<div class="container-fluid">
+    <div class="container cus_main_row" >
+        <div class="row">
+            <h2 class="pos-header-new">
+                <div>Cart Master</div>
+            </h2>
+        </div>
+        <div class="row inner_row_bg">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="panel">
+                    <div class="panel-body" style="height: 65px;">
+                        <div class="col-md-4 col-lg-3 col-sm-5 col-xs-5">
+                            <form class="form-horizontal ng-pristine ng-valid">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-lg-7 col-md-9 col-sm-9">
+
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <button id="dest_map" type="button" class="btn btn-default hi_btn"  ng-click="adddcartMaster()">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="fixed-table-container">
+                            <div class="table_wrap fixed-table-container-inner">
+                                <div class="header-background"> </div>
+                                <table data-toggle="table" data-cache="false" data-height="299"  style="margin-bottom: 0px;" class="hi_table table table-hover table-bordered table-striped table-fixed-header">
+                                    <thead>
+                                    <tr>
+                                        <th data-field=""><div class="th-inner">UserName</div></th>
+                                        <th data-field=""><div class="th-inner">Email</div></th>
+                                        <th data-field=""><div class="th-inner">Password</div></th>
+
+                                    <tbody id="parentTable">
+                                    <input type="hidden" ng-model="id" value="{{cartMasterId.id}}"/>
+                                    <tr ng-repeat="cart in cartMasterList| filter:searchText">
+                                        <td>{{cart.userName}}</td>
+                                        <td>{{cart.email}}</td>
+                                        <td>{{cart.password}}</td>
+                                        <!--<td><a id="destinationmap_edit_{{$index}}" href="javascript:void(0)" ng-click="editdestMap(map)" class="edit"><i class="fa fa-pencil-square-o fa-fw orange"></i></a></td>-->
+
+
+
+
+                                        <!--</tr>-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="modal fade ExchangeRate" tabindex="-1" id="add_cart_master" role="dialog" data-backdrop="static"
+             aria-labelledby="mySmallModalLabel">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content checkout">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4  class="modal-title" id="title" >Add CartMaster</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <form class="form-horizontal" name="mail">
+                                    <fieldset>
+                                        <input type="hidden" ng-model="mapobj.id" value="{{mapobj.id}}"/>
+
+                                        <div class="form-group">
+                                            <label class="col-md-4 col-sm-4 control-label" for="">UserName</label>
+                                            <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                <input id="UserName" name="UserName"
+                                                       type="text" placeholder="UserName"
+                                                       ng-model="userName"
+                                                       class="form-control input-md" autocomplete="off">
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-4 col-sm-4 control-label" for="">Email</label>
+                                            <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                <input id="Email" name="Email"
+                                                       type="text" placeholder="Email"
+                                                       ng-model="email"
+                                                       class="form-control input-md" autocomplete="off">
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-4 col-sm-4 control-label" for="">Password</label>
+                                            <div class="col-md-6 col-sm-6" style="position:relative;">
+                                                <input id="Password" name="Password"
+                                                       type="text" placeholder="Password"
+                                                       ng-model="password"
+                                                       class="form-control input-md" autocomplete="off">
+
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-default" data-toggle="modal"
+                                        data-target=".print-me" ng-click="savecartMaster()">save
+                                </button>
+                                <button type="button" class="btn btn-default"  ng-click="removecartMaster()"data-dismiss="modal">close</button>
+
+                            </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                        </div>
+
+                    </div>
+                </div>
+                </div>
+
+</body>
+</html>

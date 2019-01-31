@@ -1,0 +1,221 @@
+<div class="modal fade" tabindex="-1" id="generateReceipt21212" role="dialog"
+     data-backdrop="static" aria-labelledby="mySmallModalLabel">
+<div class="row" style="width: 600px;">
+    <style>
+        h1, h2, h3, h4, h5, h6 {
+            margin: 0;
+            font-family: 'Karla', sans-serif;
+            font-weight: bold;
+            color: #317eac;
+            text-rendering: optimizelegibility;
+        }
+        hr {
+            margin: 18px 0;
+            border: 0;
+            border-top: 1px solid #f5f5f5;
+            border-bottom: 1px solid #ffffff;
+        }
+
+        #feeHeading p {
+            width: auto !important;
+            display: inline-block !important;
+            border: 1px solid #000000 !important;
+            padding: 5px 20px !important;
+        }
+
+	#feeHeading {
+	    margine-right: 50px;
+	    text-align: center;
+	    margin-left: 0px;
+	}
+    </style>
+    <div class="modal fade receipt bs-check" tabindex="-1" id="generateReceipt" role="dialog"
+         data-backdrop="static" aria-labelledby="mySmallModalLabel">
+    <div class="reciept_title" style="width: 600px">
+        <h2 align="left">
+            <strong>
+                <div style="text-align: center;">
+                    <a href="http://brainystars.com/wp-content/themes/brainystar/images/logo.png">
+                        <img id="logo" src="http://brainystars.com/wp-content/themes/brainystar/images/logo.png">
+                    </a>
+                </div>
+                <hr id="null">
+                <div style="font-size: 10pt; text-align: center;">
+               <span style="font-family: Arial; font-size: 10pt;">
+               <b>
+               <span style="font-size: 13.3333px;">#12, 30th Cross, Opp. Sagar Hospital,&nbsp;</span>
+               <span style="font-size: 13.3333px;">Jayanagar 4th Block,&nbsp;</span>
+               <span style="font-size: 13.3333px;">&nbsp;Bangalore - 560 041.</span>
+               </b>
+               </span>
+                </div>
+                <div style="font-size: 10pt; text-align: center;">
+                    <hr id="null">
+                </div>
+            </strong>
+        </h2>
+        <p align="center"><strong>Telephone: +91 9742525888&nbsp; Email: info@brainystars.com<br></strong></p>
+        <div><strong><br></strong></div>
+        <p></p>
+    </div>
+    <div class="bottom_text" style="width: 600px" id="feeHeading">
+        <p><strong>FEE RECEIPT</strong></p>
+    </div>
+    <div class="bottom_text"  style="width: 600px">
+        <table  class="table amount" border="0" style="width: 600px">
+            <tr>
+                <td style="width: 50%; text-align: left;">
+                    <table style="width: 80%; margin-left: 20%;">
+                        <tr>
+                            <td><p><strong>Name: </strong>Mohammed Zaid</p></td>
+                        </tr>
+                        <tr>
+                            <td><p><strong>Admission No: </strong>0MMO14D00001</p></td>
+                        </tr>
+                        <tr>
+                            <td><p><strong>Grade: </strong>M1 , A</p></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                        </tr>
+
+                    </table>
+                </td>
+                <td style="width: 50%;">
+                    <table style="width: 100%; text-align: right;">
+                        <tr>
+                            <td><p><strong>Receipt No: </strong>1000</p></td>
+                        </tr>
+                        <tr>
+                            <td><p><strong>Date: </strong>24-Nov-2015</p></td>
+                        </tr>
+                        <tr>
+                            <td><p><strong>Academic Year: </strong>2014-2015</p></td>
+                        </tr>
+
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="fee_table" style="width:600px;">
+        <table class="table amount" border="1" width="100%;" style="border-collapse: collapse;">
+            <tbody>
+            <tr>
+                <td width="50px" align="center"><b>Sl.No</b></td>
+                <td align="left"><span style="text-align:center !important; display: block;"><b>Particulars</b></span></td>
+                <td align="center"><span style="text-align:center !important; display: block;"><b>Amount</b></span></td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Tuition Fee</td>
+                <td>30000.0</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Admission Fee Non Refundable</td>
+                <td>10000.0</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td><span class="total">Total</span></td>
+                <td>40000.00</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td><span class="total">Previous Due</span></td>
+                <td>0.00</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td><span class="total">Paid</span></td>
+                <td>0.00</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td><span class="total">Due</span></td>
+                <td>0.00</td>
+            </tr>
+            <!--/ final total row-->
+            </tbody>
+        </table>
+    </div>
+    <div class="row" style="width: 600px">
+        <!-- new wrapper -->
+        <div class="modeofpayment" style="width: 100%;">
+            <p><b>Mode Of Payment:   Cash</b></p>
+            <input id="paymentMode" hidden="hidden" value="Cash">
+            <table id="ChequeTable" style="width: 100%;">
+                <tbody>
+                <tr>
+                    <td>
+                        <p>1.</p>
+                    </td>
+                    <td style="width: 150px;">
+                        <p>Cheque No: null</p>
+                    </td>
+                    <td>
+                        <p>Bank Name: null</p>
+                    </td>
+                    <td>
+                        <p>Amount: 40000.0</p>
+                    </td>
+                    <td>
+                        <p>Date: 24-Nov-2015</p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <table id="DDTable" style="width: 100%;">
+                <tbody>
+                <tr>
+                    <td>
+                        <p>1.</p>
+                    </td>
+                    <td style="width: 150px;">
+                        <p>DD No: null</p>
+                    </td>
+                    <td>
+                        <p>Bank Name: null</p>
+                    </td>
+                    <td>
+                        <p>Amount: 40000.0</p>
+                    </td>
+                    <td>
+                        <p>Date: 24-Nov-2015</p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <table id="OtherTable" style="width: 100%;">
+                <tbody>
+                <tr>
+                    <td>
+                        <p>1.</p>
+                    </td>
+                    <td style="width: 150px;">
+                        <p>Other Details: null</p>
+                    </td>
+                    <td>
+                        <p>Bank Name: null</p>
+                    </td>
+                    <td>
+                        <p>Amount: 40000.0</p>
+                    </td>
+                    <td>
+                        <p>Date: 24-Nov-2015</p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>&nbsp;</div>
+        <div style="float:left;padding-right:40px;">
+            <p><b>Note:</b>Please Preserve this receipt carefully &amp; produce when required.</p>
+        </div>
+        <div>&nbsp;</div>
+        <div style="float:right;padding-right:40px;" id="teacherSignature1">
+            <p>Signature</p>
+        </div>
+    </div>
+</div>

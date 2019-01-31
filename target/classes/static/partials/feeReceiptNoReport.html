@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Demo</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .multiselect {
+            width: 200px;
+        }
+
+        .selectBox {
+            position: relative;
+        }
+
+        .selectBox select {
+            width: 100%;
+            font-weight: bold;
+        }
+
+        .overSelect {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+        }
+
+        #checkboxes {
+            display: none;
+            border: 1px #dadada solid;
+        }
+
+        #checkboxes label {
+            display: block;
+        }
+
+        #checkboxes label:hover {
+            background-color: #1e90ff;
+        }
+
+        .report_ineer {
+            background-color: #ccc;
+            padding: 0px 0 5px 0;
+            margin-top: 0px;
+            border-radius: 5px 5px 0px 0px;
+        }
+
+        .inner_top {
+            background-color: #66ad2d;
+            border-radius: 5px 5px 0px 0px;
+            margin-top: 10px;
+        }
+
+        .inner_top p {
+            color: #fff;
+            margin: 0;
+            padding: 10px 10px;
+        }
+
+        .form-group label {
+            color: #72309a;
+        }
+
+        .set_widht tr > th:nth-child(1), .set_widht tr > td:nth-child(1) {
+            width: 20% !important;
+            padding: 10px 5px;
+            text-align: center;
+        }
+
+        .set_widht tr > th:nth-child(2), .set_widht tr > td:nth-child(2) {
+            width: 24% !important;
+            padding: 10px 5px;
+            text-align: center;
+        }
+
+        .set_widht tr > th:nth-child(3), .set_widht tr > th:nth-child(4), .set_widht tr > th:nth-child(5), .set_widht tr > th:nth-child(6), .set_widht tr > td:nth-child(3), .set_widht tr > td:nth-child(4), .set_widht tr > td:nth-child(5), .set_widht tr > td:nth-child(6) {
+            width: 12% !important;
+            padding: 10px 5px;
+            text-align: center;
+        }
+
+        #demo .wrapper {
+            display: inline-block;
+            width: 100%;
+            margin: 0 10px 0 0;
+            height: 20px;
+            position: relative;
+        }
+
+        #demo .parent {
+            height: 100%;
+            width: 100%;
+            display: block;
+            cursor: pointer;
+            line-height: 30px;
+            height: 34px;
+            border-radius: 5px;
+            background: #F9F9F9;
+            font-weight: normal;
+            z-index: 2;
+            position: relative;
+            -webkit-transition: border-radius .1s linear, background .1s linear, z-index 0s linear;
+            -webkit-transition-delay: .8s;
+            text-align: center;
+        }
+
+        #demo .content {
+            position: absolute;
+            top: 0;
+            display: block;
+            z-index: 1;
+            height: 0;
+            width: 100%;
+            padding-top: 30px;
+            -webkit-transition: height .5s ease;
+            -webkit-transition-delay: .4s;
+        }
+
+        #demo .wrapper:active .content {
+            height: auto;
+            z-index: 3;
+            -webkit-transition-delay: 0s;
+        }
+
+        #demo .content:hover {
+            height: auto;
+            z-index: 3;
+            -webkit-transition-delay: 0s;
+        }
+
+        #demo .content ul {
+            background: #fff;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+
+        #demo .content ul a {
+            text-decoration: none;
+        }
+
+        #demo .content li:hover {
+            background: #eee;
+            color: #333;
+        }
+
+        #demo .content li {
+            list-style: none;
+            text-align: left;
+            color: #888;
+            font-size: 14px;
+            line-height: 30px;
+            height: 30px;
+            padding-left: 10px;
+            border-top: 1px solid #ccc;
+        }
+
+        #demo .content li:last-of-type {
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+
+        input[type=checkbox] {
+            display: inline !important;
+        }
+    </style>
+</head>
+<body>
+<div class="col-lg-10" style="padding: 0px;">
+    <div class="abc">
+        <div class="report_ineer">
+            <div class="inner_top">
+                <p>Fee Receipt Report</p>
+            </div>
+            <div class="col-lg-12 col-md-12">
+                <div class="col-lg-4 col-md-4">
+                    <div class="form-group" style="margin-top: 25px;">
+                        <select class="form-control" ng-model="dateTypeFilter"
+                                ng-change="setDates()"
+                                style="width: 100%; float: right; margin-right: 1px;">
+                            <option value="Today">Today</option>
+                            <option value="Yesterday">Yesterday</option>
+                            <option value="ThisWeek">This Week</option>
+                            <option value="PreviousWeek">Previous Week</option>
+                            <option value="CurrentMonth">Current Month</option>
+                            <option value="PreviousMonth">Previous Month</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <label class="control-label col-md-4 col-sm-4" for=""
+                           style="width: 30%; margin-top:32px;">From:</label>
+                    <div class="input-group" style="width: 70%; margin-top:25px;">
+                        <input type="text" class="form-control"
+                               uib-datepicker-popup="{{format}}"
+                               ng-model="fromDate" date='dd-MM-yyyy'
+                               is-open="popup1.opened" readonly datepicker-options="dateOptions"
+                               ng-required="true"
+                               close-text="Close" alt-input-formats="altInputFormats"/>
+                        <span class="input-group-btn">
+                                         <button type="button" class="btn btn-default" ng-click="openDate1()"><i
+                                                 class="glyphicon glyphicon-calendar"></i></button>
+                                    </span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <label class="control-label col-md-4 col-sm-4" for=""
+                           style="width: 30%; margin-top:32px;">To:</label>
+                    <div class="input-group" style="width: 70%; margin-top:25px;">
+                        <input type="text" class="form-control"
+                               uib-datepicker-popup="{{format}}"
+                               ng-model="toDate" date='dd-MM-yyyy'
+                               is-open="popup2.opened" readonly datepicker-options="dateOptions"
+                               ng-required="true"
+                               close-text="Close" alt-input-formats="altInputFormats"/>
+                        <span class="input-group-btn">
+                                         <button type="button" class="btn btn-default" ng-click="openDate2()"><i
+                                                 class="glyphicon glyphicon-calendar"></i></button>
+                                    </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12" style="margin-top: 10px;">
+                <div class="col-lg-4 col-md-4">
+                    <div class="form-group">
+                        <select class="form-control"
+                                ng-options="academicyear as academicyear.acdyrName for academicyear in academicYearList track by academicyear.acdyrId"
+                                ng-model="academicYearId">
+                            <option value="">Academic Year</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <div>
+                        <div class="wrapper">
+                            <div class="multiselect" style="width: 98%;">
+                                <div class="selectBox" ng-click="showCheckboxes()">
+                                    <select style="padding: 7px 0px; width: 100%;    ">
+                                        <option>Grade Master</option>
+                                    </select>
+                                    <div class="overSelect"></div>
+                                </div>
+                                <div id="checkboxes">
+                                    <label ng-repeat="grade in gradeList">
+                                        <input type="checkbox"
+                                               multiple="multiple"
+                                               ng-click="pushSelectedGrades(grade.gradeId)"
+                                               ng-model="grades"
+                                               ng-value="grade.gradeId" style="display: inline;width: 30px"/>{{grade.gradeName}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <button style="padding: 6px 0; text-align: center; background-color: #72309a; color: #fff; width: 100%; box-shadow: none; border-radius: 5px; border: none;" ng-click="getReceiptNoReport()">
+                        Apply
+                    </button>
+                    <!--<div class="form-group" style="margin-top: 20px;" id="demo">-->
+                        <!--<div class="wrapper">-->
+                            <!--<div class="content">-->
+                                <!--<ul>-->
+                                    <!--<a href="/bs/feeCollectedReportExcel?fromDate={{fromDate|date:'yyyy-MM-dd'}}&toDate={{toDate|date:'yyyy-MM-dd'}}&academicYear={{academicYearId.acdyrId}}&gradeIds={{grades}}">-->
+                                        <!--<li>Excel</li>-->
+                                    <!--</a>-->
+                                    <!--<a href="/bs/feeCollectedReportPdf?fromDate={{fromDate|date:'yyyy-MM-dd'}}&toDate={{toDate|date:'yyyy-MM-dd'}}&academicYear={{academicYearId.acdyrId}}&gradeIds={{grades}}">-->
+                                        <!--<li>Pdf</li>-->
+                                    <!--</a>-->
+                                <!--</ul>-->
+                            <!--</div>-->
+                            <!--<div class="parent" style="text-align: left; padding: 0px 5px; color: #999;">Select-->
+                                <!--Option:<span class="caret" style="float: right; margin-top: 15px;"></span></div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                </div>
+            </div>
+            <div class="form_table">
+                <div class="col-lg-12 col-md-12" style="padding: 10px 31px;">
+                    <div class="set_widht">
+                        <table style="width: 100%;">
+                            <thead style="background-color: #72309a; color: #fff; border-bottom: 5px solid #ccc;">
+                            <tr>
+                                <th data-field="edit" style="width: 20%;">
+                                    <div class="th-inner" ng-click="orderByField='name'; reverseSort = !reverseSort" align="left">
+                                        Name
+                                        <span ng-if="length>1" class="sortorder descending"
+                                              ng-show="(orderByField=='name' && reverseSort==true)">&#9650;</span>
+                                        <span ng-if="length>1" class="sortorder" ng-show="(orderByField=='name' && reverseSort==false)">&#9660;</span></div>
+                                </th>
+                                <th data-field="cntryname" style="width: 20%;">
+                                    <div class="th-inner" ng-click="orderByField='profileId'; reverseSort = !reverseSort"
+                                         align="left">Student Profile ID
+                                        <span ng-if="length>1" class="sortorder descending"
+                                              ng-show="(orderByField=='profileId' && reverseSort==true)">&#9650;</span>
+                                        <span ng-if="length>1" class="sortorder" ng-show="(orderByField=='profileId' && reverseSort==false)">&#9660;</span>
+                                    </div>
+                                </th>
+                                <th data-field="edit" style="width: 20%;">
+                                    <div class="th-inner" ng-click="orderByField='name'; reverseSort = !reverseSort" align="left">
+                                        Receipt No
+                                        <span ng-if="length>1" class="sortorder descending"
+                                              ng-show="(orderByField=='name' && reverseSort==true)">&#9650;</span>
+                                        <span ng-if="length>1" class="sortorder" ng-show="(orderByField=='name' && reverseSort==false)">&#9660;</span></div>
+                                </th>
+                                <th data-field="cntryname" style="width: 20%;">
+                                    <div class="th-inner" ng-click="orderByField='profileId'; reverseSort = !reverseSort"
+                                         align="left">Receipt Date
+                                        <span ng-if="length>1" class="sortorder descending"
+                                              ng-show="(orderByField=='profileId' && reverseSort==true)">&#9650;</span>
+                                        <span ng-if="length>1" class="sortorder" ng-show="(orderByField=='profileId' && reverseSort==false)">&#9660;</span>
+                                    </div>
+                                </th>
+                                <th data-field="edit" style="width: 12%;">
+                                    <div class="th-inner" ng-click="orderByField='cashAmt'; reverseSort = !reverseSort"
+                                         align="right">Amount
+                                        <span ng-if="length>1" class="sortorder descending"
+                                              ng-show="(orderByField=='cashAmt' && reverseSort==true)">&#9650;</span>
+                                        <span ng-if="length>1" class="sortorder" ng-show="(orderByField=='cashAmt' && reverseSort==false)">&#9660;</span>
+                                    </div>
+                                </th>
+                                <th data-field="edit">
+                                    <div class="th-inner" style="font-style: italic;font-size: 10px" align="center">
+                                        Duplicate Receipt
+                                    </div>
+                                </th>
+                            </tr>
+                            </thead>
+
+                            <tbody style="background-color: #fff; color: #72309a; border-bottom: 5px solid #ccc;">
+                            <tr ng-repeat="receipt in list| orderBy:orderByField:reverseSort">
+                                <td style="width: 20%!important;word-break: break-word;text-align: left">{{receipt.studentName}}</td>
+                                <td style="width: 20%!important;word-break: break-word;text-align: left">{{receipt.studentProfileId}}</td>
+                                <td style="width: 20%!important;word-break: break-word;text-align: left">{{receipt.receiptNo}}</td>
+                                <td style="text-align: left">{{receipt.receiptDate}}</td>
+                                <td style="text-align: right">{{receipt.paidAmt}}</td>
+                                <td style="font-size: 10px;font-style: italic"><a id="edit" href="javascript:void(0)" ng-click="getDuplicatePrint(receipt.receiptId,receipt.receiptDate)" class="fa fa-print"></a></td>
+                            </tr>
+                            <tr ng-if="length>0">
+                                <td style="text-align: left"><strong>Total</strong></td>
+                                <td><strong></strong></td>
+                                <td><strong></strong></td>
+                                <td><strong></strong></td>
+                                <td style="text-align: right"><strong>{{totalAmt}}</strong></td>
+                                <td><strong></strong></td>
+                            </tr>
+                            <tr ng-if="length==0">
+                                <td colspan="7">No Records Found</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <div class="modal fade printreceiptA4" tabindex="-1" id="receiptPaymentA5" role="dialog"
+         data-backdrop="static"
+         aria-labelledby="mySmallModalLabel">
+
+        <div class="modal-dialog modal-lg" style="width:700px !important;min-height:0px;border-top-width: 1px">
+            <div class="modal-content checkout">
+                <div id="receiptPaymentPritableArea" class="panel-body" class="mini-print-wrapper"
+                     style="width:700px;border:1px solid;height:482px; overflow-y: auto;">
+                    <style>
+                        h1, h2, h3, h4, h5, h6 {
+                            margin: 0;
+                            font-family: 'Karla', sans-serif;
+                            font-weight: bold;
+                            color: #317eac;
+                            text-rendering: optimizelegibility;
+                        }
+
+                        hr {
+                            margin: 18px 0;
+                            border: 0;
+                            border-top: 1px solid #f5f5f5;
+                            border-bottom: 1px solid #ffffff;
+                        }
+
+                        #feeHeading {
+                            margine-right: 50px;
+                            width: auto !important;
+                            /*display: inline-block !important;*/
+                            border: 1px solid #000000 !important;
+                            /*padding: 5px 20px !important;*/
+                        }
+
+                        .main_div {
+                            border: 2px solid #000;
+                        }
+
+                        .no_pad {
+                            padding: 0;
+                        }
+
+                        .top_bar {
+                            width: 100%;
+                            border-bottom: 1px solid #000;
+                        }
+
+                        .top_bar p {
+                            font-size: 12px;
+                            margin: 10px 0 0 0;
+                        }
+
+                        .top_bar h4 {
+                            font-size: 14px;
+                            margin: 10px 0 0 0;
+                        }
+
+                        .total_form {
+                            width: 100%;
+                            margin: 0 auto;
+                        }
+
+                        .table_02 {
+                            width: 100%;
+                        }
+
+                        .table_03 {
+                            width: 100%;
+                        }
+
+                        .table_03 th {
+                            border: 1px solid #000;
+                        }
+
+                        .table_03 tr td {
+                            border-bottom: 0px solid #000;
+                            border-right: 1px solid #000;
+                        }
+
+                        .table_03 th:nth-child(1) {
+                            width: 15% !important;
+                        }
+
+                        .table_03 th:nth-child(2) {
+                            width: 70% !important;
+                        }
+
+                        .table_03 th:nth-child(3) {
+                            width: 15% !important;
+                        }
+
+                        .clearfix:after {
+                            content: " "; /* Older browser do not support empty content */
+                            visibility: hidden;
+                            display: block;
+                            height: 0;
+                            clear: both;
+                        }
+
+                        .clearfix:after {
+                            content: "";
+                            display: table;
+                            clear: both;
+                        }
+
+                        .main_div td {
+                            font-size: 12px !important;
+                        }
+                    </style>
+                    <div class="total_form">
+                        <div class="main_div">
+                            <div class="top_bar">
+                                <div class="logo" style="width: 30%;">
+                                    <img src="resource/images/BrainyStarsSchool.png"
+                                         style="width: 100%; float: left;">
+                                </div>
+                                <div class="top_cont" style="width: 70%; float: right;">
+                                    <h4 style="text-align: center; color:#5f0078;">INTERNATIONAL HOLISTIC MONTESSORI
+                                        & SCHOOL</h4>
+                                    <p style="text-align: center;">{{address}}, {{branchName}}, {{city}} -
+                                        {{pinCode}}.</p>
+                                    <p style="text-align: center;">Telephone: {{phoneNumber}} Email: {{emailId}}</p>
+                                    <p style="text-align: center;">FEE RECEIPT</p>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="table_02">
+                                <div class="recipt" style="width: 100%;">
+                                    <div class="recipt" style="width: 70%; float: left;">
+                                        <table>
+                                            <tr>
+                                                <td>Receipt No:</td>
+                                                <td>&nbsp; {{studentFeeDetails.receiptNo}}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="recipt" style="width: 30%; float: right;">
+                                        <table>
+                                            <tr>
+                                                <td>Date:</td>
+                                                <td>&nbsp; {{date|date:'dd/MM/yyyy'}}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="recipt" style="width: 100%; float: left;">
+                                    <table>
+                                        <tr>
+                                            <td>Name:</td>
+                                            <td>&nbsp; {{studentFeeDetails.studentName}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="recipt" style="width: 100%;">
+                                    <div class="recipt" style="width: 70%; float: left;">
+                                        <table>
+                                            <tr>
+                                                <td>Admission No:</td>
+                                                <td>&nbsp;{{studentFeeDetails.studentProfileId}}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="recipt" style="width: 30%; float: right;">
+                                        <table>
+                                            <tr>
+                                                <td>Academic Year:</td>
+                                                <td>&nbsp; {{studentFeeDetails.academicYear}}</td>
+                                            </tr>
+                                        </table>
+
+                                    </div>
+                                </div>
+                                <div class="recipt" style="width: 70%; float: left;">
+                                    <table>
+                                        <tr>
+                                            <td>Parent Name:</td>
+                                            <td>&nbsp; {{studentFeeDetails.fatherName}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="recipt" style="width: 30%; float: right;">
+                                    <table>
+                                        <tr>
+                                            <td>Grade:</td>
+                                            <td>&nbsp;{{studentFeeDetails.gradeName}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="table_03">
+                                <table border="0" class="table"
+                                       style="margin: 0px; width: 100%; border-collapse: collapse;">
+                                    <thead>
+                                    <tr>
+                                        <th style="border-left: 0px; text-align: left !important; font-size: 12px;">
+                                            Sl.No
+                                        </th>
+                                        <th style="text-align:left !important; font-size: 12px;">Particulars</th>
+                                        <th style="border-right: 0px; text-align: right !important; font-size: 12px;">
+                                            Amount
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody ng-repeat="student in studentFeeDetailsPojoList" id="parentTable2"
+                                           class="studentList">
+                                    <tr>
+                                        <td style="text-align:left !important;">{{$index+1}}</td>
+                                        <td style="text-align:left !important;">{{student.feeTypeName}}</td>
+                                        <td style="text-align:right !important;">{{student.payingAmt|number:2}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="recipt" style="width: 100%; border-top: 1px solid #000;">
+                                <!-- <div class="recipt" style="width: 80%; float: left;"><p>Total:</p></div>
+                                <div class="recipt" style="width: 20%; float: right;"><p>768,92,00</p></div> -->
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td style="width: 15%; text-align: left !important;">Total</td>
+                                        <td style="width: 70%;"></td>
+                                        <td style="width: 9%; text-align: right !important;">
+                                            {{payingFee|number:2}}
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="recipt"
+                                 style="width: 100%; border-top: 1px solid #000; border-bottom: 0px solid #000;">
+                                <table>
+                                    <tr>
+                                        <td style="font-size: 12px;">Amount In Words:</td>
+                                        <td style="font-size: 10px;">&nbsp;{{numberToWord}} Rupees Only</td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="recipt"
+                                 style="width: 100%; border-top: 1px solid #000; border-bottom: 1px solid #000;">
+                                <table style="width: 100%; padding: 0 !important;">
+                                    <tr>
+                                        <div class="modeofpayment" style="width: 100%;padding-left: 10px;"
+                                             ng-if="paymentTypeText=='Cash'">
+                                            <p style="font-size: 10px; margin: 0 !important;"><b>BY:</b>
+                                                {{paymentTypeText}}&nbsp;&nbsp;&nbsp;<b>Amount:</b>
+                                                {{studentFeeDetails.cashAmt|number:2}}&nbsp;&nbsp;&nbsp;</p>
+                                        </div>
+                                        <div class="modeofpayment" style="width: 100%;padding-left: 10px;"
+                                             ng-if="paymentTypeText=='Card'">
+                                            <p style="font-size: 10px; margin: 0 !important;"><b>BY:</b>
+                                                {{paymentTypeText}}&nbsp;&nbsp;&nbsp;<b>Amount:</b>
+                                                {{studentFeeDetails.cardAmt|number:2}}&nbsp;&nbsp;&nbsp;<b>Card
+                                                    No:</b> {{studentFeeDetails.cardNo}}&nbsp;&nbsp;&nbsp;<b>Transaction
+                                                    No:</b> {{studentFeeDetails.approvalCode}}&nbsp;</p>
+                                        </div>
+                                        <div class="modeofpayment" style="width: 100%;padding-left: 10px;"
+                                             ng-if="paymentTypeText=='Bank'">
+                                            <p style="font-size:10px; margin: 0 !important;"><b>BY:</b>
+                                                {{paymentTypeText}}&nbsp;&nbsp;&nbsp;<b>Amount:</b>
+                                                {{studentFeeDetails.bankAmt|number:2}}&nbsp;&nbsp;&nbsp;<b>Bank
+                                                    Name:</b> {{studentFeeDetails.bankName}}&nbsp;&nbsp;&nbsp;<b>Cheque
+                                                    No:</b>
+                                                {{studentFeeDetails.chequeNo}}&nbsp;&nbsp;&nbsp;<b>Date:</b>
+                                                {{studentFeeDetails.chequeDate|date:'dd/MM/yyyy'}}&nbsp;</p>
+                                        </div>
+                                        <div class="modeofpayment" style="width: 100%;padding-left: 10px;"
+                                             ng-if="paymentTypeText=='Online'">
+                                            <p style="font-size: 10px; margin: 0 !important;"><b>BY:</b>
+                                                {{paymentTypeText}}&nbsp;&nbsp;&nbsp;<b>Amount:</b>
+                                                {{studentFeeDetails.bankAmt|number:2}}&nbsp;&nbsp;&nbsp;<b>Bank
+                                                    Name:</b> {{studentFeeDetails.bankName}}&nbsp;&nbsp;&nbsp;<b>Transaction
+                                                    No:</b>
+                                                {{studentFeeDetails.chequeNo}}&nbsp;&nbsp;&nbsp;<b>Date:</b>
+                                                {{studentFeeDetails.chequeDate|date:'dd/MM/yyyy'}}&nbsp;</p>
+                                        </div>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div ng-if="dueAmt>0">
+                                <div class="recipt"
+                                     style="width: 100%; border-top: 0px solid #000; border-bottom: 0px solid #000;">
+                                    <table>
+                                        <tr>
+                                            <td>Total Fee:</td>
+                                            <td>&nbsp; {{totConfiguredFee|number:2}}</td>
+                                            <td>Total Discount:</td>
+                                            <td>&nbsp;{{totDiscount|number:2}}</td>
+                                            <td>Total Paid:</td>
+                                            <td>&nbsp; {{totalPaidAmt|number:2}}</td>
+                                            <td>Due Amount:</td>
+                                            <td>&nbsp;{{dueAmt|number:2}}</td>
+                                        </tr>
+
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div ng-if="termsandconditions">
+                                <div class="recipt"
+                                     style="width: 100%; border-top: 1px solid #000; border-bottom: 1px solid #000;">
+                                    <table>
+                                        <tr>
+                                            <td style="font-size: 12px;">Terms & Conditions:</td>
+                                            <td style="word-break:break-all !important; font-size: 12px; width:100% !important; overflow:hidden; display: inline-block;"
+                                                valign="top">{{termsandconditions}}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="recipt" style="width: 40%; float: left;"></div>
+                            <div class="recipt" style="width: 60%; float: right;">
+                                <p style="text-align: center; margin-top: 5px; margin-bottom:0px; font-size:12px;">
+                                    For: International Holistic Montessori & School</p>
+                                <p style="text-align: center; font-size:12px; margin-top: 20px;margin-bottom:5px;">
+                                    Authorized Signature</p>
+                            </div>
+
+
+                            <div class="clearfix"></div>
+
+                        </div>
+                        <div class="recipt" style="width: 100%;">
+                            <p style="text-align: left; font-size:10px; margin-top: 5px;">NOTE:
+                                {{receiptfooterdesc}}</p>
+                        </div>
+                    </div>
+
+
+                </div>
+                <button type="button" id="printbutton" ng-click="printDivA5('receiptPaymentPritableArea')"
+                        class="btn btn-default">Print
+                </button>
+                <button type="button" ng-click="reloadPage()" class="btn btn-default" data-dismiss="modal">Close
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    var options = [];
+
+    $('.dropdown-menu a').on('click', function (event) {
+
+        var $target = $(event.currentTarget),
+            val = $target.attr('data-value'),
+            $inp = $target.find('input'),
+            idx;
+
+        if ((idx = options.indexOf(val)) > -1) {
+            options.splice(idx, 1);
+            setTimeout(function () {
+                $inp.prop('checked', false)
+            }, 0);
+        } else {
+            options.push(val);
+            setTimeout(function () {
+                $inp.prop('checked', true)
+            }, 0);
+        }
+
+        $(event.target).blur();
+
+        console.log(options);
+        return false;
+    });
+</script>
+</body>
+</html>

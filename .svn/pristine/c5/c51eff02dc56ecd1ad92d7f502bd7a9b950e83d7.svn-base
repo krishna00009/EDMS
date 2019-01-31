@@ -1,0 +1,26 @@
+spring.datasource.driverClassName=com.mysql.jdbc.Driver
+spring.datasource.url = jdbc:mysql://localhost:3306/School?createDatabaseIfNotExist=true&useSSL=false
+spring.datasource.username = root
+spring.datasource.password = myserver
+spring.jpa.show-sql = false
+spring.jpa.hibernate.ddl-auto = update
+spring.jpa.hibernate.naming-strategy = org.hibernate.cfg.ImprovedNamingStrategy
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQL5Dialect
+# Hibernate
+hibernate.dialect:org.hibernate.dialect.MySQL5Dialect
+hibernate.hbm2ddl.auto:
+entitymanager.packagesToScan:com.hyva
+logging.level.org.hibernate.SQL=error
+logging.level.org.hibernate.type.descriptor.sql.BasicBinder=error
+spring.mvc.view.prefix=/WEB-INF/
+spring.mvc.view.suffix=.html
+server.port = 8089
+quartz.enabled=true
+php_domainame = https://www.hiaccounts.in/karts/edms/api/School/
+pusher__domainame =http://localhost:8889/pusher/savePusher
+hisaas_domainname=http://localhost:8888
+subscription_type=DesktopWithRTR
+spring.kafka.bootstrap-servers=http://localhost:9092
+spring.kafka.consumer.group-id=ADNI
+jsa.kafka.topic=BSEDMS-ADNI
+management.security.enabled=false

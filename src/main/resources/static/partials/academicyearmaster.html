@@ -1,0 +1,276 @@
+<style>
+    .modal-content{
+        width:696px;
+    }
+    .modal-footer {
+        padding: 5px;
+        text-align: right;
+        border-top: 1px solid #e5e5e5;
+    }
+    .modal-header {
+        padding: 5px;
+        border-bottom: 1px solid #e5e5e5;
+    }
+    fieldset {
+        min-width: 0;
+        padding: 10px;
+        margin: 0;
+        border: 0;
+    }
+    .form-control {
+        display: block;
+        width: 171px;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    }
+</style>
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+<div class="container-fluid">
+    <div class="container cus_main_row" >
+
+        <div class="row">
+            <h2 class="pos-header-new">
+                <div>Academic Year Master</div>
+            </h2>
+        </div>
+        <div class="row inner_row_bg">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="panel-body" style="height: 65px;">
+                            <div class="col-md-4 col-lg-3 col-sm-5 col-xs-5">
+                                <form class="form-horizontal ng-pristine ng-valid">
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <p class="input-group" style="display: block;">
+                                                <input id="search_academic" name="textinput" type="text"
+                                                       placeholder="Search" ng-model="searchText" class="form-control input-md"
+                                                       ng-keyup="$event.keyCode == 13 ? getAcademicYearList(searchText) : null"/>
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-md-9 col-lg-9 col-sm-9 col-xs-7">
+
+                                <div class="form-group">
+                                    <div class="col-sm-2">
+                                        <button type="button" class="btn btn-primary hi_btn"  ng-click="addacademic()">Add</button>
+                                    </div>
+                                    <div class="col-sm-2 col-md-3 col-sm-3">
+                                        <button type="button" class="btn btn-default hi_btn"  ng-click="importPopup()">Import</button>
+                                    </div>
+                                    <div class="col-sm-2 col-md-3 col-sm-3">
+                                        <a href="/bs/acdYearExcel?val={{searchText}}&type={{checkboxStatus}}">
+                                            <button type="button" class="btn btn-default hi_btn"
+                                                    style="margin-bottom: 10px;background: #72319a;color: white">
+                                                Excel
+                                            </button>
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-2 col-md-3 col-sm-3">
+                                        <button type="button" class="btn btn-primary hi_btn"  ng-click="feeconfigurationList()">Back</button>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <input type="checkbox"  id="checkboxStatus" ng-model="checkboxStatus" ng-init="checkboxStatus = checkboxStatus || false"
+                                               ng-click="getAcademicYearList(searchText,checkboxStatus)"/>
+
+                                    </div>
+                                    <span style="align-content: right">InActive</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="fixed-table-container">
+                                        <div class="table_wrapfixed-table-container-inner">
+                                            <div class="header-background"></div>
+                                            <table data-toggle="table" data-cache="false" data-height="299" class="hi_table table table-hover table-bordered table-striped table-fixed-header">
+                                                <thead>
+                                                <tr>
+                                                    <th data-field="cntryname">
+                                                        <div class="th-inner" align="center">Academic Name</div>
+                                                    </th>
+                                                    <th data-field="edit">
+                                                        <div class="th-inner" align="center">Academic Description</div>
+                                                    </th>
+                                                    <th data-field="edit">
+                                                        <div class="th-inner" align="center">From Date</div>
+                                                    </th>
+                                                    <th data-field="edit">
+                                                        <div class="th-inner" align="center">To Date</div>
+                                                    </th>
+                                                    <th data-field="edit">
+                                                        <div class="th-inner" align="center">Status</div>
+                                                    </th>
+                                                    <th data-field="edit">
+                                                        <div class="th-inner" align="center">Edit</div>
+                                                    </th>
+                                                    <th data-field="edit">
+                                                        <div class="th-inner" align="center">Delete</div>
+                                                    </th>
+
+                                                </tr>
+                                                </thead>
+                                                <tbody id="parentTable">
+                                                <input type="hidden" ng-model="acdyrId" value="{{academicYearList.acdyrId}}"/>
+                                                <tr ng-repeat="academic in academicYearList|filter:searchText">
+                                                    <td>{{academic.acdyrName}}</td>
+                                                    <td>{{academic.acdyrDescription}}</td>
+                                                    <td>{{academic.fromDate|date:'dd/MM/yyyy'}}</td>
+                                                    <td>{{academic.toDate|date:'dd/MM/yyyy'}}</td>
+                                                    <td>{{academic.status}}</td>
+                                                    <td><button type="button" class="btn btn-primary hi_btn"  ng-click="EditAcademics(academic)">Edit</button></td>
+                                                      <td><button type="button" class="btn btn-primary hi_btn"  ng-click="DeleteAcademics(academic)">Delete</button></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade Student" tabindex="-1" id="add_academic_master" role="dialog" data-backdrop="static"
+                                     aria-labelledby="mySmallModalLabel">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content checkout">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                                        aria-hidden="true">&times;</span></button>
+                                                <h4 id = "student-title" class="modal-title">Add Academics</h4>
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-md-12 col-sm-12">
+                                                        <form class="form-horizontal" name="student">
+                                                            <fieldset>
+                                                                <div class="tab-content">
+                                                                    <div class="tab-pane fade in active" id="sub_step12">
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <label class="col-md-4 control-label" for=""> Name</label>
+                                                                                <div class="col-md-6" style="position:relative;">
+                                                                                    <input id="acdname" name="acdname"  maxlength="32"
+                                                                                           type="text" placeholder="Academic Name"
+                                                                                           ng-pattern="/^[a-z\d\-_\s]+$/i"
+                                                                                           ng-model="acdname"
+                                                                                           class="form-control input-md" required>
+                                                                                    <p class="error" ng-show="student.acdname.$error.pattern">Enter Valid Name</p>
+                                                                                    <!--<span style="color:red" ng-show="student.acdname.$dirty"  class="ng-hide">Please Enter Valid  Name.!</span>-->
+                                                                                        <!--<p class="error" ng-show="acdname.$error.pattern">Enter Valid Name</p>-->
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="col-md-4 control-label" for=""> Description</label>
+                                                                                <div class="col-md-6" style="position:relative;">
+                                                                                    <input id="acddesc" name="acddesc"  maxlength="150"
+                                                                                           type="text" placeholder="Academic Description"
+                                                                                           ng-pattern="[a-z0-9.+-]+@[a-z0-9.-]+\.[A-Z]$"
+                                                                                           ng-model="acddesc"
+                                                                                           class="form-control input-md" required>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-sm-4" for="">From Date</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <p class="input-group">
+                                                                                        <input type="text" id="fromDate" class="form-control" uib-datepicker-popup="{{format}}"  ng-model="fromDate"  is-open="popup1.opened" datepicker-options="dateOptions"  close-text="Close" alt-input-formats="altInputFormats" />
+                                                                                        <span class="input-group-btn">
+                                     <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-sm-4" for="">To Date</label>
+                                                                                <div class="col-sm-8">
+                                                                                    <p class="input-group">
+                                                                                        <input type="text" id="todate" class="form-control" uib-datepicker-popup="{{format}}"  ng-model="todate"   is-open="popup2.opened" datepicker-options="dateOptions"  close-text="Close" alt-input-formats="altInputFormats" />
+                                                                                        <span class="input-group-btn">
+                                     <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="form-group">
+                                                                                <label class="col-md-4 control-label" for="">Status</label>
+                                                                                <div class="col-md-6">
+                                                                                    <select name="Status" id="Status" ng-model="statusText" class="form-control input-md" required>
+                                                                                        <option value="Active">Active</option>
+                                                                                        <option value="InActive">InActive</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </fieldset>
+
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary" ng-click="saveAcademicMaster()">Save</button>
+                                                <button type="button" class="btn btn-primary" ng-click="removeAcademicMaster()" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<form class="form-horizontal" id="details" method="post" ng-submit="saveAcademicYearImport()">
+    <div class="modal fade" tabindex="-1" id="import_academicyear" role="dialog" data-backdrop="static"
+         aria-labelledby="mySmallModalLabel_1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Import Academic Year </h4>
+                </div>
+                <a href="resource/ImpotSheets/AcademicYear.xlsx" download>Download ExcelSheet</a>
+                <div class="modal-body checkout-body">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-xs-5">
+                                <input type="file" name="myFile"
+                                       id="myFile"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default" data-toggle="modal" ng-disabled="isDisabled">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--</div>-->
+</form>
+</body>
+</html>
